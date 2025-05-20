@@ -1,0 +1,80 @@
+---
+import c1 from "@/assets/pics/card-pic1.png";
+import c2 from "@/assets/pics/card-pic2.png";
+import c3 from "@/assets/pics/card-pic3.png";
+import c4 from "@/assets/pics/card-pic4.png";
+import c5 from "@/assets/pics/card-pic5.png";
+import c6 from "@/assets/pics/card-pic6.png";
+import Section from "@/components/sections/Section.astro";
+import LocationCard from "@/components/ui/LocationCard.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import * as m from "@/paraglide/messages";
+
+const cards = [
+  {
+    index: 1,
+    titleTop: "Lisboa",
+    titleBottom: "Marquês 18h",
+    img: c1,
+    link: "https://google.com",
+  },
+  {
+    index: 2,
+    titleTop: "Porto",
+    titleBottom: "Marquês 18h",
+    img: c2,
+    link: "https://google.com",
+  },
+  {
+    index: 3,
+    titleTop: "Braga",
+    titleBottom: "Marquês 18h",
+    img: c3,
+    link: "https://google.com",
+  },
+  {
+    index: 1,
+    titleTop: "Coimbra",
+    titleBottom: "Marquês 18h",
+    img: c4,
+    link: "https://google.com",
+  },
+  {
+    index: 2,
+    titleTop: "Matosinhos",
+    titleBottom: "Marquês 18h",
+    img: c5,
+    link: "https://google.com",
+  },
+  {
+    index: 3,
+    titleTop: "Outros",
+    titleBottom: "Marquês 18h",
+    img: c6,
+    link: "https://google.com",
+  },
+];
+---
+
+<Section id="locations">
+  <div class="mt-[140px] mb-5">
+    <SectionTitle
+      sectionTitle={m.locations_title}
+      description={m.locations_description}
+    />
+    <div class="grid lg:grid-cols-2 lg:grid-rows-3 gap-10">
+      {
+        cards.map((card) => (
+          <LocationCard
+            index={card.index}
+            titleTop={card.titleTop}
+            titleBottom={card.titleBottom}
+            img={card.img}
+            alt={card.titleTop}
+            link={card.link}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Section>
