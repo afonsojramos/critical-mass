@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import * as m from "@/paraglide/messages";
+import Card from "./Card.astro";
+
+type Props = {
+  event: CollectionEntry<"events">;
+  index: number;
+  lang: string;
+};
+
+const { event, index, lang } = Astro.props as Props;
+---
+
+<Card isUnderline={true}>
+  <div
+    class={`relative overflow-hidden rounded-[45px] border-0 h-full ${index % 2 === 0 ? "bg-gray" : "bg-green"}`}
+  >
+    <div class="relative h-64 w-full">
+      {
+        event.data.image ? (
+          <Image
+            src={event.data.image}
+            alt={event.data.title}
+            class="h-full w-full object-cover"
+            width={300}
+            height={200}
+            loading="lazy"
+          />
+        ) : (
+          <div
+            class={`h-full w-full flex items-center justify-center ${index % 2 === 0 ? "bg-dark" : "bg-gray-200"}`}
+          >
+            <span class="text-gray-400">{m.events_noImage}</span>
+          </div>
+        )
+      }
+    </div>
+    <div class="p-8 sm:p-[50px]">
+      <div class="flex flex-col mb-6">
+        <h3 class="text-2xl font-medium mb-4">
+          <span class={`rounded-md px-2 text-white bg-dark`}>
+            {event.data.title}
+          </span>
+        </h3>
+        <p class="text-dark">{event.data.description}</p>
+      </div>
+      <a
+        href={`/${lang}/events/${event.slug.split("/")[1]}`}
+        class="btn-primary inline-block mt-4"
+      >
+        {m.events_join}
+      </a>
+    </div>
+  </div>
+</Card>
