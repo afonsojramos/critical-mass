@@ -21,7 +21,11 @@ export async function getStaticPaths() {
 const currentLocale = Astro.currentLocale;
 ---
 
-<MainLayout locale={currentLocale} title={m.title} description={m.description}>
+<MainLayout
+  locale={currentLocale}
+  title={m.title()}
+  description={m.description()}
+>
   <Hero />
   <Sponsors />
   <Locations />
