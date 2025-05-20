@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrlList } from "astro:i18n";
+import EventCard from "@/components/ui/EventCard.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import * as m from "@/paraglide/messages";
+
+export async function getStaticPaths() {
+  const paths = getRelativeLocaleUrlList();
+
+  return paths.map((url) => {
+    const locale = url.split("/")[1];
+
+    return { params: { locale } };
+  });
+}
+
+const { locale } = Astro.params;
+
+const allEvents = await getCollection("events", ({ id, data }) => {
+  const isCorrectLang = id.startsWith(`${locale}/`);
+  return isCorrectLang;
+});
+---
+
+<MainLayout title={m.events_title()} description={m.events_description()}>
+  <main class="space-y-20">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-bold mb-4">{m.events_title()}</h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          {m.events_description()}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        {
+          allEvents.map((event, index) => (
+            <EventCard event={event} index={index} lang={locale} />
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</MainLayout>
