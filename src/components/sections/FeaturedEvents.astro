@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import Section from "@/components/sections/Section.astro";
+import EventCard from "@/components/ui/EventCard.astro";
+import SectionTitle from "@/components/ui/SectionTitle.astro";
+import * as m from "@/paraglide/messages";
+
+const lang = Astro.currentLocale || "en";
+
+const allEvents = await getCollection("events");
+
+const featuredEvents = allEvents
+  .filter((event) => event.data.featured)
+  .filter((event) => event.filePath?.includes(`/${lang}/`));
+---
+
+<Section id="events">
+  <div class="mt-[140px] mb-5">
+    <SectionTitle
+      sectionTitle={m.events_title}
+      description={m.events_description}
+    />
+
+    <div class="grid lg:grid-cols-2 gap-10">
+      {
+        featuredEvents.map((event, index) => (
+          <EventCard event={event} index={index} lang={lang} />
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <a href={`/${lang}/events`} class="btn-secondary inline-block">
+        {m.events_viewAll}
+      </a>
+    </div>
+  </div>
+</Section>
