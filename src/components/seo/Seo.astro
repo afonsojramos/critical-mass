@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import siteData from "@/data/siteData.json";
 import jsonLDGenerator from "@/utils/jsonLD";
 
 type Props = {
@@ -17,7 +16,21 @@ type Props = {
   frontmatter?: CollectionEntry<"blog">;
 };
 
-const { title, description, url = Astro.url, image, frontmatter, robots } = Astro.props;
+const siteData = {
+  image: {
+    src: "/images/critical-mass-logo.png",
+    alt: "Critical Mass Logo",
+  },
+};
+
+const {
+  title,
+  description,
+  url = Astro.url,
+  image,
+  frontmatter,
+  robots,
+} = Astro.props;
 
 // Again, frontmatter triggers CMS post type
 const jsonLD = jsonLDGenerator({
