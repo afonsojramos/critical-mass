@@ -1,0 +1,86 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import Tags from "@/components/ui/Tags.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import * as m from "@/paraglide/messages";
+import { formatDate } from "@/utils";
+
+export async function getStaticPaths() {
+  const allBlogArticles = await getCollection("blog");
+
+  return allBlogArticles.map((article) => {
+    const locale = article.id.split("/")[0];
+
+    return {
+      params: {
+        locale,
+        slug: article.slug.replace(`${locale}/`, ""),
+      },
+      props: { article },
+    };
+  });
+}
+
+if (!Astro.params.slug) {
+  return Astro.redirect(`/${Astro.currentLocale}/articles`);
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<MainLayout title={article.data.title} description={article.data.summary}>
+  <main class="space-y-40 mb-40 pt-24">
+    <section class="bg-white">
+      <div
+        class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-1 lg:py-16 lg:px-3"
+      >
+        <div class="font-light text-gray-500 sm:text-lg">
+          <a
+            href={`/${Astro.currentLocale}/articles`}
+            class="inline-flex items-center font-medium text-black hover:text-green my-4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="h-6 w-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16l-4-4m0 0l4-4m-4 4h18"
+              >
+              </path>
+            </svg>
+            <span class="ml-1 font-bold text-lg">{m.blog_allArticles()}</span>
+          </a>
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+            {article.data.title}
+          </h2>
+          <h3 class="text-lg mb-2">
+            {m.blog_writtenBy()}
+            {article.data.author}
+            {m.blog_on()}
+            {formatDate(article.data.pubDate, Astro.currentLocale)}
+          </h3>
+          <Tags tags={article.data.tags} />
+          <Image
+            src={article.data.image}
+            alt="Article Image"
+            class="w-full h-auto rounded-xl my-6"
+            width={300}
+            height={200}
+            loading="eager"
+          />
+          <div class="content">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout>
