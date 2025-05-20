@@ -1,0 +1,30 @@
+---
+import { getRelativeLocaleUrlList } from "astro:i18n";
+import FeaturedEvents from "@/components/sections/FeaturedEvents.astro";
+import Hero from "@/components/sections/Hero.astro";
+import LastBlogArticle from "@/components/sections/LastBlogArticle.astro";
+import Locations from "@/components/sections/Locations.astro";
+import Sponsors from "@/components/sections/Sponsors.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import * as m from "@/paraglide/messages";
+
+export async function getStaticPaths() {
+  const paths = getRelativeLocaleUrlList();
+
+  return paths.map((url) => {
+    const locale = url.split("/")[1];
+
+    return { params: { locale } };
+  });
+}
+
+const currentLocale = Astro.currentLocale;
+---
+
+<MainLayout locale={currentLocale} title={m.title} description={m.description}>
+  <Hero />
+  <Sponsors />
+  <Locations />
+  <FeaturedEvents />
+  <LastBlogArticle />
+</MainLayout>
