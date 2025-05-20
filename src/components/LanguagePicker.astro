@@ -1,0 +1,16 @@
+---
+import { getRouteFromUrl } from "@/i18n/utils";
+import { baseLocale, locales } from "@/paraglide/runtime";
+
+const route = getRouteFromUrl(Astro.url);
+const currentLang = Astro.currentLocale;
+const otherLang = locales.find((lang) => lang !== currentLang) || baseLocale;
+const langLabels = {
+  en: "English",
+  pt: "Português",
+};
+---
+
+<a href={`/${otherLang}/${route}`} class="hover:underline">
+  {langLabels[otherLang]}
+</a>
