@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrlList } from "astro:i18n";
+import ArticleCard from "@/components/ui/ArticleCard.astro";
+import SearchForm from "@/components/ui/SearchForm.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import * as m from "@/paraglide/messages";
+
+export async function getStaticPaths() {
+  const paths = getRelativeLocaleUrlList();
+
+  return paths.map((url) => {
+    const locale = url.split("/")[1];
+
+    return { params: { locale } };
+  });
+}
+
+const { locale } = Astro.params;
+
+const allBlogArticles = await getCollection("blog", ({ id, data }) => {
+  const isCorrectLang = id.startsWith(`${locale}/`);
+  return isCorrectLang;
+});
+---
+
+<MainLayout title={m.blog_title()} description={m.blog_description()}>
+  <main class="space-y-20">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
+      <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
+          {m.blog_title()}
+        </h2>
+        <p class="font-light sm:text-xl">
+          {m.blog_description()}
+        </p>
+      </div>
+      <br />
+      <SearchForm />
+      <br />
+      <div class="grid gap-8 lg:grid-cols-2">
+        {allBlogArticles.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </main>
+</MainLayout>
