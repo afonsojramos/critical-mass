@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
 const { locale } = Astro.params;
 
-const allBlogArticles = await getCollection("blog", ({ id, data }) => {
+const allBlogArticles = await getCollection("blog", ({ id }) => {
   const isCorrectLang = id.startsWith(`${locale}/`);
   return isCorrectLang;
 });
