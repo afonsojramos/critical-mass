@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --font-grotesk: "Grotesk", sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  --color-green: #b9ff66;
+  --color-black: rgb(0, 0, 0);
+  --color-dark: #191a23;
+  --color-gray: #f3f3f3;
+  --color-white: #ffffff;
+}
+
+@layer base {
+  @font-face {
+    font-family: "Grotesk";
+    src: url("/fonts/grotesk/SpaceGrotesk-Regular.woff"), format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Grotesk";
+    src: url("/fonts/grotesk/SpaceGrotesk-Medium.woff"), format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .font-outline {
+    -webkit-text-stroke: 2.5px black;
+    background-color: transparent;
+  }
+  .font-outline-sm {
+    -webkit-text-stroke: 1.2px black;
+    background-color: transparent;
+  }
+
+  :root {
+    --green: #b9ff66;
+    --black: rgb(0, 0, 0);
+    --dark: #191a23;
+    --gray: #f3f3f3;
+    --white: #ffffff;
+  }
+}
+
+/* Custom component classes */
+.btn-primary {
+  background-color: var(--color-dark);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 1.25rem 2.18rem;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background-color: var(--color-green);
+  color: black;
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: black;
+  padding: 1.25rem 2.18rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  background-color: black;
+  color: white;
+  border-color: var(--color-green);
+  transform: scale(1.05);
+}
+
+.btn-tertiary {
+  background-color: var(--color-green);
+  color: black;
+  border-radius: 0.5rem;
+  padding: 1.25rem 2.18rem;
+  transition: all 0.2s;
+}
+.btn-tertiary:hover {
+  background-color: white;
+  color: black;
+  transform: scale(1.05);
+}
+
+.greenhead {
+  background-color: var(--color-green);
+  color: black;
+  border-radius: 0.43rem;
+  padding: 0 0.43rem;
+}
+
+.whitehead {
+  background-color: var(--color-white);
+  color: black;
+  border-radius: 0.43rem;
+  padding: 0 0.43rem;
+}
+
+.blackhead {
+  background-color: var(--color-black);
+  color: white;
+  border-radius: 0.43rem;
+  padding: 0 0.43rem;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* markdown style */
+.content p {
+  margin: 20px 0;
+  font-size: 1.1rem;
+}
+
+.content h2 {
+  margin: 20px 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
