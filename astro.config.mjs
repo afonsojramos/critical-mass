@@ -2,6 +2,7 @@
 import cloudflare from "@astrojs/cloudflare";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
+import decapCmsOauth from "astro-decap-cms-oauth";
 import { defineConfig } from "astro/config";
 import { baseLocale, locales } from "./src/paraglide/runtime";
 
@@ -19,6 +20,7 @@ export default defineConfig({
       }),
     ],
   },
+  integrations: [decapCmsOauth()],
   output: "server",
   adapter: cloudflare(),
   i18n: {

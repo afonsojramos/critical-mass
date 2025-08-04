@@ -17,6 +17,7 @@
 		"@astrojs/cloudflare": "^12.5.3",
 		"@tailwindcss/vite": "^4.1.7",
 		"astro": "^5.7.13",
+		"astro-decap-cms-oauth": "^0.5.1",
 		"astro-navbar": "^2.3.9",
 		"lenis": "^1.3.3",
 		"swiper": "^11.2.7",
