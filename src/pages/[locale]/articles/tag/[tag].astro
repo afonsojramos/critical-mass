@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
@@ -32,12 +34,16 @@ if (!tag) {
   return Astro.redirect(`/${Astro.currentLocale}/articles`);
 }
 
-const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+const allBlogArticles: CollectionEntry<"blog">[] = (
+  await getCollection("blog")
+).sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const tagArticles = allBlogArticles.filter((article) => article.data.tags.includes(tag));
+const tagArticles = allBlogArticles.filter((article) =>
+  article.data.tags.includes(tag)
+);
 ---
 
 <MainLayout title={m.articles_title()}>
