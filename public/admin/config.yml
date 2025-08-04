@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: afonsoramos/massacritica
+  repo: afonsojramos/critical-mass
   branch: main
   site_domain: critical-mass.pages.dev
   base_url: https://critical-mass.pages.dev
