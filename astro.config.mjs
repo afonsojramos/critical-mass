@@ -19,7 +19,7 @@ export default defineConfig({
       }),
     ],
   },
-  output: "static",
+  output: "server",
   adapter: cloudflare(),
   i18n: {
     locales: [...locales],

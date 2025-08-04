@@ -1,0 +1,162 @@
+backend:
+  name: github
+  repo: afonsoramos/massacritica
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://massacritica.pt
+logo_url: /logo.svg
+
+i18n:
+  structure: multiple_folders
+  locales: [pt, en]
+  default_locale: pt
+
+collections:
+  # Portuguese Blog Posts
+  - name: "blog_pt"
+    label: "Blog (Português)"
+    folder: "src/content/blog/pt"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Author Image", name: "authImage", widget: "image" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "select",
+          multiple: true,
+          options:
+            [
+              "ciclismo",
+              "ativismo",
+              "história",
+              "segurança",
+              "dicas",
+              "urbanismo",
+              "comunidade",
+              "eventos",
+              "sustentabilidade",
+              "mobilidade",
+              "transporte",
+              "bicicleta",
+            ],
+          default: [],
+        }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - {
+          label: "Type",
+          name: "type",
+          widget: "select",
+          options: ["Article", "Tutorial"],
+          default: "Article",
+        }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # English Blog Posts
+  - name: "blog_en"
+    label: "Blog (English)"
+    folder: "src/content/blog/en"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Author Image", name: "authImage", widget: "image" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "select",
+          multiple: true,
+          options:
+            [
+              "cycling",
+              "activism",
+              "history",
+              "safety",
+              "tips",
+              "urban planning",
+              "community",
+              "events",
+              "sustainability",
+              "mobility",
+              "transport",
+              "bicycle",
+            ],
+          default: [],
+        }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - {
+          label: "Type",
+          name: "type",
+          widget: "select",
+          options: ["Article", "Tutorial"],
+          default: "Article",
+        }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  # Portuguese Events
+  - name: "events_pt"
+    label: "Eventos (Português)"
+    folder: "src/content/events/pt"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+      - { label: "Content", name: "body", widget: "markdown" }
+
+  # English Events
+  - name: "events_en"
+    label: "Events (English)"
+    folder: "src/content/events/en"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+      - { label: "Content", name: "body", widget: "markdown" }
+
+  # Static Pages
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page (Portuguese)"
+        name: "home_pt"
+        file: "src/content/pages/home-pt.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+      - label: "Home Page (English)"
+        name: "home_en"
+        file: "src/content/pages/home-en.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
+          - { label: "Body", name: "body", widget: "markdown" }
