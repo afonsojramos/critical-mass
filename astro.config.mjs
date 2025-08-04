@@ -20,7 +20,11 @@ export default defineConfig({
       }),
     ],
   },
-  integrations: [decapCmsOauth()],
+  integrations: [
+    decapCmsOauth({
+      decapCMSSrcUrl: "https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js",
+    }),
+  ],
   output: "server",
   adapter: cloudflare(),
   i18n: {
