@@ -6,7 +6,7 @@ const authorsCollection = defineCollection({
     name: z.string(),
     image: z.string(),
     bio: z.string().optional(),
-    socialMediaLink: z.string().url().optional(),
+    socialMediaLink: z.string().optional(),
   }),
 });
 

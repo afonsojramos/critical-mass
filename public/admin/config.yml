@@ -6,7 +6,7 @@ backend:
   base_url: https://critical-mass.pages.dev
   auth_endpoint: oauth
 
-media_folder: "public/images"
+media_folder: "/public/images"
 public_folder: "/images"
 
 site_url: https://critical-mass.pages.dev
@@ -26,15 +26,11 @@ collections:
     slug: "{{slug}}"
     extension: "json"
     format: "json"
+    media_folder: "/public/images/authors"
+    public_folder: "/images/authors"
     fields:
       - { label: "Name", name: "name", widget: "string" }
-      - {
-          label: "Image",
-          name: "image",
-          widget: "image",
-          media_folder: "/public/images/authors",
-          public_folder: "/images/authors",
-        }
+      - { label: "Image", name: "image", widget: "image" }
       - { label: "Bio", name: "bio", widget: "text", required: false }
       - {
           label: "Social Media Link",
@@ -50,6 +46,8 @@ collections:
     folder: "src/content/blog/pt"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    media_folder: "/public/images/articles"
+    public_folder: "/images/articles"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
@@ -62,13 +60,7 @@ collections:
           value_field: "{{slug}}",
           display_fields: ["name"],
         }
-      - {
-          label: "Featured Image",
-          name: "image",
-          widget: "image",
-          media_folder: "/public/images/articles",
-          public_folder: "/images/articles",
-        }
+      - { label: "Featured Image", name: "image", widget: "image" }
       - {
           label: "Tags",
           name: "tags",
@@ -107,6 +99,8 @@ collections:
     folder: "src/content/blog/en"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    media_folder: "/public/images/articles"
+    public_folder: "/images/articles"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
@@ -119,13 +113,7 @@ collections:
           value_field: "{{slug}}",
           display_fields: ["name"],
         }
-      - {
-          label: "Featured Image",
-          name: "image",
-          widget: "image",
-          media_folder: "/public/images/articles",
-          public_folder: "/images/articles",
-        }
+      - { label: "Featured Image", name: "image", widget: "image" }
       - {
           label: "Tags",
           name: "tags",
@@ -164,6 +152,8 @@ collections:
     folder: "src/content/events/pt"
     create: true
     slug: "{{slug}}"
+    media_folder: "/public/images/events"
+    public_folder: "/images/events"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - {
@@ -171,14 +161,7 @@ collections:
           name: "images",
           widget: "list",
           required: false,
-          field:
-            {
-              label: "Image",
-              name: "image",
-              widget: "image",
-              media_folder: "/public/images/events",
-              public_folder: "/images/events",
-            },
+          field: { label: "Image", name: "image", widget: "image" },
         }
       - { label: "Description", name: "description", widget: "text" }
       - {
@@ -195,6 +178,8 @@ collections:
     folder: "src/content/events/en"
     create: true
     slug: "{{slug}}"
+    media_folder: "/public/images/events"
+    public_folder: "/images/events"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - {
@@ -202,14 +187,7 @@ collections:
           name: "images",
           widget: "list",
           required: false,
-          field:
-            {
-              label: "Image",
-              name: "image",
-              widget: "image",
-              media_folder: "/public/images/events",
-              public_folder: "/images/events",
-            },
+          field: { label: "Image", name: "image", widget: "image" },
         }
       - { label: "Description", name: "description", widget: "text" }
       - {
