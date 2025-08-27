@@ -18,6 +18,33 @@ i18n:
   default_locale: pt
 
 collections:
+  # Authors
+  - name: "authors"
+    label: "Authors"
+    folder: "src/content/authors"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - {
+          label: "Image",
+          name: "image",
+          widget: "image",
+          media_folder: "/public/images/authors",
+          public_folder: "/images/authors",
+        }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Twitter", name: "twitter", widget: "string", required: false }
+      - {
+          label: "LinkedIn",
+          name: "linkedin",
+          widget: "string",
+          required: false,
+        }
+      - { label: "GitHub", name: "github", widget: "string", required: false }
+
   # Portuguese Blog Posts
   - name: "blog_pt"
     label: "Blog (Português)"
@@ -27,9 +54,22 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Author Image", name: "authImage", widget: "image" }
-      - { label: "Featured Image", name: "image", widget: "image" }
+      - {
+          label: "Author",
+          name: "author",
+          widget: "relation",
+          collection: "authors",
+          search_fields: ["name"],
+          value_field: "{{slug}}",
+          display_fields: ["name"],
+        }
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          media_folder: "/public/images/articles",
+          public_folder: "/images/articles",
+        }
       - {
           label: "Tags",
           name: "tags",
@@ -71,9 +111,22 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Author Image", name: "authImage", widget: "image" }
-      - { label: "Featured Image", name: "image", widget: "image" }
+      - {
+          label: "Author",
+          name: "author",
+          widget: "relation",
+          collection: "authors",
+          search_fields: ["name"],
+          value_field: "{{slug}}",
+          display_fields: ["name"],
+        }
+      - {
+          label: "Featured Image",
+          name: "image",
+          widget: "image",
+          media_folder: "/public/images/articles",
+          public_folder: "/images/articles",
+        }
       - {
           label: "Tags",
           name: "tags",
@@ -114,7 +167,14 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - {
+          label: "Image",
+          name: "image",
+          widget: "image",
+          required: false,
+          media_folder: "/public/images/events",
+          public_folder: "/images/events",
+        }
       - { label: "Description", name: "description", widget: "text" }
       - {
           label: "Featured",
@@ -132,7 +192,14 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - {
+          label: "Image",
+          name: "image",
+          widget: "image",
+          required: false,
+          media_folder: "/public/images/events",
+          public_folder: "/images/events",
+        }
       - { label: "Description", name: "description", widget: "text" }
       - {
           label: "Featured",
@@ -141,25 +208,3 @@ collections:
           default: false,
         }
       - { label: "Content", name: "body", widget: "markdown" }
-
-  # Static Pages
-  - name: "pages"
-    label: "Pages"
-    files:
-      - label: "Home Page (Portuguese)"
-        name: "home_pt"
-        file: "src/content/pages/home-pt.md"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Hero Title", name: "heroTitle", widget: "string" }
-          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
-          - { label: "Body", name: "body", widget: "markdown" }
-
-      - label: "Home Page (English)"
-        name: "home_en"
-        file: "src/content/pages/home-en.md"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Hero Title", name: "heroTitle", widget: "string" }
-          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text" }
-          - { label: "Body", name: "body", widget: "markdown" }

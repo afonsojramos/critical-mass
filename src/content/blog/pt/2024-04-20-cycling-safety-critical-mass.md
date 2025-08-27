@@ -1,8 +1,7 @@
 ---
 title: Dicas Essenciais de Segurança para Participantes da Massa Crítica
 pubDate: 2024-04-20
-author: Marco Silva
-authImage: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
+author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["ciclismo", "segurança", "dicas"]
 summary: "Seja você um participante de primeira viagem ou um veterano da Massa Crítica, estas dicas de segurança ajudarão a garantir uma experiência positiva e segura para todos os envolvidos."

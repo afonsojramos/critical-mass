@@ -1,8 +1,7 @@
 ---
 title: Essential Safety Tips for Critical Mass Participants
 pubDate: 2024-04-20
-author: Marco Silva
-authImage: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
+author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["cycling", "safety", "tips"]
 summary: Whether you're a first-time participant or a Critical Mass veteran, these safety tips will help ensure a positive and secure experience for everyone involved.
