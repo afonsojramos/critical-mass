@@ -2,14 +2,14 @@ backend:
   name: github
   repo: afonsojramos/critical-mass
   branch: main
-  site_domain: critical-mass.pages.dev
-  base_url: https://critical-mass.pages.dev
+  site_domain: massacritica.pt
+  base_url: https://massacritica.pt
   auth_endpoint: oauth
 
 media_folder: "/public/images"
 public_folder: "/images"
 
-site_url: https://critical-mass.pages.dev
+site_url: https://massacritica.pt
 logo_url: /logo.svg
 
 i18n:
