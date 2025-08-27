@@ -1,54 +1,54 @@
 /**
  * Tag translation mapper
- * Stores Portuguese tags in content, displays appropriate language in frontend
+ * Stores English tags in content, displays appropriate language in frontend
  */
 
 export const tagTranslations = {
-  ciclismo: {
+  cycling: {
     pt: "ciclismo",
     en: "cycling"
   },
-  ativismo: {
+  activism: {
     pt: "ativismo", 
     en: "activism"
   },
-  história: {
+  history: {
     pt: "história",
     en: "history"
   },
-  segurança: {
+  safety: {
     pt: "segurança",
     en: "safety"
   },
-  dicas: {
+  tips: {
     pt: "dicas",
     en: "tips"
   },
-  urbanismo: {
+  "urban-planning": {
     pt: "urbanismo",
     en: "urban planning"
   },
-  comunidade: {
+  community: {
     pt: "comunidade",
     en: "community"
   },
-  eventos: {
+  events: {
     pt: "eventos",
     en: "events"
   },
-  sustentabilidade: {
+  sustainability: {
     pt: "sustentabilidade",
     en: "sustainability"
   },
-  mobilidade: {
+  mobility: {
     pt: "mobilidade",
     en: "mobility"
   },
-  transporte: {
+  transport: {
     pt: "transporte",
     en: "transport"
   },
-  bicicleta: {
+  bicycle: {
     pt: "bicicleta",
     en: "bicycle"
   }
@@ -58,24 +58,24 @@ export type TagKey = keyof typeof tagTranslations;
 export type Locale = 'pt' | 'en';
 
 /**
- * Translate a Portuguese tag to the specified locale
+ * Translate an English tag to the specified locale
  */
-export function translateTag(ptTag: string, locale: Locale): string {
-  const tagKey = ptTag as TagKey;
-  return tagTranslations[tagKey]?.[locale] || ptTag;
+export function translateTag(enTag: string, locale: Locale): string {
+  const tagKey = enTag as TagKey;
+  return tagTranslations[tagKey]?.[locale] || enTag;
 }
 
 /**
- * Translate an array of Portuguese tags to the specified locale
+ * Translate an array of English tags to the specified locale
  */
-export function translateTags(ptTags: string[], locale: Locale): string[] {
-  return ptTags.map(tag => translateTag(tag, locale));
+export function translateTags(enTags: string[], locale: Locale): string[] {
+  return enTags.map(tag => translateTag(tag, locale));
 }
 
 /**
- * Get all available Portuguese tag keys (for CMS configuration)
+ * Get all available English tag keys (for CMS configuration)
  */
-export function getPortugueseTags(): string[] {
+export function getEnglishTags(): string[] {
   return Object.keys(tagTranslations);
 }
 

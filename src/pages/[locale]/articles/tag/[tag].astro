@@ -7,6 +7,7 @@ import ArticleCard from "@/components/ui/ArticleCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { capitalize } from "@/utils";
+import { translateTag, createTagSlug } from "@/lib/tagMapper";
 
 export async function getStaticPaths() {
   const allBlogArticles = await getCollection("blog");
@@ -15,7 +16,9 @@ export async function getStaticPaths() {
   for (const article of allBlogArticles) {
     const locale = article.id.split("/")[0];
     for (const tag of article.data.tags) {
-      paths.add(JSON.stringify({ locale, tag }));
+      // Use tag slug for URL
+      const tagSlug = createTagSlug(tag);
+      paths.add(JSON.stringify({ locale, tag: tagSlug }));
     }
   }
 
@@ -39,7 +42,19 @@ const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog"))
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const tagArticles = allBlogArticles.filter((article) => article.data.tags.includes(tag));
+// Filter articles by matching tag slug with actual tag
+const tagArticles = allBlogArticles.filter((article) => 
+  article.data.tags.some(articleTag => createTagSlug(articleTag) === tag)
+);
+
+// Get the actual English tag for translation (find first match)
+const actualTag = allBlogArticles
+  .flatMap(article => article.data.tags)
+  .find(articleTag => createTagSlug(articleTag) === tag) || tag;
+
+// Translate tag for display
+const locale = Astro.currentLocale as 'pt' | 'en';
+const displayTag = translateTag(actualTag, locale);
 ---
 
 <MainLayout title={m.articles_tag()}>
@@ -67,7 +82,7 @@ const tagArticles = allBlogArticles.filter((article) => article.data.tags.includ
         <span class="ml-1 font-bold text-lg">All Articles</span>
       </a>
 
-      <h2 class="text-2xl pb-3">#{capitalize(tag)}</h2>
+      <h2 class="text-2xl pb-3">#{capitalize(displayTag)}</h2>
       <div class="grid gap-8 lg:grid-cols-2">
         {tagArticles.map((article) => <ArticleCard article={article} />)}
       </div>
