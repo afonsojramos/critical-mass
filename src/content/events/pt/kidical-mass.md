@@ -1,29 +1,32 @@
 ---
 title: Kidical Mass
 images: ["/images/events/kidical-mass.webp"]
-description: Join the July edition of Critical Mass in Lisbon! As summer heats up, we'll be riding through the city at sunset, ending with a picnic at Jardim da Estrela.
+description: A primeira edição da Kidical Mass de 2024 foi um sucesso, com o verão a aquecer, pedalámos pela cidade ao pôr do sol, de norte a sul do país.
 featured: true
 ---
-# Kidical Mass
 
-Esta edição contou com 100 ciclistas, que partiram de Marquês de Pombal às 18:30.
+A primeira edição da Kidical Mass de 2024 reuniu ciclistas de todo o Portugal em passeios simultâneos ao pôr do sol. De Lisboa ao Porto, de Braga a Faro, famílias e entusiastas do ciclismo participaram nesta celebração nacional da cultura da bicicleta.
 
-## Meeting Details
+## Participação Nacional
 
-- **Location**: Marquês de Pombal
-- **Time**: 18:30
-- **Date**: July 28, 2023
+Esta edição contou com mais de 500 ciclistas que partiram de pontos de encontro por todo o país às 18:30, criando um movimento sincronizado de norte a sul de Portugal.
 
-## Special Notes
+## Localizações Principais
 
-This month we're organizing a communal picnic at the end of the ride. If you'd like to participate, bring some food to share!
+- **Lisboa**: Marquês de Pombal
+- **Porto**: Avenida dos Aliados
+- **Braga**: Praça da República
+- **Coimbra**: Praça 8 de Maio
+- **Faro**: Jardim Manuel Bivar
 
-## Route
+**Queres organizar a Kidical Mass na tua cidade?** [Contacta-nos](mailto:afonsojorgeramos@gmail.com) e ajudamos-te a começar!
 
-We'll start at Marquês de Pombal, ride through the city center, up to Príncipe Real, and finish at Jardim da Estrela for our picnic.
+## Destaques Especiais
 
-## Why Critical Mass?
+Este evento nacional demonstrou a força crescente da comunidade ciclística de Portugal, com passeios simultâneos criando uma declaração poderosa sobre a importância de cidades amigas da bicicleta em todo o país.
 
-Critical Mass is a global cycling event held on the last Friday of every month in over 300 cities around the world. The idea is to reclaim the streets for cycling and raise awareness of cyclists in the city.
+## Porquê Kidical Mass?
 
-Join us and make the streets safer for everyone!
+A Kidical Mass é uma versão familiar da Massa Crítica, especificamente desenhada para incluir crianças e famílias no movimento de defesa do ciclismo. É sobre criar espaços seguros para ciclistas de todas as idades e construir ligações comunitárias por todo o Portugal.
+
+Juntos, estamos a tornar as ruas mais seguras para todos, de norte a sul!
