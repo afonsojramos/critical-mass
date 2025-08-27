@@ -2,7 +2,7 @@
 export const prerender = true;
 
 import { Image } from "astro:assets";
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import Tags from "@/components/ui/Tags.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
@@ -30,6 +30,7 @@ if (!Astro.params.slug) {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+const author = await getEntry(article.data.author);
 ---
 
 <MainLayout title={article.data.title} description={article.data.summary}>
@@ -63,12 +64,23 @@ const { Content } = await render(article);
           <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
             {article.data.title}
           </h2>
-          <h3 class="text-lg mb-2">
-            {m.blog_writtenBy()}
-            {article.data.author}
-            {m.blog_on()}
-            {formatDate(article.data.pubDate, Astro.currentLocale)}
-          </h3>
+          <div class="flex items-center space-x-3 mb-4">
+            <Image
+              class="w-10 h-10 rounded-full"
+              src={author?.data.image}
+              alt={author?.data.name + " avatar"}
+              width={40}
+              height={40}
+            />
+            <div>
+              <h3 class="text-lg">
+                {m.blog_writtenBy()}
+                {author?.data.name}
+                {m.blog_on()}
+                {formatDate(article.data.pubDate, Astro.currentLocale)}
+              </h3>
+            </div>
+          </div>
           <Tags tags={article.data.tags} />
           <Image
             src={article.data.image}

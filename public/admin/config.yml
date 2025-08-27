@@ -36,14 +36,13 @@ collections:
           public_folder: "/images/authors",
         }
       - { label: "Bio", name: "bio", widget: "text", required: false }
-      - { label: "Twitter", name: "twitter", widget: "string", required: false }
-      - {
-          label: "LinkedIn",
-          name: "linkedin",
-          widget: "string",
+      - { 
+          label: "Social Media Link", 
+          name: "socialMediaLink", 
+          widget: "string", 
           required: false,
+          hint: "Full URL (e.g., https://twitter.com/username, https://linkedin.com/in/username)"
         }
-      - { label: "GitHub", name: "github", widget: "string", required: false }
 
   # Portuguese Blog Posts
   - name: "blog_pt"

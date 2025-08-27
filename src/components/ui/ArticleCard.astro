@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 import ArticleIcon from "@/components/Icons/ArticleIcon.astro";
 import VideoIcon from "@/components/Icons/VideoIcon.astro";
 import Card from "@/components/ui/Card.astro";
@@ -12,6 +14,8 @@ const { article } = Astro.props;
 interface Props {
   article: CollectionEntry<"blog">;
 }
+
+const author = await getEntry(article.data.author);
 ---
 
 <Card isUnderline={true}>
@@ -33,13 +37,15 @@ interface Props {
     </p>
     <div class="flex justify-between items-center">
       <div class="flex items-center space-x-4">
-        <img
+        <Image
           class="w-7 h-7 rounded-full"
-          src={article.data.authImage}
-          alt={article.data.author + " cover"}
+          src={author?.data.image}
+          alt={author?.data.name + " avatar"}
+          height={28}
+          width={28}
         />
         <span class="font-medium">
-          {article.data.author}
+          {author?.data.name}
         </span>
       </div>
       <a
