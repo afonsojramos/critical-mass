@@ -35,7 +35,7 @@ const author = await getEntry(article.data.author);
 
 <MainLayout title={article.data.title} description={article.data.summary}>
   <main class="space-y-20">
-    <section class="bg-white">
+    <section class="container mx-auto max-w-4xl bg-white">
       <div
         class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-1 lg:py-16 lg:px-3"
       >
@@ -90,7 +90,7 @@ const author = await getEntry(article.data.author);
             height={200}
             loading="eager"
           />
-          <div class="content">
+          <div class="prose prose-lg max-w-none">
             <Content />
           </div>
         </div>
