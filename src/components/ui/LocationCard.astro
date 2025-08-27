@@ -5,20 +5,21 @@ import wob from "@/assets/icons/icon7.svg";
 import Card from "@/components/ui/Card.astro";
 import * as m from "@/paraglide/messages";
 
-const { index, titleTop, titleBottom, img, alt, link } = Astro.props;
+const { index, titleTop, titleBottom, img, alt, link, newLocation } =
+  Astro.props;
 ---
 
 <Card isUnderline={true}>
   <div
-    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index === 1 ? 'bg-gray' : index === 2 ? 'bg-green' : 'bg-dark text-gray'}`
+    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index === 1 ? 'bg-gray' : index === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`
   >
     <h3 class=`flex flex-col col-span-2 lg:col-span-1`>
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`
-        >{titleTop}</span
-      >
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`
-        >{titleBottom}</span
-      >
+      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`>
+        {titleTop}
+      </span>
+      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`>
+        {titleBottom}
+      </span>
     </h3>
     <picture
       class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center"
@@ -26,14 +27,15 @@ const { index, titleTop, titleBottom, img, alt, link } = Astro.props;
       <Image
         src={img}
         alt={alt}
-        class="h-[100px] w-auto sm:h-auto sm:w-3/4 object-cover"
+        class=`object-cover ${newLocation ? 'h-16 w-16' : 'h-[100px] w-auto sm:h-auto sm:w-3/4'}`
       />
     </picture>
+
     <div class="flex items-end">
-      <a href={link} class="flex items-center gap-3.5"
-        ><Image src={index === 1 || index === 2 ? gob : wob} alt={alt} />
-        <span class="hidden sm:block">{m.events_serviceInfo}</span></a
-      >
+      <a href={link} class="flex items-center gap-3.5">
+        <Image src={index === 1 || index === 2 ? gob : wob} alt={alt} />
+        <span class="hidden sm:block">{m.events_serviceInfo}</span>
+      </a>
     </div>
   </div>
 </Card>

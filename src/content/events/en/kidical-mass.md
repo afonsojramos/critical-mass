@@ -18,7 +18,7 @@ This edition counted with over 500 cyclists who departed from meeting points acr
 - **Coimbra**: Praça 8 de Maio
 - **Faro**: Jardim Manuel Bivar
 
-**Want to organize Kidical Mass in your city?** [Contact us](mailto:afonsojorgeramos@gmail.com) and we'll help you get started!
+**Want to organize Kidical Mass in your city?** [Contact us](mailto:geral@mubi.pt) and we'll help you get started!
 
 ## Special Highlights
 This nationwide event demonstrated the growing strength of Portugal's cycling community, with simultaneous rides creating a powerful statement about the importance of bike-friendly cities across the entire country.

@@ -2,6 +2,7 @@
 import lisboa from "@/assets/cities/lisboa.svg";
 import porto from "@/assets/cities/porto.svg";
 import viana from "@/assets/cities/viana.svg";
+import plus from "@/assets/plus.svg";
 import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
@@ -29,6 +30,13 @@ const cards = [
     img: viana,
     link: "https://www.instagram.com/massacriticaviana/",
   },
+  {
+    index: 4,
+    titleTop: m.locations_moreComingSoon(),
+    titleBottom: m.locations_createYourMovement(),
+    img: plus,
+    link: "mailto:geral@mubi.pt",
+  },
 ];
 ---
 
@@ -48,6 +56,7 @@ const cards = [
             img={card.img}
             alt={card.titleTop}
             link={card.link}
+            newLocation={card.index === 4}
           />
         ))
       }

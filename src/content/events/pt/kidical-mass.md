@@ -19,7 +19,7 @@ Esta edição contou com mais de 500 ciclistas que partiram de pontos de encontr
 - **Coimbra**: Praça 8 de Maio
 - **Faro**: Jardim Manuel Bivar
 
-**Queres organizar a Kidical Mass na tua cidade?** [Contacta-nos](mailto:afonsojorgeramos@gmail.com) e ajudamos-te a começar!
+**Queres organizar a Kidical Mass na tua cidade?** [Contacta-nos](mailto:geral@mubi.pt) e ajudamos-te a começar!
 
 ## Destaques Especiais
 
