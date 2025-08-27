@@ -27,9 +27,6 @@ const { locale, ...props } = Astro.props;
   <script src="../utils/lenis"></script>
   <body class="bg-white font-grotesk">
     <main class="flex flex-col min-h-screen">
-      <div class="flex justify-end px-6 pt-2">
-        <LanguagePicker locale={locale} />
-      </div>
       <Navbar />
       <slot />
       <Footer />
