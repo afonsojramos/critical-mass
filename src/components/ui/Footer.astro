@@ -13,51 +13,50 @@ const contactLocations = [
 <section class="sm:px-5">
   <div class="w-full max-w-[1280px] mx-auto">
     <div
-      class="flex flex-col lg:flex-row justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px]"
+      class="flex flex-col md:flex-row justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px]"
     >
-      <div class="flex flex-col gap-2 items-center lg:items-start">
-          <a href="#home" class="flex items-center">
-            <Image
-              src={Logo}
-              alt="Logo for Critical Mass"
-              class="size-24 text-white"
-              loading="lazy"
-            />
-            <h1 class="text-white text-2xl font-bold uppercase">
-              {
-            m
-              .hero_title()
-              .split("\n")
-              .map((line, index) => (
-                <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
-              ))
-          }
-            </h1>
-          </a>
-
-        <div class="flex text-center lg:text-start flex-col">
-          <h3 class="mb-5 text-center md:text-left text-2xl text-green">
-            {m.footer_contact}
-          </h3>
-          <div class="flex flex-col justify-between gap-4">
+      <div class="flex flex-col gap-2 items-center self-center md:items-start">
+        <a href="#home" class="flex items-center">
+          <Image
+            src={Logo}
+            alt="Logo for Critical Mass"
+            class="size-24 text-white"
+            loading="lazy"
+          />
+          <h1 class="text-white text-2xl font-bold uppercase">
             {
-              contactLocations.map((location) => {
-                return (
-                  <div class="flex items-center gap-2">
-                    <span> {location.name}: </span>
-
-                    <a
-                      href={location.href}
-                      target="_blank"
-                      class="flex items-center gap-1"
-                    >
-                      <Instagram class="size-6" />@{location.href.split("/")[3]}
-                    </a>
-                  </div>
-                );
-              })
+              m
+                .hero_title()
+                .split("\n")
+                .map((line, index) => (
+                  <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
+                ))
             }
-          </div>
+          </h1>
+        </a>
+      </div>
+      <div class="flex text-center lg:text-start items-center md:items-start flex-col">
+        <h3 class="mb-5 text-center md:text-left text-2xl text-green">
+          {m.footer_contact}
+        </h3>
+        <div class="flex flex-col justify-between gap-4">
+          {
+            contactLocations.map((location) => {
+              return (
+                <div class="flex items-center gap-2">
+                  <span> {location.name}: </span>
+
+                  <a
+                    href={location.href}
+                    target="_blank"
+                    class="flex items-center gap-1"
+                  >
+                    <Instagram class="size-6" />@{location.href.split("/")[3]}
+                  </a>
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     </div>
