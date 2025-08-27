@@ -1,6 +1,6 @@
 ---
 title: "The History and Impact of Critical Mass: A Global Cycling Movement"
-pubDate: 2024-04-15
+pubDate: 2025-04-15
 author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["cycling", "activism", "history"]

@@ -1,6 +1,6 @@
 ---
 title: "A História e o Impacto da Massa Crítica: Um Movimento Ciclístico Global"
-pubDate: 2024-04-15
+pubDate: 2025-04-15
 author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["ciclismo", "ativismo", "história"]

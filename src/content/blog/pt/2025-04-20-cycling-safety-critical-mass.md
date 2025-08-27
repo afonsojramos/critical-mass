@@ -1,6 +1,6 @@
 ---
 title: Dicas Essenciais de Segurança para Participantes da Massa Crítica
-pubDate: 2024-04-20
+pubDate: 2025-04-20
 author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["ciclismo", "segurança", "dicas"]

@@ -1,6 +1,6 @@
 ---
 title: 5 Formas Como a Massa Crítica Transforma os Espaços Urbanos
-pubDate: 2024-04-25
+pubDate: 2025-04-25
 author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["ciclismo", "urbanismo", "comunidade"]

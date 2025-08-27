@@ -1,6 +1,6 @@
 ---
 title: Essential Safety Tips for Critical Mass Participants
-pubDate: 2024-04-20
+pubDate: 2025-04-20
 author: afonso-ramos
 image: "/images/events/kidical-mass.webp"
 tags: ["cycling", "safety", "tips"]
