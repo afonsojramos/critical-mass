@@ -50,17 +50,12 @@ collections:
     public_folder: "/images/articles"
     i18n: true
     fields:
-      - { 
-          label: "Title", 
-          name: "title", 
-          widget: "string",
-          i18n: true
-        }
-      - { 
-          label: "Publish Date", 
-          name: "pubDate", 
+      - { label: "Title", name: "title", widget: "string", i18n: true }
+      - {
+          label: "Publish Date",
+          name: "pubDate",
           widget: "datetime",
-          i18n: duplicate
+          i18n: duplicate,
         }
       - {
           label: "Author",
@@ -70,68 +65,47 @@ collections:
           search_fields: ["name"],
           value_field: "{{slug}}",
           display_fields: ["name"],
-          i18n: duplicate
+          i18n: duplicate,
         }
-      - { 
-          label: "Featured Image", 
-          name: "image", 
+      - {
+          label: "Featured Image",
+          name: "image",
           widget: "image",
-          i18n: duplicate
+          i18n: duplicate,
         }
       - {
           label: "Tags",
           name: "tags",
           widget: "select",
           multiple: true,
-          options: [
-            "ciclismo",
-            "ativismo", 
-            "história",
-            "segurança",
-            "dicas",
-            "urbanismo",
-            "comunidade",
-            "eventos",
-            "sustentabilidade",
-            "mobilidade",
-            "transporte",
-            "bicicleta",
-            "cycling",
-            "activism",
-            "history", 
-            "safety",
-            "tips",
-            "urban planning",
-            "community",
-            "events",
-            "sustainability",
-            "mobility",
-            "transport",
-            "bicycle"
-          ],
+          options:
+            [
+              "ciclismo",
+              "ativismo",
+              "história",
+              "segurança",
+              "dicas",
+              "urbanismo",
+              "comunidade",
+              "eventos",
+              "sustentabilidade",
+              "mobilidade",
+              "transporte",
+              "bicicleta",
+            ],
           default: [],
-          i18n: true
+          i18n: duplicate,
         }
-      - { 
-          label: "Summary", 
-          name: "summary", 
-          widget: "text",
-          i18n: true
-        }
+      - { label: "Summary", name: "summary", widget: "text", i18n: true }
       - {
           label: "Type",
           name: "type",
           widget: "select",
           options: ["Article", "Tutorial"],
           default: "Article",
-          i18n: duplicate
+          i18n: duplicate,
         }
-      - { 
-          label: "Body", 
-          name: "body", 
-          widget: "markdown",
-          i18n: true
-        }
+      - { label: "Body", name: "body", widget: "markdown", i18n: true }
 
   # Events (Unified with i18n)
   - name: "events"
@@ -143,36 +117,26 @@ collections:
     public_folder: "/images/events"
     i18n: true
     fields:
-      - { 
-          label: "Title", 
-          name: "title", 
-          widget: "string",
-          i18n: true
-        }
+      - { label: "Title", name: "title", widget: "string", i18n: true }
       - {
           label: "Images",
           name: "images",
           widget: "list",
           required: false,
           field: { label: "Image", name: "image", widget: "image" },
-          i18n: duplicate
+          i18n: duplicate,
         }
-      - { 
-          label: "Description", 
-          name: "description", 
+      - {
+          label: "Description",
+          name: "description",
           widget: "text",
-          i18n: true
+          i18n: true,
         }
       - {
           label: "Featured",
           name: "featured",
           widget: "boolean",
           default: false,
-          i18n: duplicate
+          i18n: duplicate,
         }
-      - { 
-          label: "Content", 
-          name: "body", 
-          widget: "markdown",
-          i18n: true
-        }
+      - { label: "Content", name: "body", widget: "markdown", i18n: true }
