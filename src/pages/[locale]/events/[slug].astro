@@ -29,6 +29,34 @@ const { Content } = await event.render();
 <MainLayout title={event.data.title} description={event.data.description}>
   <article class="py-12 bg-white">
     <div class="container mx-auto max-w-4xl">
+      <a
+        href={`/${Astro.currentLocale}/events`}
+        class="inline-flex items-center font-medium text-black hover:text-green my-4"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          class="h-6 w-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 16l-4-4m0 0l4-4m-4 4h18"
+          >
+          </path>
+        </svg>
+        <span class="ml-1 font-bold text-lg">{m.events_viewAll()}</span>
+      </a>
+
+      <header class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">{event.data.title}</h1>
+        <div class="bg-gray-100 p-5 rounded-lg mb-8">
+          <p class="text-xl">{event.data.description}</p>
+        </div>
+      </header>
       <div class="relative h-80 md:h-96 w-full mb-8 rounded-xl overflow-hidden">
         {
           event.data.images && event.data.images.length > 0 ? (
@@ -43,15 +71,6 @@ const { Content } = await event.render();
           )
         }
       </div>
-
-      <header class="mb-8">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">{event.data.title}</h1>
-
-        <div class="bg-gray-100 p-5 rounded-lg mb-8">
-          <p class="text-xl">{event.data.description}</p>
-        </div>
-      </header>
-
       <!-- Event content -->
       <div class="prose prose-lg max-w-none">
         <Content />
