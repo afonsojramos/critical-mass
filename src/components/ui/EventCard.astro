@@ -19,9 +19,9 @@ const { event, index, lang } = Astro.props as Props;
   >
     <div class="relative h-64 w-full">
       {
-        event.data.image ? (
+        event.data.images && event.data.images.length > 0 ? (
           <Image
-            src={event.data.image}
+            src={event.data.images[0]}
             alt={event.data.title}
             class="h-full w-full object-cover"
             width={300}
