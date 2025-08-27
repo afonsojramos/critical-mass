@@ -1,6 +1,6 @@
 ---
 title: Kidical Mass
-image: /images/events/kidical-mass.webp
+images: ["/images/events/kidical-mass.webp"]
 description: Join the July edition of Critical Mass in Lisbon! As summer heats up, we'll be riding through the city at sunset, ending with a picnic at Jardim da Estrela.
 featured: true
 ---

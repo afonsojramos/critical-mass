@@ -27,7 +27,7 @@ const eventsCollection = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
-    image: z.string().optional(),
+    images: z.array(z.string()).optional(),
     description: z.string(),
     featured: z.boolean().default(false),
   }),

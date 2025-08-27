@@ -6,8 +6,8 @@ backend:
   base_url: https://critical-mass.pages.dev
   auth_endpoint: oauth
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "public/images"
+public_folder: "/images"
 
 site_url: https://critical-mass.pages.dev
 logo_url: /logo.svg
@@ -36,12 +36,12 @@ collections:
           public_folder: "/images/authors",
         }
       - { label: "Bio", name: "bio", widget: "text", required: false }
-      - { 
-          label: "Social Media Link", 
-          name: "socialMediaLink", 
-          widget: "string", 
+      - {
+          label: "Social Media Link",
+          name: "socialMediaLink",
+          widget: "string",
           required: false,
-          hint: "Full URL (e.g., https://twitter.com/username, https://linkedin.com/in/username)"
+          hint: "Full URL (e.g., https://twitter.com/username, https://linkedin.com/in/username)",
         }
 
   # Portuguese Blog Posts
@@ -167,12 +167,18 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - {
-          label: "Image",
-          name: "image",
-          widget: "image",
+          label: "Images",
+          name: "images",
+          widget: "list",
           required: false,
-          media_folder: "/public/images/events",
-          public_folder: "/images/events",
+          field:
+            {
+              label: "Image",
+              name: "image",
+              widget: "image",
+              media_folder: "/public/images/events",
+              public_folder: "/images/events",
+            },
         }
       - { label: "Description", name: "description", widget: "text" }
       - {
@@ -192,12 +198,18 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - {
-          label: "Image",
-          name: "image",
-          widget: "image",
+          label: "Images",
+          name: "images",
+          widget: "list",
           required: false,
-          media_folder: "/public/images/events",
-          public_folder: "/images/events",
+          field:
+            {
+              label: "Image",
+              name: "image",
+              widget: "image",
+              media_folder: "/public/images/events",
+              public_folder: "/images/events",
+            },
         }
       - { label: "Description", name: "description", widget: "text" }
       - {
