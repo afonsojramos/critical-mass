@@ -18,7 +18,7 @@ i18n:
   default_locale: pt
 
 collections:
-  # Authors
+  # Authors (Language neutral)
   - name: "authors"
     label: "Authors"
     folder: "src/content/authors"
@@ -40,17 +40,28 @@ collections:
           hint: "Full URL (e.g., https://twitter.com/username, https://linkedin.com/in/username)",
         }
 
-  # Portuguese Blog Posts
-  - name: "blog_pt"
-    label: "Blog (Português)"
-    folder: "src/content/blog/pt"
+  # Blog Posts (Unified with i18n)
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     media_folder: "/public/images/articles"
     public_folder: "/images/articles"
+    i18n: true
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { 
+          label: "Title", 
+          name: "title", 
+          widget: "string",
+          i18n: true
+        }
+      - { 
+          label: "Publish Date", 
+          name: "pubDate", 
+          widget: "datetime",
+          i18n: duplicate
+        }
       - {
           label: "Author",
           name: "author",
@@ -59,141 +70,109 @@ collections:
           search_fields: ["name"],
           value_field: "{{slug}}",
           display_fields: ["name"],
+          i18n: duplicate
         }
-      - { label: "Featured Image", name: "image", widget: "image" }
+      - { 
+          label: "Featured Image", 
+          name: "image", 
+          widget: "image",
+          i18n: duplicate
+        }
       - {
           label: "Tags",
           name: "tags",
           widget: "select",
           multiple: true,
-          options:
-            [
-              "ciclismo",
-              "ativismo",
-              "história",
-              "segurança",
-              "dicas",
-              "urbanismo",
-              "comunidade",
-              "eventos",
-              "sustentabilidade",
-              "mobilidade",
-              "transporte",
-              "bicicleta",
-            ],
+          options: [
+            "ciclismo",
+            "ativismo", 
+            "história",
+            "segurança",
+            "dicas",
+            "urbanismo",
+            "comunidade",
+            "eventos",
+            "sustentabilidade",
+            "mobilidade",
+            "transporte",
+            "bicicleta",
+            "cycling",
+            "activism",
+            "history", 
+            "safety",
+            "tips",
+            "urban planning",
+            "community",
+            "events",
+            "sustainability",
+            "mobility",
+            "transport",
+            "bicycle"
+          ],
           default: [],
+          i18n: true
         }
-      - { label: "Summary", name: "summary", widget: "text" }
+      - { 
+          label: "Summary", 
+          name: "summary", 
+          widget: "text",
+          i18n: true
+        }
       - {
           label: "Type",
           name: "type",
           widget: "select",
           options: ["Article", "Tutorial"],
           default: "Article",
+          i18n: duplicate
         }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { 
+          label: "Body", 
+          name: "body", 
+          widget: "markdown",
+          i18n: true
+        }
 
-  # English Blog Posts
-  - name: "blog_en"
-    label: "Blog (English)"
-    folder: "src/content/blog/en"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    media_folder: "/public/images/articles"
-    public_folder: "/images/articles"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - {
-          label: "Author",
-          name: "author",
-          widget: "relation",
-          collection: "authors",
-          search_fields: ["name"],
-          value_field: "{{slug}}",
-          display_fields: ["name"],
-        }
-      - { label: "Featured Image", name: "image", widget: "image" }
-      - {
-          label: "Tags",
-          name: "tags",
-          widget: "select",
-          multiple: true,
-          options:
-            [
-              "cycling",
-              "activism",
-              "history",
-              "safety",
-              "tips",
-              "urban planning",
-              "community",
-              "events",
-              "sustainability",
-              "mobility",
-              "transport",
-              "bicycle",
-            ],
-          default: [],
-        }
-      - { label: "Summary", name: "summary", widget: "text" }
-      - {
-          label: "Type",
-          name: "type",
-          widget: "select",
-          options: ["Article", "Tutorial"],
-          default: "Article",
-        }
-      - { label: "Body", name: "body", widget: "markdown" }
-
-  # Portuguese Events
-  - name: "events_pt"
-    label: "Eventos (Português)"
-    folder: "src/content/events/pt"
+  # Events (Unified with i18n)
+  - name: "events"
+    label: "Events"
+    folder: "src/content/events"
     create: true
     slug: "{{slug}}"
     media_folder: "/public/images/events"
     public_folder: "/images/events"
+    i18n: true
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - { 
+          label: "Title", 
+          name: "title", 
+          widget: "string",
+          i18n: true
+        }
       - {
           label: "Images",
           name: "images",
           widget: "list",
           required: false,
           field: { label: "Image", name: "image", widget: "image" },
+          i18n: duplicate
         }
-      - { label: "Description", name: "description", widget: "text" }
+      - { 
+          label: "Description", 
+          name: "description", 
+          widget: "text",
+          i18n: true
+        }
       - {
           label: "Featured",
           name: "featured",
           widget: "boolean",
           default: false,
+          i18n: duplicate
         }
-      - { label: "Content", name: "body", widget: "markdown" }
-
-  # English Events
-  - name: "events_en"
-    label: "Events (English)"
-    folder: "src/content/events/en"
-    create: true
-    slug: "{{slug}}"
-    media_folder: "/public/images/events"
-    public_folder: "/images/events"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - {
-          label: "Images",
-          name: "images",
-          widget: "list",
-          required: false,
-          field: { label: "Image", name: "image", widget: "image" },
+      - { 
+          label: "Content", 
+          name: "body", 
+          widget: "markdown",
+          i18n: true
         }
-      - { label: "Description", name: "description", widget: "text" }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "boolean",
-          default: false,
-        }
-      - { label: "Content", name: "body", widget: "markdown" }
