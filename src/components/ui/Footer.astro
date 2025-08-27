@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Instagram from "@/assets/instagram.svg";
 import Logo from "@/assets/logo-alt.svg";
-import ShortForm from "@/components/ui/ShortForm.astro";
 import * as m from "@/paraglide/messages";
 
 const contactLocations = [
@@ -17,7 +16,6 @@ const contactLocations = [
       class="flex flex-col lg:flex-row justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px]"
     >
       <div class="flex flex-col gap-2 items-center lg:items-start">
-        <picture>
           <a href="#home" class="flex items-center">
             <Image
               src={Logo}
@@ -25,11 +23,17 @@ const contactLocations = [
               class="size-24 text-white"
               loading="lazy"
             />
-            <h1 class="text-white text-2xl font-bold">
-              {m.hero_title().toUpperCase()}
+            <h1 class="text-white text-2xl font-bold uppercase">
+              {
+            m
+              .hero_title()
+              .split("\n")
+              .map((line, index) => (
+                <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
+              ))
+          }
             </h1>
           </a>
-        </picture>
 
         <div class="flex text-center lg:text-start flex-col">
           <h3 class="mb-5 text-center md:text-left text-2xl text-green">
@@ -55,9 +59,6 @@ const contactLocations = [
             }
           </div>
         </div>
-      </div>
-      <div class="my-4 lg:ml-12">
-        <ShortForm />
       </div>
     </div>
   </div>
