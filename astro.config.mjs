@@ -2,8 +2,8 @@
 import cloudflare from "@astrojs/cloudflare";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
-import decapCmsOauth from "astro-decap-cms-oauth";
 import { defineConfig } from "astro/config";
+import decapCmsOauth from "astro-decap-cms-oauth";
 import { baseLocale, locales } from "./src/paraglide/runtime";
 
 // https://astro.build/config
