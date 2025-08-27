@@ -21,12 +21,6 @@ const { event, index, lang } = Astro.props as Props;
     <div class="relative h-64 w-full">
       {
         event.data.images && event.data.images.length > 0 ? (
-          event.data.images.length > 1 ? (
-            <EventCarousel
-              images={event.data.images}
-              eventTitle={event.data.title}
-            />
-          ) : (
             <Image
               src={event.data.images[0]}
               alt={event.data.title}
@@ -35,8 +29,7 @@ const { event, index, lang } = Astro.props as Props;
               height={200}
               loading="lazy"
             />
-          )
-        ) : (
+          ): (
           <div
             class={`h-full w-full flex items-center justify-center ${index % 2 === 0 ? "bg-dark" : "bg-gray-200"}`}
           >
