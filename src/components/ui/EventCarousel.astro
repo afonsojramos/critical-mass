@@ -1,0 +1,102 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  images: string[];
+  eventTitle: string;
+}
+
+const { images, eventTitle } = Astro.props;
+
+// If no images provided, don't render the carousel
+if (!images || images.length === 0) return null;
+---
+
+<swiper-container
+  class="event-carousel h-full w-full"
+  slides-per-view="1"
+  pagination="true"
+  navigation="true"
+  autoplay="true"
+  autoplay-delay="4000"
+  autoplay-disable-on-interaction="false"
+  loop={images.length > 1 ? "true" : "false"}
+  grab-cursor="true"
+  space-between="0"
+>
+  {
+    images.map((image, index) => (
+      <swiper-slide class="h-full">
+        <div class="relative h-full w-full">
+          <Image
+            src={image}
+            alt={`${eventTitle} - Image ${index + 1}`}
+            class="h-full w-full object-cover"
+            width={800}
+            height={600}
+            loading="eager"
+          />
+        </div>
+      </swiper-slide>
+    ))
+  }
+</swiper-container>
+
+<script>
+  import { register } from 'swiper/element/bundle';
+  
+  // Register Swiper elements
+  register();
+  
+  // Ensure elements are ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const swiperContainers = document.querySelectorAll('swiper-container');
+    swiperContainers.forEach((container) => {
+      // Force initialization if needed
+      if (container.swiper) {
+        container.swiper.update();
+      }
+    });
+  });
+</script>
+
+<style>
+  .event-carousel {
+    --swiper-navigation-color: #ffffff;
+    --swiper-pagination-color: #b9ff66;
+    --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.5);
+    --swiper-navigation-size: 24px;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .event-carousel::part(button-prev),
+  .event-carousel::part(button-next) {
+    width: 24px;
+    height: 24px;
+    z-index: 10;
+  }
+  
+  .event-carousel::part(pagination) {
+    bottom: 16px;
+    z-index: 10;
+  }
+  
+  .event-carousel swiper-slide {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Ensure swiper container takes full height */
+  .event-carousel .swiper {
+    height: 100%;
+  }
+  
+  .event-carousel .swiper-wrapper {
+    height: 100%;
+  }
+</style>
