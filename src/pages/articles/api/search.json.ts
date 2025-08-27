@@ -1,5 +1,5 @@
-import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ url }): Promise<Response> => {
