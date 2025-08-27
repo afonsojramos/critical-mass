@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import Instagram from "@/assets/instagram.svg";
 import Logo from "@/assets/logo-alt.svg";
 import * as m from "@/paraglide/messages";
 
 const contactLocations = [
-  { name: "Porto", href: "https://instagram.com/massacriticaporto" },
-  { name: "Lisboa", href: "https://instagram.com/massacriticalisboa" },
+  { name: "MUBI", href: "https://mubi.pt" },
+  { name: "MUBI Email", href: "mailto:geral@mubi.pt" },
+  { name: "afonso ramos", href: "https://afonsojramos.me" },
 ];
 ---
 
@@ -51,7 +51,7 @@ const contactLocations = [
                     target="_blank"
                     class="flex items-center gap-1"
                   >
-                    <Instagram class="size-6" />@{location.href.split("/")[3]}
+                    {location.href.includes('https') ? location.href.split("/").slice(2).join("/") : location.href.replace("mailto:", "")}
                   </a>
                 </div>
               );
