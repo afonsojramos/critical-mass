@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import * as m from "@/paraglide/messages";
 import Card from "./Card.astro";
-import EventCarousel from "./EventCarousel.astro";
 
 type Props = {
   event: CollectionEntry<"events">;
@@ -21,15 +20,15 @@ const { event, index, lang } = Astro.props as Props;
     <div class="relative h-64 w-full">
       {
         event.data.images && event.data.images.length > 0 ? (
-            <Image
-              src={event.data.images[0]}
-              alt={event.data.title}
-              class="h-full w-full object-cover"
-              width={300}
-              height={200}
-              loading="lazy"
-            />
-          ): (
+          <Image
+            src={event.data.images[0]}
+            alt={event.data.title}
+            class="h-full w-full object-cover"
+            width={300}
+            height={200}
+            loading="lazy"
+          />
+        ) : (
           <div
             class={`h-full w-full flex items-center justify-center ${index % 2 === 0 ? "bg-dark" : "bg-gray-200"}`}
           >

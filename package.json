@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/cloudflare": "^12.6.6",
+    "@astrojs/sitemap": "^3.5.1",
     "@tailwindcss/vite": "^4.1.12",
     "astro": "^5.13.4",
     "astro-decap-cms-oauth": "^0.5.1",
