@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Logo from "@/assets/logo-alt.svg";
+import KidicalMass from "@/assets/sponsors/kidical-mass.svg";
+import Mubi from "@/assets/sponsors/mubi-cropped.png";
 import * as m from "@/paraglide/messages";
 
 const contactLocations = [
@@ -34,8 +36,33 @@ const contactLocations = [
             }
           </h1>
         </a>
+        <div class="flex flex-row items-center gap-2">
+          {m.partners()}:
+          <a href="https://mubi.pt">
+            <Image
+              src={Mubi}
+              alt="Logo for Mubi"
+              class="text-white"
+              loading="lazy"
+              height={64}
+              width={125}
+            />
+          </a>
+          <a href="https://kidicalmass.pt">
+            <Image
+              src={KidicalMass}
+              alt="Logo for Kidical Mass"
+              class="text-white"
+              loading="lazy"
+              height={64 * 1.2}
+              width={125 * 1.2}
+            />
+          </a>
+        </div>
       </div>
-      <div class="flex text-center lg:text-start items-center md:items-start flex-col">
+      <div
+        class="flex text-center lg:text-start items-center md:items-start flex-col"
+      >
         <h3 class="mb-5 text-center md:text-left text-2xl text-green">
           {m.footer_contact}
         </h3>
@@ -51,7 +78,9 @@ const contactLocations = [
                     target="_blank"
                     class="flex items-center gap-1"
                   >
-                    {location.href.includes('https') ? location.href.split("/").slice(2).join("/") : location.href.replace("mailto:", "")}
+                    {location.href.includes("https")
+                      ? location.href.split("/").slice(2).join("/")
+                      : location.href.replace("mailto:", "")}
                   </a>
                 </div>
               );
