@@ -6,7 +6,6 @@ import FeaturedEvents from "@/components/sections/FeaturedEvents.astro";
 import Hero from "@/components/sections/Hero.astro";
 import LastBlogArticle from "@/components/sections/LastBlogArticle.astro";
 import Locations from "@/components/sections/Locations.astro";
-import Sponsors from "@/components/sections/Sponsors.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 
@@ -25,7 +24,6 @@ const currentLocale = Astro.currentLocale;
 
 <MainLayout locale={currentLocale} description={m.description()}>
   <Hero />
-  <Sponsors />
   <Locations />
   <FeaturedEvents />
   <LastBlogArticle />
