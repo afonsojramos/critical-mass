@@ -11,13 +11,17 @@ const { index, titleTop, titleBottom, img, alt, link, newLocation } =
 
 <Card isUnderline={true}>
   <div
-    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index === 1 ? 'bg-gray' : index === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`
+    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index % 3 === 1 ? 'bg-gray' : index % 3 === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`
   >
     <h3 class=`flex flex-col col-span-2 lg:col-span-1`>
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`>
+      <span
+        class=`w-[fit-content] ${index % 3 === 1 ? 'greenhead' : 'whitehead'}`
+      >
         {titleTop}
       </span>
-      <span class=`w-[fit-content] ${index === 1 ? 'greenhead' : 'whitehead'}`>
+      <span
+        class=`w-[fit-content] ${index % 3 === 1 ? 'greenhead' : 'whitehead'}`
+      >
         {titleBottom}
       </span>
     </h3>
@@ -33,8 +37,10 @@ const { index, titleTop, titleBottom, img, alt, link, newLocation } =
 
     <div class="flex items-end">
       <a href={link} class="flex items-center gap-3.5">
-        <Image src={index === 1 || index === 2 ? gob : wob} alt={alt} />
-        <span class="hidden sm:block">{m.events_serviceInfo}</span>
+        <Image src={index % 3 === 1 || index % 3 === 2 ? gob : wob} alt={alt} />
+        <span class="hidden sm:block"
+          >{!newLocation ? m.events_serviceInfo : m.locations_sendEmail}</span
+        >
       </a>
     </div>
   </div>

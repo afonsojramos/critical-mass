@@ -1,4 +1,5 @@
 ---
+import coimbra from "@/assets/cities/coimbra.svg";
 import lisboa from "@/assets/cities/lisboa.svg";
 import porto from "@/assets/cities/porto.svg";
 import viana from "@/assets/cities/viana.svg";
@@ -26,16 +27,23 @@ const cards = [
   {
     index: 3,
     titleTop: "Viana",
-    titleBottom: "Praça da República 18h",
+    titleBottom: "Praça da República 18h30",
     img: viana,
     link: "https://www.instagram.com/massacriticaviana/",
   },
   {
     index: 4,
+    titleTop: "Coimbra",
+    titleBottom: "Largo da Portagem 18h30",
+    img: coimbra,
+    link: "https://www.instagram.com/coimbrapedal/",
+  },
+  {
+    index: 5,
     titleTop: m.locations_moreComingSoon(),
     titleBottom: m.locations_createYourMovement(),
     img: plus,
-    link: "mailto:geral@mubi.pt",
+    link: "mailto:afonsojorgeramos@gmail.com",
   },
 ];
 ---
@@ -56,7 +64,7 @@ const cards = [
             img={card.img}
             alt={card.titleTop}
             link={card.link}
-            newLocation={card.index === 4}
+            newLocation={card.index === 5}
           />
         ))
       }
