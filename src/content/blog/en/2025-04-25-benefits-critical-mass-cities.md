@@ -2,8 +2,8 @@
 title: 5 Ways Critical Mass Events Transform Urban Spaces
 pubDate: 2025-04-25
 author: afonso-ramos
-image: "/images/events/kidical-mass.webp"
-tags: ["cycling", "urban planning", "community"]
+image: "/images/articles/urbanism.webp"
+tags: ["cycling", "urban-planning", "community"]
 summary: Critical Mass does more than just bring cyclists together once a month. Discover how these cycling events are transforming cities physically, socially, and politically.
 type: Article
 ---

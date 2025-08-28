@@ -2,8 +2,8 @@
 title: 5 Formas Como a Massa Crítica Transforma os Espaços Urbanos
 pubDate: 2025-04-25
 author: afonso-ramos
-image: "/images/events/kidical-mass.webp"
-tags: ["ciclismo", "urbanismo", "comunidade"]
+image: "/images/articles/urbanism.webp"
+tags: ["cycling", "urban-planning", "community"]
 summary: A Massa Crítica faz mais do que apenas reunir ciclistas uma vez por mês. Descubra como estes eventos ciclísticos estão transformando as cidades física, social e politicamente.
 type: Article
 ---

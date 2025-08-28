@@ -1,8 +1,8 @@
 ---
 title: Kidical Mass
 images:
-  - /images/events/kidical-porto.jpg
-  - /images/events/kidical-aveiro.jpg
+  - /images/events/kidical-porto.webp
+  - /images/events/kidical-aveiro.webp
 description: A sétima edição da Kidical Mass foi um sucesso, com o verão a aquecer, pedalámos pela cidade ao pôr do sol, de norte a sul do país.
 featured: true
 ---

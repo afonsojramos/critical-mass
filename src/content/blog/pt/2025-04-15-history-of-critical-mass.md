@@ -2,8 +2,8 @@
 title: "A História e o Impacto da Massa Crítica: Um Movimento Ciclístico Global"
 pubDate: 2025-04-15
 author: afonso-ramos
-image: "/images/events/kidical-mass.webp"
-tags: ["ciclismo", "ativismo", "história"]
+image: "/images/articles/san-francisco.webp"
+tags: ["cycling", "activism", "history"]
 summary: A Massa Crítica começou em São Francisco em 1992 e desde então se transformou em um movimento global. Conheça suas origens, evolução e impacto na cultura e política do ciclismo urbano.
 type: Article
 ---

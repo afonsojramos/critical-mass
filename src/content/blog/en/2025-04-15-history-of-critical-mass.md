@@ -2,7 +2,7 @@
 title: "The History and Impact of Critical Mass: A Global Cycling Movement"
 pubDate: 2025-04-15
 author: afonso-ramos
-image: "/images/events/kidical-mass.webp"
+image: "/images/articles/san-francisco.webp"
 tags: ["cycling", "activism", "history"]
 summary: Critical Mass began in San Francisco in 1992 and has since grown into a global movement. Learn about its origins, evolution, and impact on urban cycling culture and policy.
 type: Article
