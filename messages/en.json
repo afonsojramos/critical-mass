@@ -16,7 +16,7 @@
   "events_join": "Know more",
   "events_serviceInfo": "Event Info",
   "events_noImage": "No image available",
-  "footer_contact": "Contact us",
+  "footer_contact": "Send me an email at",
   "search_placeholder": "Search articles...",
   "search_button": "Search",
   "button_readMore": "Read More",
@@ -31,6 +31,7 @@
   "articles_tag": "Articles with tag",
   "locations_moreComingSoon": "Your city could be next!",
   "locations_createYourMovement": "Bring Critical Mass to your city!",
-  "partners": "Partners",
-  "locations_sendEmail": "Send us an Email"
+  "locations_sendEmail": "Send us an Email",
+  "communities": "Other Communities",
+  "footer_contribute": "Would you like to contribute?"
 }
