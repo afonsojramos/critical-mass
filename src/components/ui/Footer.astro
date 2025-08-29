@@ -65,7 +65,7 @@ const contactLocations = [
         </div>
       </div>
       <div
-        class="flex text-center lg:text-start items-center md:items-start flex-col"
+        class="flex text-center lg:text-start items-center md:items-start flex-col self-center"
       >
         <h3 class="mb-5 text-center md:text-left text-2xl text-green">
           {m.footer_contact}
@@ -74,7 +74,7 @@ const contactLocations = [
           {
             contactLocations.map((location) => {
               return (
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 self-center md:self-auto">
                   <span> {location.name}: </span>
 
                   <a
