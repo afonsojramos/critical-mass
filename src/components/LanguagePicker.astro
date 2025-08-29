@@ -1,7 +1,6 @@
 ---
 import { getRouteFromUrl } from "@/i18n/utils";
 import { baseLocale, locales } from "@/paraglide/runtime";
-import { getLanguageSwitchUrlStatic } from "@/utils/languageFallback";
 
 const route = getRouteFromUrl(Astro.url);
 const currentLang = Astro.currentLocale;
@@ -11,8 +10,8 @@ const langLabels = {
   pt: "Português",
 };
 
-// Use fallback logic to determine the target URL
-const targetUrl = getLanguageSwitchUrlStatic(otherLang, route);
+// Simple language switching - just replace the locale in the current route
+const targetUrl = route ? `/${otherLang}/${route}` : `/${otherLang}`;
 ---
 
 <a href={targetUrl} class="hover:underline">
