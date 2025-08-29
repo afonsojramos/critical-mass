@@ -18,7 +18,9 @@ const menuitems = [
 <div class="w-full top-0 left-0 z-50 lg:fixed bg-white">
   <header class="my-5 px-6 md:px-32">
     <Astronav>
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:justify-between relative"
+      >
         <!-- Logo section - left side on desktop -->
         <div class="flex w-full lg:w-1/4 items-center justify-between">
           <a href={`/${lang}`} class="flex items-center rtl:space-x-reverse">
@@ -65,7 +67,7 @@ const menuitems = [
 
         <!-- Menu items - centered on desktop -->
         <nav
-          class="hidden w-full lg:flex lg:w-2/4 lg:justify-center bg-white"
+          class="hidden w-full lg:flex lg:w-2/4 lg:justify-center bg-white lg:bg-transparent absolute lg:relative top-full lg:top-auto left-0 lg:left-auto z-[9999] lg:z-auto shadow-lg lg:shadow-none"
           id="menu-items"
         >
           <ul
