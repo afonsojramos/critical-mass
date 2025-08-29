@@ -1,8 +1,11 @@
 ---
 import { Image } from "astro:assets";
+import Calendar from "@/assets/calendar.svg";
 import HeroIlust from "@/assets/hero.png";
 import Section from "@/components/sections/Section.astro";
 import * as m from "@/paraglide/messages";
+
+const currentLang = Astro.currentLocale;
 ---
 
 <Section id="home">
@@ -30,13 +33,27 @@ import * as m from "@/paraglide/messages";
           {m.hero_description()}
         </p>
         <div
-          class="w-full justify-center md:justify-start items-center inline-flex"
+          class="w-full justify-center md:justify-start items-center inline-flex gap-4"
         >
           <a
             href="#locations"
             class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border text-xl font-normal leading-7"
           >
             {m.hero_button()}
+          </a>
+          <a
+            href={`/critical-mass-${currentLang}.ics`}
+            download
+            class="flex items-center justify-center w-14 h-14rounded-2xl transition-colors"
+            aria-label="Download calendar event"
+            title={m.hero_downloadCalendar()}
+          >
+            <Image
+              src={Calendar}
+              alt="Calendar"
+              class="w-6 h-6 text-black"
+              loading="lazy"
+            />
           </a>
         </div>
       </div>
