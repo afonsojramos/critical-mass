@@ -16,7 +16,7 @@
   "events_join": "Saber mais",
   "events_serviceInfo": "Informações do Evento",
   "events_noImage": "Imagem não disponível",
-  "footer_contact": "Entra em contato",
+  "footer_contact": "Envia-me um email para",
   "search_placeholder": "Pesquisar artigos...",
   "search_button": "Pesquisar",
   "button_readMore": "Ler Mais",
@@ -32,5 +32,6 @@
   "locations_moreComingSoon": "A tua cidade pode ser a próxima!",
   "locations_createYourMovement": "Leva a Massa Crítica para a tua cidade!",
   "locations_sendEmail": "Envia-nos um Email",
-  "partners": "Parceiros"
+  "communities": "Outras Comunidades",
+  "footer_contribute": "Gostarias de contribuir?"
 }
