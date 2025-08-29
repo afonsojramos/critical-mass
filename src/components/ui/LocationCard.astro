@@ -11,7 +11,7 @@ const { index, titleTop, titleBottom, img, alt, link, newLocation } =
 
 <Card isUnderline={true}>
   <div
-    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid custom-grid lg:grid-cols-2 lg:grid-rows-1 p-8 sm:p-[50px] rounded-[45px] ${index % 3 === 1 ? 'bg-gray' : index % 3 === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`
+    class=`h-[300px] w-full sm:h-full lg:gap-[60px] grid auto-cols-auto auto-rows-auto grid-cols-2 grid-rows-1 p-8 sm:p-[50px] gap-2 rounded-[45px] ${index % 3 === 1 ? 'bg-gray' : index % 3 === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`
   >
     <h3 class=`flex flex-col col-span-2 lg:col-span-1`>
       <span
@@ -26,28 +26,22 @@ const { index, titleTop, titleBottom, img, alt, link, newLocation } =
       </span>
     </h3>
     <picture
-      class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center"
+      class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center lg:justify-end lg:items-end"
     >
       <Image
         src={img}
         alt={alt}
-        class=`object-cover ${newLocation ? 'h-16 w-16' : 'h-[100px] w-auto sm:h-auto sm:w-3/4'}`
+        class=`object-cover ${newLocation ? 'h-16 w-16' : 'h-auto w-3/4'}`
       />
     </picture>
 
     <div class="flex items-end">
       <a href={link} class="flex items-center gap-3.5">
         <Image src={index % 3 === 1 || index % 3 === 2 ? gob : wob} alt={alt} />
-        <span class="hidden sm:block"
+        <span class="hidden sm:block md:hidden lg:block"
           >{!newLocation ? m.events_serviceInfo : m.locations_sendEmail}</span
         >
       </a>
     </div>
   </div>
 </Card>
-
-<style>
-  .custom-grid {
-    grid-template: auto auto;
-  }
-</style>
