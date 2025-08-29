@@ -1,5 +1,12 @@
 ---
 import { Image } from "astro:assets";
+import BragaCiclavel from "@/assets/communities/braga-ciclavel.png";
+import Ciclaveiro from "@/assets/communities/ciclaveiro.svg";
+import Cicloda from "@/assets/communities/cicloda.png";
+import CicloficinaPorto from "@/assets/communities/cicloficina-porto.png";
+import EstradaViva from "@/assets/communities/estrada-viva.png";
+import FPC from "@/assets/communities/FPC.png";
+import FPCUB from "@/assets/communities/FPCUB.jpg";
 import KidicalMass from "@/assets/communities/kidical-mass.svg";
 import Mubi from "@/assets/communities/mubi-cropped.png";
 import GitHub from "@/assets/github.svg";
@@ -15,65 +22,137 @@ const contacts = {
 };
 ---
 
-<section class="sm:px-5">
-  <div class="w-full max-w-[1280px] mx-auto">
-    <div
-      class="flex flex-col md:flex-row justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px] gap-8"
-    >
-      <div class="flex flex-col gap-8 items-center self-center md:items-start">
-        <a href="#home" class="flex items-center">
-          <Image
-            src={Logo}
-            alt="Logo for Critical Mass"
-            class="size-24 text-white"
-            loading="lazy"
-          />
-          <h1 class="text-white text-2xl font-bold uppercase">
-            {
-              m
-                .hero_title()
-                .split("\n")
-                .map((line, index) => (
-                  <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
-                ))
-            }
-          </h1>
-        </a>
-        <div class="flex flex-col items-center gap-8">
-          <span class="text-green text-center text-xl lg:text-start">
-            {m.communities()}
-          </span>
-          <div class="flex flex-row items-center gap-4">
-            <a href="https://mubi.pt">
-              <Image
-                src={Mubi}
-                alt="Logo for Mubi"
-                class="text-white"
-                loading="lazy"
-                height={64}
-                width={125}
-              />
-            </a>
-            <a href="https://kidicalmass.pt">
-              <Image
-                src={KidicalMass}
-                alt="Logo for Kidical Mass"
-                class="text-white"
-                loading="lazy"
-                height={64 * 1.2}
-                width={125 * 1.2}
-              />
-            </a>
-          </div>
+<section class="sm:px-5 w-full max-w-[1280px] mx-auto">
+  <div
+    class="flex flex-col items-center justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px] gap-8"
+  >
+    <a href="#home" class="flex items-center">
+      <Image
+        src={Logo}
+        alt="Logo for Critical Mass"
+        class="size-24 text-white"
+        loading="lazy"
+      />
+      <h1 class="text-white text-2xl font-bold uppercase">
+        {
+          m
+            .hero_title()
+            .split("\n")
+            .map((line, index) => (
+              <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
+            ))
+        }
+      </h1>
+    </a>
+    <div class="flex flex-col lg:flex-row gap-16 items-center">
+      <div class="flex flex-col gap-8 items-center">
+        <h3 class="text-green text-center text-2xl lg:text-start">
+          {m.communities()}
+        </h3>
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-lg"
+        >
+          <a href="https://mubi.pt" class="h-12 w-auto" title="Mubi">
+            <Image
+              src={Mubi}
+              alt="Logo for Mubi"
+              class="text-white h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://kidicalmass.pt"
+            class="h-12 w-auto"
+            title="Kidical Mass"
+          >
+            <Image
+              src={KidicalMass}
+              alt="Logo for Kidical Mass"
+              class="text-white h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a href="https://fpciclaveiro.pt" class="h-12 w-auto" title="FPC">
+            <Image
+              src={FPC}
+              alt="Logo for FPC"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://cicloficina.cicloda.pt"
+            class="h-12 w-auto"
+            title="Cicloficina Porto"
+          >
+            <Image
+              src={CicloficinaPorto}
+              alt="Logo for Cicloficina Porto"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a href="https://fpcub.pt" class="h-12 w-auto" title="FPCUB">
+            <Image
+              src={FPCUB}
+              alt="Logo for FPCUB"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://bragaciclavel.pt"
+            class="h-12 w-auto"
+            title="Braga Ciclável"
+          >
+            <Image
+              src={BragaCiclavel}
+              alt="Logo for Braga Ciclável"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://ciclaveiro.pt"
+            class="h-12 w-auto"
+            title="Ciclaveiro"
+          >
+            <Image
+              src={Ciclaveiro}
+              alt="Logo for Ciclaveiro"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://estradaviva.pt"
+            class="h-12 w-auto"
+            title="Estrada Viva"
+          >
+            <Image
+              src={EstradaViva}
+              alt="Logo for Estrada Viva"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
+          <a href="https://cicloda.pt" class="h-12 w-auto" title="Cicloda">
+            <Image
+              src={Cicloda}
+              alt="Logo for Cicloda"
+              class="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </a>
         </div>
       </div>
       <div
-        class="flex text-center lg:text-start items-center md:items-start flex-col self-center"
+        class="flex text-center lg:text-start items-center lg:items-start flex-col self-center"
       >
-        <h3 class="mb-5 text-center md:text-left text-2xl text-green">
+        <h3 class="mb-5 text-center lg:text-left text-2xl text-green">
           {m.footer_contribute}
         </h3>
-        <p class="text-center md:text-left">
+        <p class="text-center lg:text-left">
           {m.footer_contact}
         </p>
         <a
@@ -83,7 +162,7 @@ const contacts = {
         >
           {contacts.email.split("@").join(" @ ")}
         </a>
-        <div class="flex gap-4 mt-8 md:justify-start justify-center">
+        <div class="flex gap-4 mt-8 lg:justify-start justify-center">
           <a href={contacts.href} target="_blank" aria-label="Personal Website">
             <Image src={Globe} alt="Website" class="w-5 h-5" loading="lazy" />
           </a>
