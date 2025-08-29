@@ -8,8 +8,8 @@ import * as m from "@/paraglide/messages";
 
 const lang = Astro.currentLocale || "en";
 
-const allBlogArticles = (await getCollection("blog")).filter((article: CollectionEntry<"blog">) =>
-  article.filePath?.includes(`/${lang}/`),
+const allBlogArticles = (await getCollection("blog")).filter(
+  (article: CollectionEntry<"blog">) => article.filePath?.includes(`/${lang}/`)
 );
 const lastBlogArticle = allBlogArticles[0] || null;
 ---
@@ -22,7 +22,7 @@ const lastBlogArticle = allBlogArticles[0] || null;
         description={m.blog_description}
       />
       <Card>
-        <div class="flex bg-gray rounded-[45px] p-[60px] relative mt-12 mb-24 justify-between">
+        <div class="flex bg-gray rounded-[45px] p-[60px] relative mt-12 mb-24 justify-between gap-4">
           <div class="w-full md:w-[40%] flex flex-col gap-[26px]">
             <h2 class="text-3xl font-medium">{lastBlogArticle.data.title}</h2>
             <p>{lastBlogArticle.data.summary}</p>
@@ -38,7 +38,7 @@ const lastBlogArticle = allBlogArticles[0] || null;
             alt="This is an illustration"
             width={500}
             height={300}
-            class="hidden md:flex items-center justify-center object-cover"
+            class="hidden md:flex items-center justify-center object-cover max-w-5/8 rounded"
           />
         </div>
       </Card>
