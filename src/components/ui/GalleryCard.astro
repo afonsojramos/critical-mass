@@ -1,12 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { translateTag } from "@/lib/tagMapper";
 
 type Props = {
   galleryItem: CollectionEntry<"gallery">;
 };
 
 const { galleryItem } = Astro.props as Props;
+const locale = Astro.currentLocale as "pt" | "en";
 ---
 
 <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -26,7 +28,7 @@ const { galleryItem } = Astro.props as Props;
       )}
       {galleryItem.data.category && (
         <span class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded">
-          {galleryItem.data.category}
+          {translateTag(galleryItem.data.category, locale)}
         </span>
       )}
     </div>

@@ -52,6 +52,18 @@ export const tagTranslations = {
     pt: "bicicleta",
     en: "bicycle",
   },
+  rides: {
+    pt: "passeios",
+    en: "rides",
+  },
+  posters: {
+    pt: "cartazes",
+    en: "posters",
+  },
+  other: {
+    pt: "outros",
+    en: "other",
+  },
 } as const;
 
 export type TagKey = keyof typeof tagTranslations;
