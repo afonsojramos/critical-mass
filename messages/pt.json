@@ -39,5 +39,7 @@
   "gallery_title": "Galeria",
   "gallery_description": "Momentos capturados das nossas iniciativas e eventos",
   "nav_gallery": "Galeria",
-  "gallery_noImages": "Nenhuma imagem disponível ainda."
+  "gallery_noImages": "Nenhuma imagem disponível ainda.",
+  "location_sunday": "Domingo",
+  "location_ofEveryMonth": "do mês"
 }

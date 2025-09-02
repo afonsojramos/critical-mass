@@ -38,5 +38,7 @@
   "gallery_title": "Gallery",
   "gallery_description": "Captured moments from our initiatives and events",
   "nav_gallery": "Gallery",
-  "gallery_noImages": "No images available yet."
+  "gallery_noImages": "No images available yet.",
+  "location_sunday": "Sunday",
+  "location_ofEveryMonth": "of the month"
 }
