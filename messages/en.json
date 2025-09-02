@@ -34,5 +34,9 @@
   "locations_sendEmail": "Send us an Email",
   "communities": "Other Communities",
   "footer_contribute": "Would you like to contribute?",
-  "hero_downloadCalendar": "Add to Calendar"
+  "hero_downloadCalendar": "Add to Calendar",
+  "gallery_title": "Gallery",
+  "gallery_description": "Captured moments from our initiatives and events",
+  "nav_gallery": "Gallery",
+  "gallery_noImages": "No images available yet."
 }

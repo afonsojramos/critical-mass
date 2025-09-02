@@ -35,5 +35,9 @@
   "partners": "Parceiros",
   "communities": "Outras Comunidades",
   "footer_contribute": "Gostarias de contribuir?",
-  "hero_downloadCalendar": "Adicionar ao calendário"
+  "hero_downloadCalendar": "Adicionar ao calendário",
+  "gallery_title": "Galeria",
+  "gallery_description": "Momentos capturados das nossas iniciativas e eventos",
+  "nav_gallery": "Galeria",
+  "gallery_noImages": "Nenhuma imagem disponível ainda."
 }

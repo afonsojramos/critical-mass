@@ -33,8 +33,20 @@ const eventsCollection = defineCollection({
   }),
 });
 
+const galleryCollection = defineCollection({
+  type: "data",
+  schema: z.object({
+    title: z.string(),
+    image: z.string(),
+    description: z.string().optional(),
+    category: z.string().optional(),
+    date: z.coerce.date().optional(),
+  }),
+});
+
 export const collections = {
   authors: authorsCollection,
   blog: blogCollection,
   events: eventsCollection,
+  gallery: galleryCollection,
 };

@@ -140,3 +140,45 @@ collections:
           i18n: duplicate,
         }
       - { label: "Content", name: "body", widget: "markdown", i18n: true }
+
+  # Gallery (Unified with i18n)
+  - name: "gallery"
+    label: "Gallery"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    media_folder: "/public/images/gallery"
+    public_folder: "/images/gallery"
+    i18n: true
+    fields:
+      - { label: "Title", name: "title", widget: "string", i18n: true }
+      - {
+          label: "Image",
+          name: "image",
+          widget: "image",
+          i18n: duplicate,
+        }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "text",
+          required: false,
+          i18n: true,
+        }
+      - {
+          label: "Category",
+          name: "category",
+          widget: "select",
+          options: ["events", "rides", "activism", "community", "posters", "other"],
+          required: false,
+          i18n: duplicate,
+        }
+      - {
+          label: "Date",
+          name: "date",
+          widget: "datetime",
+          required: true,
+          i18n: duplicate,
+        }

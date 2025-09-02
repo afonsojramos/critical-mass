@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  galleryItem: CollectionEntry<"gallery">;
+};
+
+const { galleryItem } = Astro.props as Props;
+---
+
+<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+  <Image
+    src={galleryItem.data.image}
+    alt={galleryItem.data.title}
+    class="w-full h-auto object-cover"
+    width={400}
+    height={300}
+    loading="lazy"
+  />
+  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
+    <div class="p-4 text-white bg-gradient-to-t from-black/60 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+      <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
+      {galleryItem.data.description && (
+        <p class="text-sm text-gray-200 mb-1">{galleryItem.data.description}</p>
+      )}
+      {galleryItem.data.category && (
+        <span class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded">
+          {galleryItem.data.category}
+        </span>
+      )}
+    </div>
+  </div>
+</div>
