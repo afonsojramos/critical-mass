@@ -9,14 +9,12 @@ import FPC from "@/assets/communities/FPC.png";
 import FPCUB from "@/assets/communities/FPCUB.jpg";
 import KidicalMass from "@/assets/communities/kidical-mass.svg";
 import Mubi from "@/assets/communities/mubi-cropped.png";
-import GitHub from "@/assets/github.svg";
-import Globe from "@/assets/globe.svg";
 import Logo from "@/assets/logo-alt.svg";
 import * as m from "@/paraglide/messages";
 
 const contacts = {
-  name: "afonso ramos",
-  email: "afonsojorgeramos@gmail.com",
+  name: "afonso jorge ramos",
+  email: "contributions@massacritica.pt",
   href: "https://afonsojramos.me",
   github: "https://github.com/afonsoramos/critical-mass",
 };
@@ -162,19 +160,15 @@ const contacts = {
         >
           {contacts.email.split("@").join(" @ ")}
         </a>
-        <div class="flex gap-4 mt-8 lg:justify-start justify-center">
-          <a href={contacts.href} target="_blank" aria-label="Personal Website">
-            <Image src={Globe} alt="Website" class="w-5 h-5" loading="lazy" />
-          </a>
-          <a
-            href={contacts.github}
-            target="_blank"
-            aria-label="GitHub Repository"
-          >
-            <Image src={GitHub} alt="GitHub" class="w-5 h-5" loading="lazy" />
-          </a>
-        </div>
       </div>
+    </div>
+    <div class="border-t border-gray-700 pt-6 mt-6 text-center">
+      <p class="text-sm text-gray-400">
+        Crafted with 💚 by <a href={contacts.href} target="_blank" class="text-green hover:text-white transition-colors">{contacts.name}</a>
+      </p>
+      <p class="text-xs text-gray-500 mt-2">
+        <a href={contacts.github} target="_blank" class="text-gray-500 hover:text-green transition-colors">Source available on GitHub</a>
+      </p>
     </div>
   </div>
 </section>
