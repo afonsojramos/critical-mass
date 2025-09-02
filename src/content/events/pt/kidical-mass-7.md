@@ -1,5 +1,5 @@
 ---
-title: Kidical Mass
+title: 7ª edição da Kidical Mass
 images:
   - /images/events/kidical-porto.webp
   - /images/events/kidical-aveiro.webp
