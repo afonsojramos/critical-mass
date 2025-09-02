@@ -8,8 +8,8 @@ import * as m from "@/paraglide/messages";
 
 const lang = Astro.currentLocale || "en";
 
-const allBlogArticles = (await getCollection("blog")).filter(
-  (article: CollectionEntry<"blog">) => article.filePath?.includes(`/${lang}/`)
+const allBlogArticles = (await getCollection("blog")).filter((article: CollectionEntry<"blog">) =>
+  article.filePath?.includes(`/${lang}/`),
 );
 const lastBlogArticle = allBlogArticles[0] || null;
 ---

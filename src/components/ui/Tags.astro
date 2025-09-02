@@ -1,9 +1,9 @@
 ---
+import { createTagSlug, translateTags } from "@/lib/tagMapper";
 import { capitalize } from "@/utils";
-import { translateTags, createTagSlug } from "@/lib/tagMapper";
 
 const { tags } = Astro.props;
-const locale = Astro.currentLocale as 'pt' | 'en';
+const locale = Astro.currentLocale as "pt" | "en";
 
 // Translate English tags to current locale
 const translatedTags = translateTags(tags, locale);

@@ -5,9 +5,9 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { createTagSlug, translateTag } from "@/lib/tagMapper";
 import * as m from "@/paraglide/messages";
 import { capitalize } from "@/utils";
-import { translateTag, createTagSlug } from "@/lib/tagMapper";
 
 export async function getStaticPaths() {
   const allBlogArticles = await getCollection("blog");
@@ -43,17 +43,18 @@ const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog"))
 );
 
 // Filter articles by matching tag slug with actual tag
-const tagArticles = allBlogArticles.filter((article) => 
-  article.data.tags.some(articleTag => createTagSlug(articleTag) === tag)
+const tagArticles = allBlogArticles.filter((article) =>
+  article.data.tags.some((articleTag) => createTagSlug(articleTag) === tag),
 );
 
 // Get the actual English tag for translation (find first match)
-const actualTag = allBlogArticles
-  .flatMap(article => article.data.tags)
-  .find(articleTag => createTagSlug(articleTag) === tag) || tag;
+const actualTag =
+  allBlogArticles
+    .flatMap((article) => article.data.tags)
+    .find((articleTag) => createTagSlug(articleTag) === tag) || tag;
 
 // Translate tag for display
-const locale = Astro.currentLocale as 'pt' | 'en';
+const locale = Astro.currentLocale as "pt" | "en";
 const displayTag = translateTag(actualTag, locale);
 ---
 

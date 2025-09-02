@@ -6,56 +6,56 @@
 export const tagTranslations = {
   cycling: {
     pt: "ciclismo",
-    en: "cycling"
+    en: "cycling",
   },
   activism: {
-    pt: "ativismo", 
-    en: "activism"
+    pt: "ativismo",
+    en: "activism",
   },
   history: {
     pt: "história",
-    en: "history"
+    en: "history",
   },
   safety: {
     pt: "segurança",
-    en: "safety"
+    en: "safety",
   },
   tips: {
     pt: "dicas",
-    en: "tips"
+    en: "tips",
   },
   "urban-planning": {
     pt: "urbanismo",
-    en: "urban planning"
+    en: "urban planning",
   },
   community: {
     pt: "comunidade",
-    en: "community"
+    en: "community",
   },
   events: {
     pt: "eventos",
-    en: "events"
+    en: "events",
   },
   sustainability: {
     pt: "sustentabilidade",
-    en: "sustainability"
+    en: "sustainability",
   },
   mobility: {
     pt: "mobilidade",
-    en: "mobility"
+    en: "mobility",
   },
   transport: {
     pt: "transporte",
-    en: "transport"
+    en: "transport",
   },
   bicycle: {
     pt: "bicicleta",
-    en: "bicycle"
-  }
+    en: "bicycle",
+  },
 } as const;
 
 export type TagKey = keyof typeof tagTranslations;
-export type Locale = 'pt' | 'en';
+export type Locale = "pt" | "en";
 
 /**
  * Translate an English tag to the specified locale
@@ -69,7 +69,7 @@ export function translateTag(enTag: string, locale: Locale): string {
  * Translate an array of English tags to the specified locale
  */
 export function translateTags(enTags: string[], locale: Locale): string[] {
-  return enTags.map(tag => translateTag(tag, locale));
+  return enTags.map((tag) => translateTag(tag, locale));
 }
 
 /**
@@ -83,7 +83,7 @@ export function getEnglishTags(): string[] {
  * Get all translated tags for a specific locale
  */
 export function getTranslatedTags(locale: Locale): string[] {
-  return Object.values(tagTranslations).map(translation => translation[locale]);
+  return Object.values(tagTranslations).map((translation) => translation[locale]);
 }
 
 /**
@@ -92,7 +92,7 @@ export function getTranslatedTags(locale: Locale): string[] {
 export function createTagSlug(tag: string): string {
   return tag
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/\s+/g, '-'); // Replace spaces with hyphens
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove accents
+    .replace(/\s+/g, "-"); // Replace spaces with hyphens
 }

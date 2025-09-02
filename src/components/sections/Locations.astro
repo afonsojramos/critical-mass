@@ -2,6 +2,7 @@
 import coimbra from "@/assets/cities/coimbra.svg";
 import lisboa from "@/assets/cities/lisboa.svg";
 import porto from "@/assets/cities/porto.svg";
+import santaIria from "@/assets/cities/santa-iria-de-azoia.svg";
 import viana from "@/assets/cities/viana.svg";
 import plus from "@/assets/plus.svg";
 import Section from "@/components/sections/Section.astro";
@@ -12,17 +13,17 @@ import * as m from "@/paraglide/messages";
 const cards = [
   {
     index: 1,
-    titleTop: "Lisboa",
-    titleBottom: "Praça Marquês de Pombal 18h30",
-    img: lisboa,
-    link: "https://www.instagram.com/massacriticalisboa/",
-  },
-  {
-    index: 2,
     titleTop: "Porto",
     titleBottom: "Praça do Marquês 18h30",
     img: porto,
     link: "https://www.instagram.com/massacriticaporto/",
+  },
+  {
+    index: 2,
+    titleTop: "Lisboa",
+    titleBottom: "Praça Marquês de Pombal 18h30",
+    img: lisboa,
+    link: "https://www.instagram.com/massacriticalisboa/",
   },
   {
     index: 3,
@@ -40,6 +41,14 @@ const cards = [
   },
   {
     index: 5,
+    titleTop: "Santa Iria de Azóia",
+    date: "1º Domingo do mês",
+    titleBottom: "Pirescoxe 10H",
+    img: santaIria,
+    link: "https://www.facebook.com/bicicletada.santairia",
+  },
+  {
+    index: 100,
     titleTop: m.locations_moreComingSoon(),
     titleBottom: m.locations_createYourMovement(),
     img: plus,
@@ -64,7 +73,8 @@ const cards = [
             img={card.img}
             alt={card.titleTop}
             link={card.link}
-            newLocation={card.index === 5}
+            newLocation={card.index === 100}
+            date={card.date}
           />
         ))
       }

@@ -23,14 +23,7 @@ const siteData = {
   },
 };
 
-const {
-  title,
-  description,
-  url = Astro.url,
-  image,
-  frontmatter,
-  robots,
-} = Astro.props;
+const { title, description, url = Astro.url, image, frontmatter, robots } = Astro.props;
 
 // Again, frontmatter triggers CMS post type
 const jsonLD = jsonLDGenerator({
