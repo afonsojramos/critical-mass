@@ -10,7 +10,7 @@ A primeira edição da Kidical Mass de 2025 reuniu ciclistas de todo o Portugal 
 
 ## Participação Nacional
 
-Esta edição contou com mais de 1000 ciclistas pelo país todo que partiram de pontos de encontro por todo o país às 18:30, criando um movimento sincronizado de norte a sul de Portugal.
+Esta edição contou com mais de 1000 ciclistas pelo país todo que partiram de pontos de encontro por todo o país, criando um movimento sincronizado de norte a sul de Portugal.
 
 ## Localizações Principais
 

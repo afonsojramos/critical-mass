@@ -11,7 +11,7 @@ The first edition of Kidical Mass of 2025 brought together cyclists from across 
 
 ## Nationwide Participation
 
-This edition counted with over 1000 cyclists from across the country who departed from meeting points across the country at 18:30, creating a synchronized movement from north to south of Portugal.
+This edition counted with over 1000 cyclists from across the country who departed from meeting points across the country, creating a synchronized movement from north to south of Portugal.
 
 ## Key Locations
 
@@ -32,6 +32,6 @@ This nationwide event demonstrated the growing strength of Portugal's cycling co
 
 Kidical Mass is a family-friendly version of Critical Mass, specifically designed to include children and families in the cycling advocacy movement. It's about creating safe spaces for cyclists of all ages and building community connections across Portugal.
 
-Together, we're making the streets safer for everyone, from north to south! 
+Together, we're making the streets safer for everyone, from north to south!
 
 Get involved and keep pedaling! Know more about Kidical Mass at [Kidical Mass Portugal](https://kidicalmass.pt).
