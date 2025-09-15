@@ -1,11 +1,9 @@
 ---
 import { Astronav } from "astro-navbar";
 import LanguagePicker from "@/components/LanguagePicker.astro";
-import { getRouteFromUrl } from "@/i18n/utils";
 import * as m from "@/paraglide/messages";
 
 const lang = Astro.currentLocale;
-const url = getRouteFromUrl(Astro.url);
 
 const menuitems = [
   // { href: "/about", label: "About us" },
