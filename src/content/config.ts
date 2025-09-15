@@ -41,6 +41,7 @@ const galleryCollection = defineCollection({
     description: z.string().optional(),
     category: z.string().optional(),
     date: z.coerce.date().optional(),
+    author: reference("authors").optional(),
   }),
 });
 

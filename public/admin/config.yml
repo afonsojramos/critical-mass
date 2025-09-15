@@ -6,7 +6,7 @@ backend:
   base_url: https://massacritica.pt
   auth_endpoint: oauth
 
-media_folder: "/public/images"
+media_folder: "/src/assets/images"
 public_folder: "/images"
 
 site_url: https://massacritica.pt
@@ -26,7 +26,7 @@ collections:
     slug: "{{slug}}"
     extension: "json"
     format: "json"
-    media_folder: "/public/images/authors"
+    media_folder: "/src/assets/images/authors"
     public_folder: "/images/authors"
     fields:
       - { label: "Name", name: "name", widget: "string" }
@@ -46,7 +46,7 @@ collections:
     folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    media_folder: "/public/images/articles"
+    media_folder: "/src/assets/images/articles"
     public_folder: "/images/articles"
     i18n: true
     fields:
@@ -113,7 +113,7 @@ collections:
     folder: "src/content/events"
     create: true
     slug: "{{slug}}"
-    media_folder: "/public/images/events"
+    media_folder: "/src/assets/images/events"
     public_folder: "/images/events"
     i18n: true
     fields:
@@ -149,7 +149,7 @@ collections:
     slug: "{{slug}}"
     extension: "json"
     format: "json"
-    media_folder: "/public/images/gallery"
+    media_folder: "/src/assets/images/gallery"
     public_folder: "/images/gallery"
     i18n: true
     fields:
@@ -180,5 +180,16 @@ collections:
           name: "date",
           widget: "datetime",
           required: true,
+          i18n: duplicate,
+        }
+      - {
+          label: "Author",
+          name: "author",
+          widget: "relation",
+          collection: "authors",
+          search_fields: ["name"],
+          value_field: "{{slug}}",
+          display_fields: ["name"],
+          required: false,
           i18n: duplicate,
         }
