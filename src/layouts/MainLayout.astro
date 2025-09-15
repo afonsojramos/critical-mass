@@ -3,12 +3,10 @@ import Footer from "@/components/ui/Footer.astro";
 import Navbar from "@/components/ui/Navbar.astro";
 import MainHead from "./MainHead.astro";
 import "@/styles/global.css";
-
-const { locale, ...props } = Astro.props;
 ---
 
-<html lang={locale}>
-  <MainHead {...props} />
+<html lang={Astro.currentLocale}>
+  <MainHead {...Astro.props} />
   <style>
     html.lenis {
       height: auto;
