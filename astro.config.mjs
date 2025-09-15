@@ -28,7 +28,9 @@ export default defineConfig({
     sitemap(),
   ],
   output: "server",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: "compile",
+  }),
   i18n: {
     locales: [...locales],
     defaultLocale: baseLocale,
