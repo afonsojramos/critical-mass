@@ -26,7 +26,7 @@ const allBlogArticles = await getCollection("blog", ({ id }) => {
 <MainLayout title={m.blog_title()} description={m.blog_description()}>
   <main class="space-y-20">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
-      <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+      <div class="mx-auto max-w-screen-sm text-center mb-8">
         <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold">
           {m.blog_title()}
         </h2>
