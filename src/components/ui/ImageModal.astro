@@ -6,13 +6,13 @@ interface Props {
 const { id } = Astro.props;
 ---
 
-<div id={id} class="image-modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300" role="dialog" aria-modal="true">
+<div id={id} class="image-modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300 backdrop-blur-sm select-none" role="dialog" aria-modal="true">
   <div class="relative max-w-screen-lg max-h-[100vh] p-4 flex flex-col">
     <button class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10" aria-label="Close modal">
       &times;
     </button>
-    <img class="max-w-full max-h-[calc(100vh-6rem)] object-contain flex-shrink-0" id="modal-image" />
-    <div class="text-white mt-4 text-left">
+    <img class="max-w-full max-h-[calc(100vh-6rem)] object-contain flex-shrink-0 select-none pointer-events-none no-drag" id="modal-image" />
+    <div class="text-white mt-4 text-left select-none pointer-events-none">
       <h3 class="text-lg font-medium" id="modal-title"></h3>
     </div>
   </div>
@@ -60,8 +60,3 @@ const { id } = Astro.props;
   });
 </script>
 
-<style>
-  .image-modal {
-    backdrop-filter: blur(4px);
-  }
-</style>
