@@ -21,7 +21,7 @@ const locale = Astro.currentLocale as "pt" | "en";
     loading="lazy"
   />
   <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
-    <div class="p-4 text-white bg-gradient-to-t from-black/60 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+    <div class="p-4 text-white bg-gradient-to-t from-black/60 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full">
       <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
       {galleryItem.data.description && (
         <p class="text-sm text-gray-200 mb-1">{galleryItem.data.description}</p>
