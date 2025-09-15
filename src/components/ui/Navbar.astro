@@ -10,7 +10,7 @@ const url = getRouteFromUrl(Astro.url);
 const menuitems = [
   // { href: "/about", label: "About us" },
   { href: `/${lang}/events`, label: m.nav_events },
-  { href: `${url ? "/" : ""}#locations`, label: m.nav_locations },
+  { href: `/${lang}/#locations`, label: m.nav_locations },
   { href: `/${lang}/articles`, label: m.nav_blog },
 ];
 ---
