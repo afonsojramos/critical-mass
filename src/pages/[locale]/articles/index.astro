@@ -2,20 +2,17 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
-import { getRelativeLocaleUrlList } from "astro:i18n";
+
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import SearchForm from "@/components/ui/SearchForm.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
+import { locales } from "@/paraglide/runtime";
 
 export async function getStaticPaths() {
-  const paths = getRelativeLocaleUrlList();
-
-  return paths.map((url) => {
-    const locale = url.split("/")[1];
-
-    return { params: { locale } };
-  });
+  return locales.map((locale) => ({
+    params: { locale },
+  }));
 }
 
 const { locale } = Astro.params;

@@ -7,10 +7,9 @@ import Card from "./Card.astro";
 type Props = {
   event: CollectionEntry<"events">;
   index: number;
-  lang: string;
 };
 
-const { event, index, lang } = Astro.props as Props;
+const { event, index } = Astro.props as Props;
 ---
 
 <Card isUnderline={true}>
@@ -47,7 +46,7 @@ const { event, index, lang } = Astro.props as Props;
         <p class="text-dark">{event.data.description}</p>
       </div>
       <a
-        href={`/${lang}/events/${event.slug.split("/")[1]}`}
+        href={`/${Astro.currentLocale}/events/${event.slug.split("/")[1]}`}
         class="btn-primary inline-block mt-4"
       >
         {m.events_join}

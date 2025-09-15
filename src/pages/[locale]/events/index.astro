@@ -2,19 +2,15 @@
 export const prerender = true;
 
 import { getCollection } from "astro:content";
-import { getRelativeLocaleUrlList } from "astro:i18n";
 import EventCard from "@/components/ui/EventCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
+import { locales } from "@/paraglide/runtime";
 
 export async function getStaticPaths() {
-  const paths = getRelativeLocaleUrlList();
-
-  return paths.map((url) => {
-    const locale = url.split("/")[1];
-
-    return { params: { locale } };
-  });
+  return locales.map((locale) => ({
+    params: { locale },
+  }));
 }
 
 const { locale } = Astro.params;
@@ -38,7 +34,7 @@ const allEvents = await getCollection("events", ({ id }) => {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {
           allEvents.map((event, index) => (
-            <EventCard event={event} index={index} lang={locale} />
+            <EventCard event={event} index={index} />
           ))
         }
       </div>
