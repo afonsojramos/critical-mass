@@ -1,0 +1,108 @@
+---
+import { getCollection } from "astro:content";
+import GalleryCard from "@/components/ui/GalleryCard.astro";
+import ImageModal from "@/components/ui/ImageModal.astro";
+import { translateTag } from "@/lib/tagMapper";
+import * as m from "@/paraglide/messages";
+
+interface Props {
+  filterCategory?: string;
+}
+
+const { filterCategory = "all" } = Astro.props;
+const locale = Astro.currentLocale as "pt" | "en";
+
+const allGalleryItems = await getCollection("gallery", ({ id }) => {
+  const isCorrectLang = id.startsWith(`${Astro.currentLocale}/`);
+  return isCorrectLang;
+});
+
+// Filter items based on category
+const filteredGalleryItems =
+  filterCategory === "all"
+    ? allGalleryItems
+    : allGalleryItems.filter((item) => item.data.category === filterCategory);
+
+// Sort by date (newest first) if date is available, otherwise by title
+const sortedGalleryItems = filteredGalleryItems.sort((a, b) => {
+  if (a.data.date && b.data.date) {
+    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+  }
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Get unique categories for filter buttons
+const uniqueCategories = [
+  ...new Set(allGalleryItems.map((item) => item.data.category || "none").filter(Boolean)),
+];
+---
+
+<main class="space-y-20">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
+    <div class="text-center mb-4">
+      <h1 class="text-5xl font-bold mb-4">{m.gallery_title()}</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        {m.gallery_description()}
+      </p>
+    </div>
+
+    {uniqueCategories.length > 0 && (
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <a
+          href={`/${locale}/gallery/`}
+          class={`px-4 py-2 rounded-full border-2 transition-colors ${
+            filterCategory === "all"
+              ? "bg-black text-white border-black"
+              : "border-gray-300 hover:border-gray-400"
+          }`}
+        >
+          All
+        </a>
+        {uniqueCategories.map((category) => {
+          const isActive = filterCategory === category;
+          return (
+            <a
+              href={`/${locale}/gallery/${encodeURIComponent(category)}/`}
+              class={`px-4 py-2 rounded-full border-2 transition-colors capitalize ${
+                isActive
+                  ? "bg-black text-white border-black"
+                  : "border-gray-300 hover:border-gray-400"
+              }`}
+            >
+              {translateTag(category, locale)}
+            </a>
+          );
+        })}
+      </div>
+    )}
+
+    <div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6" id="gallery-grid">
+      {
+        sortedGalleryItems.map((galleryItem) => (
+          <div class="break-inside-avoid mb-6">
+            <GalleryCard galleryItem={galleryItem} />
+          </div>
+        ))
+      }
+    </div>
+
+    {sortedGalleryItems.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">{m.gallery_noImages()}</p>
+      </div>
+    )}
+  </div>
+</main>
+<ImageModal id="gallery-modal" />
+
+<script>
+  // Make global function for tag clicks - navigate to filtered page
+  window.filterByTag = (tag: string) => {
+    const currentLocale = document.documentElement.lang || 'pt';
+    if (tag === 'all') {
+      window.location.href = `/${currentLocale}/gallery/`;
+    } else {
+      window.location.href = `/${currentLocale}/gallery/${encodeURIComponent(tag)}/`;
+    }
+  };
+</script>

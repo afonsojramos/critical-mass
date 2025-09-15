@@ -1,10 +1,8 @@
 ---
 export const prerender = true;
 
-import { getCollection } from "astro:content";
-import GalleryCard from "@/components/ui/GalleryCard.astro";
-import ImageModal from "@/components/ui/ImageModal.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
+import GalleryView from "@/components/sections/GalleryView.astro";
 import * as m from "@/paraglide/messages";
 import { locales } from "@/paraglide/runtime";
 
@@ -13,47 +11,8 @@ export async function getStaticPaths() {
     params: { locale },
   }));
 }
-
-const allGalleryItems = await getCollection("gallery", ({ id }) => {
-  const isCorrectLang = id.startsWith(`${Astro.currentLocale}/`);
-  return isCorrectLang;
-});
-
-// Sort by date (newest first) if date is available, otherwise by title
-const sortedGalleryItems = allGalleryItems.sort((a, b) => {
-  if (a.data.date && b.data.date) {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  }
-  return a.data.title.localeCompare(b.data.title);
-});
 ---
 
 <MainLayout title={m.gallery_title()} description={m.gallery_description()}>
-  <main class="space-y-20">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
-      <div class="text-center mb-12">
-        <h1 class="text-5xl font-bold mb-4">{m.gallery_title()}</h1>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          {m.gallery_description()}
-        </p>
-      </div>
-
-      <div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-        {
-          sortedGalleryItems.map((galleryItem) => (
-            <div class="break-inside-avoid mb-6">
-              <GalleryCard galleryItem={galleryItem} />
-            </div>
-          ))
-        }
-      </div>
-
-      {sortedGalleryItems.length === 0 && (
-        <div class="text-center py-12">
-          <p class="text-gray-500 text-lg">{m.gallery_noImages()}</p>
-        </div>
-      )}
-    </div>
-  </main>
-  <ImageModal id="gallery-modal" />
+  <GalleryView filterCategory="all" />
 </MainLayout>
