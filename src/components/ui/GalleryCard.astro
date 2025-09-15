@@ -11,7 +11,7 @@ const { galleryItem } = Astro.props as Props;
 const locale = Astro.currentLocale as "pt" | "en";
 ---
 
-<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
   <Image
     src={galleryItem.data.image}
     alt={galleryItem.data.title}

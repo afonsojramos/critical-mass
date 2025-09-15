@@ -3,6 +3,7 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import GalleryCard from "@/components/ui/GalleryCard.astro";
+import ImageModal from "@/components/ui/ImageModal.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { locales } from "@/paraglide/runtime";
@@ -54,4 +55,5 @@ const sortedGalleryItems = allGalleryItems.sort((a, b) => {
       )}
     </div>
   </main>
+  <ImageModal id="gallery-modal" />
 </MainLayout>

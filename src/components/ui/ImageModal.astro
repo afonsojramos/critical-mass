@@ -1,0 +1,67 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div id={id} class="image-modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300" role="dialog" aria-modal="true">
+  <div class="relative max-w-screen-lg max-h-[100vh] p-4 flex flex-col">
+    <button class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10" aria-label="Close modal">
+      &times;
+    </button>
+    <img class="max-w-full max-h-[calc(100vh-6rem)] object-contain flex-shrink-0" id="modal-image" />
+    <div class="text-white mt-4 text-left">
+      <h3 class="text-lg font-medium" id="modal-title"></h3>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('.image-modal') as HTMLElement;
+    const modalImg = modal?.querySelector('#modal-image') as HTMLImageElement;
+    const modalTitle = modal?.querySelector('#modal-title') as HTMLElement;
+    const closeBtn = modal?.querySelector('button') as HTMLButtonElement;
+
+    function openModal(imageSrc: string, imageAlt: string) {
+      if (modal && modalImg && modalTitle) {
+        modalImg.src = imageSrc;
+        modalImg.alt = imageAlt;
+        modalTitle.textContent = imageAlt;
+        modal.classList.remove('opacity-0', 'invisible');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.add('opacity-0', 'invisible');
+        document.body.style.overflow = '';
+      }
+    }
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('invisible')) {
+        closeModal();
+      }
+    });
+
+    window.openImageModal = openModal;
+  });
+</script>
+
+<style>
+  .image-modal {
+    backdrop-filter: blur(4px);
+  }
+</style>
