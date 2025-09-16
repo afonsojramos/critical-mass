@@ -33,7 +33,7 @@ const optimizedImage = imageModule?.default;
     height={300}
     loading="lazy"
   />
-  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title}>
+  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.socialMediaLink || ""}>
     <div class="p-4 pt-6 text-white bg-gradient-to-t from-black/80 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full cursor-default gallery-content">
       <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
       {galleryItem.data.description && (
@@ -74,8 +74,10 @@ const optimizedImage = imageModule?.default;
       overlay.addEventListener('click', (e) => {
         const imageSrc = overlay.getAttribute('data-image-src');
         const imageTitle = overlay.getAttribute('data-image-title');
+        const authorName = overlay.getAttribute('data-author-name');
+        const authorLink = overlay.getAttribute('data-author-link');
         if (imageSrc && imageTitle) {
-          window.openImageModal(imageSrc, imageTitle);
+          window.openImageModal(imageSrc, imageTitle, authorName, authorLink);
         }
       });
     });
