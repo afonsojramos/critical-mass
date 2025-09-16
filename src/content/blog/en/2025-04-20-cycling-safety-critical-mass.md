@@ -30,7 +30,7 @@ Critical Mass attracts riders of all experience levels. If you're newer to cycli
 - Become comfortable riding with one hand so you can signal turns
 - Familiarize yourself with your gears to handle various terrain
 
-### 3. Dress Appropriately
+### 3. Dress Appropriately (optional)
 
 - **Wear bright or reflective clothing** to enhance visibility
 - **Layer for changing conditions**, as rides can last several hours
@@ -123,4 +123,4 @@ Music adds to the festive atmosphere:
 
 Remember, the spirit of Critical Mass is about community, advocacy, and joy. By riding safely and respectfully, you contribute to the positive impact of the movement and help create the safer streets we're all advocating for.
 
-Whether you're joining your first ride or your fiftieth, these guidelines will help ensure Critical Mass remains a positive experience for participants and the broader community alike. 
+Whether you're joining your first ride or your fiftieth, these guidelines will help ensure Critical Mass remains a positive experience for participants and the broader community alike.

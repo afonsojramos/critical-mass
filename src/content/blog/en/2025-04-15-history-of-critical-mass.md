@@ -54,6 +54,6 @@ The movement has also influenced a new generation of cycling advocacy that combi
 
 As cities worldwide face challenges of congestion, pollution, and climate change, the principles behind Critical Mass remain relevant. The movement demonstrated that ordinary citizens could come together to reimagine and reshape their urban environments.
 
-Whether you're a longtime participant or just learning about Critical Mass, consider joining a ride in your city. Experience firsthand the joy, community, and empowerment that comes from transforming streets designed for cars into spaces for people—if only for a few hours each month.
+Whether you're a longtime participant or just learning about Critical Mass, consider joining a ride in your city. Experience firsthand the joy, community, and empowerment that comes from transforming streets designed for cars into spaces for people - if only for a few hours each month.
 
-The story of Critical Mass reminds us that significant change often begins with simple actions and that when people come together, they can transform not just their streets, but their societies. 
+The story of Critical Mass reminds us that significant change often begins with simple actions and that when people come together, they can transform not just their streets, but their societies.
