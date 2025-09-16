@@ -9,11 +9,22 @@ type Props = {
 
 const { galleryItem } = Astro.props as Props;
 const locale = Astro.currentLocale as "pt" | "en";
+
+// Get author data if available
+const author = galleryItem.data.author ? await getEntry(galleryItem.data.author) : null;
+
+// Dynamically import the image from assets
+const images = import.meta.glob("/src/assets/images/**/*", { eager: true });
+// Convert CMS path (/images/gallery/filename.jpg) to asset path (gallery/filename.jpg)
+const relativeImagePath = galleryItem.data.image.replace(/^\/images\//, "");
+const imagePath = `/src/assets/images/${relativeImagePath}`;
+const imageModule = images[imagePath] as { default: ImageMetadata };
+const optimizedImage = imageModule?.default;
 ---
 
-<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick="openImageModal(this.querySelector('img').src, this.querySelector('img').alt)">
+<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick={`openImageModal('${optimizedImage?.src}', '${galleryItem.data.title}')`}>
   <Image
-    src={galleryItem.data.image}
+    src={optimizedImage}
     alt={galleryItem.data.title}
     class="w-full h-auto object-cover"
     width={400}
