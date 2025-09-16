@@ -1,0 +1,43 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import GalleryView from "@/components/sections/GalleryView.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { translateTag } from "@/lib/tagMapper";
+import * as m from "@/paraglide/messages";
+import { locales } from "@/paraglide/runtime";
+
+export async function getStaticPaths() {
+  // Get all gallery items to determine available categories
+  const allGalleryItems = await getCollection("gallery");
+
+  // Get unique categories
+  const uniqueCategories = [
+    ...new Set(allGalleryItems.map((item) => item.data.category).filter(Boolean)),
+  ];
+
+  // Generate paths for each locale and category combination
+  const paths = [];
+  for (const locale of locales) {
+    for (const category of uniqueCategories) {
+      paths.push({
+        params: { locale, category },
+        props: { category, locale },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { category } = Astro.props;
+const locale = Astro.currentLocale as "pt" | "en";
+
+// Generate page title with category name
+const categoryTitle = `${m.gallery_title()} - ${translateTag(category as string, locale)}`;
+---
+
+<MainLayout title={categoryTitle} description={m.gallery_description()}>
+  <GalleryView filterCategory={category} />
+</MainLayout>
