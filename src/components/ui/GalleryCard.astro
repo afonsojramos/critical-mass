@@ -24,7 +24,7 @@ const imageModule = images[imagePath] as { default: ImageMetadata };
 const optimizedImage = imageModule?.default;
 ---
 
-<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer" onclick={`openImageModal('${optimizedImage?.src}', '${galleryItem.data.title}')`}>
+<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
   <Image
     src={optimizedImage}
     alt={galleryItem.data.title}
@@ -33,19 +33,32 @@ const optimizedImage = imageModule?.default;
     height={300}
     loading="lazy"
   />
-  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
-    <div class="p-4 text-white bg-gradient-to-t from-black/60 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full">
+  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title}>
+    <div class="p-4 pt-6 text-white bg-gradient-to-t from-black/80 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full cursor-default gallery-content">
       <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
       {galleryItem.data.description && (
-        <p class="text-sm text-gray-200 mb-1">{galleryItem.data.description}</p>
+        <p class="text-sm text-gray-200 mb-2">{galleryItem.data.description}</p>
       )}
       {author && (
-        <p class="text-xs text-gray-300 mb-1">By {author.data.name}</p>
+        <p class="text-xs text-gray-300 mb-2">
+          By {author.data.socialMediaLink ? (
+            <a
+              href={author.data.socialMediaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-white underline decoration-dotted underline-offset-2"
+            >
+              {author.data.name}
+            </a>
+          ) : (
+            author.data.name
+          )}
+        </p>
       )}
       {galleryItem.data.category && (
         <span
-          class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded cursor-pointer hover:bg-opacity-30 transition-all"
-          onclick={`event.stopPropagation(); filterByTag('${galleryItem.data.category}')`}
+          class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded cursor-pointer hover:bg-opacity-30 transition-all pointer-events-auto capitalize gallery-tag"
+          data-category={galleryItem.data.category}
         >
           {translateTag(galleryItem.data.category, locale)}
         </span>

@@ -45,7 +45,18 @@ const author = await getEntry(article.data.author);
           width={28}
         />
         <span class="font-medium">
-          {author?.data.name}
+          {author?.data.socialMediaLink ? (
+            <a
+              href={author.data.socialMediaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-green underline decoration-dotted underline-offset-2"
+            >
+              {author.data.name}
+            </a>
+          ) : (
+            author?.data.name
+          )}
         </span>
       </div>
       <a
