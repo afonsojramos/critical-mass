@@ -66,3 +66,36 @@ const optimizedImage = imageModule?.default;
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleryOverlays = document.querySelectorAll('.gallery-overlay');
+    galleryOverlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        const imageSrc = overlay.getAttribute('data-image-src');
+        const imageTitle = overlay.getAttribute('data-image-title');
+        if (imageSrc && imageTitle) {
+          window.openImageModal(imageSrc, imageTitle);
+        }
+      });
+    });
+
+    const galleryContents = document.querySelectorAll('.gallery-content');
+    galleryContents.forEach(content => {
+      content.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    const galleryTags = document.querySelectorAll('.gallery-tag');
+    galleryTags.forEach(tag => {
+      tag.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const category = tag.getAttribute('data-category');
+        if (category && window.filterByTag) {
+          window.filterByTag(category);
+        }
+      });
+    });
+  });
+</script>
