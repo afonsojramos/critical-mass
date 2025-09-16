@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
 import { translateTag } from "@/lib/tagMapper";
 
 type Props = {
@@ -41,7 +43,10 @@ const optimizedImage = imageModule?.default;
         <p class="text-xs text-gray-300 mb-1">By {author.data.name}</p>
       )}
       {galleryItem.data.category && (
-        <span class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded">
+        <span
+          class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded cursor-pointer hover:bg-opacity-30 transition-all"
+          onclick={`event.stopPropagation(); filterByTag('${galleryItem.data.category}')`}
+        >
           {translateTag(galleryItem.data.category, locale)}
         </span>
       )}
