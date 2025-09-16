@@ -124,6 +124,15 @@
   -o-user-drag: none;
 }
 
+.bg-radial-white {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 30%,
+    rgba(255, 255, 255, 0) 80%
+  );
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

@@ -8,13 +8,13 @@ const { id } = Astro.props;
 
 <div id={id} class="image-modal fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300 backdrop-blur-sm select-none" role="dialog" aria-modal="true">
   <div class="relative max-w-screen-lg max-h-[100vh] p-4 flex flex-col gap-4">
-    <button class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10" aria-label="Close modal">
+    <button class="absolute top-4 right-4 text-black size-10 text-4xl transition-colors z-10 bg-radial-white" aria-label="Close modal">
       &times;
     </button>
     <img class="max-w-full max-h-[calc(100vh-6rem)] object-contain flex-shrink-0 select-none pointer-events-none no-drag" id="modal-image" />
     <div class="text-white flex justify-between text-left select-none pointer-events-none">
       <h3 class="text-lg font-medium mb-2" id="modal-title"></h3>
-      <a id="modal-author" class="text-sm text-gray-300 cursor-pointer"></a>
+      <div id="modal-author" class="text-sm text-gray-300 cursor-pointer"></div>
     </div>
   </div>
 </div>
@@ -24,7 +24,7 @@ const { id } = Astro.props;
     const modal = document.querySelector('.image-modal') as HTMLElement;
     const modalImg = modal?.querySelector('#modal-image') as HTMLImageElement;
     const modalTitle = modal?.querySelector('#modal-title') as HTMLElement;
-    const modalAuthor = modal?.querySelector('#modal-author') as HTMLElement;
+    const modalAuthor = modal?.querySelector('#modal-author') as HTMLAnchorElement;
     const closeBtn = modal?.querySelector('button') as HTMLButtonElement;
 
     function openModal(imageSrc: string, imageAlt: string, authorName?: string, authorLink?: string) {
@@ -36,7 +36,7 @@ const { id } = Astro.props;
         // Handle author display
         if (authorName) {
           if (authorLink) {
-            modalAuthor.innerHTML = `By <a href="${authorLink}" target="_blank" rel="noopener noreferrer" class="hover:text-white underline decoration-dotted underline-offset-2">${authorName}</a>`;
+            modalAuthor.innerHTML = `By <a href="${authorLink}" target="_blank" rel="noopener noreferrer" class="hover:text-white underline decoration-dotted underline-offset-2 pointer-events-auto">${authorName}</a>`;
           } else {
             modalAuthor.innerHTML = `By ${authorName}`;
           }
