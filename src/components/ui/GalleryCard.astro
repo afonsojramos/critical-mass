@@ -76,7 +76,7 @@ const optimizedImage = imageModule?.default;
         const imageTitle = overlay.getAttribute('data-image-title');
         const authorName = overlay.getAttribute('data-author-name');
         const authorLink = overlay.getAttribute('data-author-link');
-        if (imageSrc && imageTitle) {
+        if (imageSrc && imageTitle && authorName && authorLink) {
           window.openImageModal(imageSrc, imageTitle, authorName, authorLink);
         }
       });

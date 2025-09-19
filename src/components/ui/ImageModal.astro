@@ -27,7 +27,7 @@ const { id } = Astro.props;
     const modalAuthor = modal?.querySelector('#modal-author') as HTMLAnchorElement;
     const closeBtn = modal?.querySelector('button') as HTMLButtonElement;
 
-    function openModal(imageSrc: string, imageAlt: string, authorName?: string, authorLink?: string) {
+    function openImageModal(imageSrc: string, imageAlt: string, authorName?: string, authorLink?: string) {
       if (modal && modalImg && modalTitle && modalAuthor) {
         modalImg.src = imageSrc;
         modalImg.alt = imageAlt;
@@ -70,6 +70,6 @@ const { id } = Astro.props;
       }
     });
 
-    window.openImageModal = openModal;
+    window.openImageModal = openImageModal;
   });
 </script>

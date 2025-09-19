@@ -3,8 +3,8 @@ declare global {
     openImageModal: (
       imageSrc: string,
       imageAlt: string,
-      authorName: string | null,
-      authorLink: string | null,
+      authorName?: string,
+      authorLink?: string,
     ) => void;
     filterByTag: (tag: string) => void;
   }
