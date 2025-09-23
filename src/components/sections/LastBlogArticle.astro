@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { type CollectionEntry, getCollection } from "astro:content";
+import type { ImageMetadata } from "astro";
 import Section from "@/components/sections/Section.astro";
 import Card from "@/components/ui/Card.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
@@ -12,6 +13,18 @@ const allBlogArticles = (await getCollection("blog")).filter((article: Collectio
   article.filePath?.includes(`/${lang}/`),
 );
 const lastBlogArticle = allBlogArticles[0] || null;
+
+// Dynamically import the image from assets
+const images = import.meta.glob("/src/assets/images/**/*", { eager: true });
+let optimizedImage: ImageMetadata | undefined;
+
+if (lastBlogArticle?.data.image) {
+  // Convert CMS path (/images/blog/filename.jpg) to asset path (blog/filename.jpg)
+  const relativeImagePath = lastBlogArticle.data.image.replace(/^\/images\//, "");
+  const imagePath = `/src/assets/images/${relativeImagePath}`;
+  const imageModule = images[imagePath] as { default: ImageMetadata };
+  optimizedImage = imageModule?.default;
+}
 ---
 
 {
@@ -33,13 +46,16 @@ const lastBlogArticle = allBlogArticles[0] || null;
               {m.button_readMore}
             </a>
           </div>
-          <Image
-            src={lastBlogArticle.data.image}
-            alt="This is an illustration"
-            width={500}
-            height={300}
-            class="hidden md:flex items-center justify-center object-cover max-w-5/8 rounded"
-          />
+          {optimizedImage && (
+            <Image
+              src={optimizedImage}
+              alt={lastBlogArticle.data.title}
+              width={500}
+              height={300}
+              class="hidden md:flex items-center justify-center object-cover max-w-5/8 rounded"
+              loading="lazy"
+            />
+          )}
         </div>
       </Card>
     </Section>

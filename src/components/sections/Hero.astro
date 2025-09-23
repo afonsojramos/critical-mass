@@ -52,14 +52,22 @@ const currentLang = Astro.currentLocale;
               src={Calendar}
               alt="Calendar"
               class="w-6 h-6 text-black"
-              loading="lazy"
+              priority
+              loading="eager"
             />
           </a>
         </div>
       </div>
     </div>
     <div class="flex items-center py-5 md:w-6/12">
-      <Image src={HeroIlust} alt="Hero Ilustration" loading="eager" />
+      <Image
+        src={HeroIlust}
+        alt="Hero Ilustration"
+        loading="eager"
+        priority
+        width={372*1.5}
+        height={248*1.5}
+      />
     </div>
   </div>
 </Section>
