@@ -1,6 +1,6 @@
 {
-  "titleTop": "Lisboa",
-  "titleBottom": "Praça Marquês de Pombal 18h30",
+  "city": "Lisboa",
+  "exactLocation": "Praça Marquês de Pombal 18h30",
   "image": "/cities/lisboa.svg",
   "link": "https://www.instagram.com/massacriticalisboa/",
   "index": 2

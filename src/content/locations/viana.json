@@ -1,6 +1,6 @@
 {
-  "titleTop": "Viana",
-  "titleBottom": "Praça da República 18h30",
+  "city": "Viana",
+  "exactLocation": "Praça da República 18h30",
   "image": "/cities/viana.svg",
   "link": "https://www.instagram.com/massacriticaviana/",
   "index": 3

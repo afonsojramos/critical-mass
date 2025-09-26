@@ -1,6 +1,6 @@
 {
-  "titleTop": "Coimbra",
-  "titleBottom": "Largo da Portagem 18h30",
+  "city": "Coimbra",
+  "exactLocation": "Largo da Portagem 18h30",
   "image": "/cities/coimbra.svg",
   "link": "https://www.instagram.com/coimbrapedal/",
   "index": 4

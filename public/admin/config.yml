@@ -23,7 +23,7 @@ collections:
     label: "Authors"
     folder: "src/content/authors"
     create: true
-    slug: "{{slug}}"
+    slug: "{{name}}"
     extension: "json"
     format: "json"
     media_folder: "/src/assets/images/authors"
@@ -112,7 +112,7 @@ collections:
     label: "Events"
     folder: "src/content/events"
     create: true
-    slug: "{{slug}}"
+    slug: "{{title}}"
     media_folder: "/src/assets/images/events"
     public_folder: "/images/events"
     i18n: true
@@ -146,7 +146,7 @@ collections:
     label: "Gallery"
     folder: "src/content/gallery"
     create: true
-    slug: "{{slug}}"
+    slug: "{{title}}"
     extension: "json"
     format: "json"
     media_folder: "/src/assets/images/gallery"
@@ -199,14 +199,14 @@ collections:
     label: "Locations"
     folder: "src/content/locations"
     create: true
-    slug: "{{slug}}"
+    slug: "{{city}}"
     extension: "json"
     format: "json"
     media_folder: "/src/assets/cities"
     public_folder: "/cities"
     fields:
-      - { label: "Title Top", name: "titleTop", widget: "string" }
-      - { label: "Title Bottom", name: "titleBottom", widget: "string" }
+      - { label: "City", name: "city", widget: "string" }
+      - { label: "Exact Location", name: "exactLocation", widget: "string" }
       - { label: "Image", name: "image", widget: "image" }
       - {
           label: "Link",

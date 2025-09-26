@@ -56,8 +56,8 @@ const cards = locations.map((location) => {
 
   return {
     index: location.data.index,
-    titleTop: isSpecial ? m.locations_moreComingSoon : location.data.titleTop,
-    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.titleBottom,
+    titleTop: isSpecial ? m.locations_moreComingSoon : location.data.city,
+    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.exactLocation,
     img: getOptimizedImage(location.data.image),
     link: location.data.link,
     date: dateText,

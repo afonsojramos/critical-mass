@@ -1,6 +1,6 @@
 {
-  "titleTop": "Porto",
-  "titleBottom": "Praça do Marquês 18h30",
+  "city": "Porto",
+  "exactLocation": "Praça do Marquês 18h30",
   "image": "/cities/porto.svg",
   "link": "https://www.instagram.com/massacriticaporto/",
   "index": 1

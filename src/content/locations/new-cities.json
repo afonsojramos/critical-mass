@@ -1,6 +1,6 @@
 {
-  "titleTop": "DISABLED",
-  "titleBottom": "DISABLED",
+  "city": "DISABLED",
+  "exactLocation": "DISABLED",
   "image": "/cities/plus.svg",
   "link": "mailto:afonsojorgeramos@gmail.com",
   "index": 100

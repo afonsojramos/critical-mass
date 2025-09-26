@@ -48,8 +48,8 @@ const galleryCollection = defineCollection({
 const locationsCollection = defineCollection({
   type: "data",
   schema: z.object({
-    titleTop: z.string(),
-    titleBottom: z.string(),
+    city: z.string(),
+    exactLocation: z.string(),
     image: z.string(),
     link: z.string(),
     index: z.number(),
