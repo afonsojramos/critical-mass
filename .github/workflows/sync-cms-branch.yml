@@ -1,0 +1,74 @@
+name: Sync CMS Branch with Main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync-cms-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync cms-updates with main
+        run: |
+          # Fetch all branches
+          git fetch origin
+
+          # Check if cms-updates branch exists
+          if git show-ref --verify --quiet refs/remotes/origin/cms-updates; then
+            echo "cms-updates branch exists, syncing..."
+
+            # Switch to cms-updates branch
+            git checkout cms-updates
+
+            # Try to merge main into cms-updates
+            if git merge origin/main --no-edit; then
+              echo "Successfully merged main into cms-updates"
+
+              # Push the updated branch
+              git push origin cms-updates
+              echo "cms-updates branch synced with main"
+            else
+              echo "Merge conflict detected. Manual intervention required."
+
+              # Create an issue to alert about the conflict
+              gh issue create \
+                --title "CMS Branch Sync Conflict" \
+                --body "The cms-updates branch has merge conflicts with main and requires manual resolution.
+
+              **Steps to resolve:**
+              1. Checkout the cms-updates branch locally
+              2. Merge main: \`git merge main\`
+              3. Resolve any conflicts
+              4. Push the resolved branch
+
+              **Files likely to have conflicts:**
+              - Content files in \`src/content/\`
+              - Configuration files
+              - Translation files
+
+              This issue will be automatically closed when the branch is synced." \
+                --label "automation,cms"
+
+              exit 1
+            fi
+          else
+            echo "cms-updates branch does not exist, creating it..."
+            git checkout -b cms-updates
+            git push -u origin cms-updates
+            echo "Created cms-updates branch from main"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

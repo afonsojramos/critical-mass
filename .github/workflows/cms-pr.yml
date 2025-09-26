@@ -1,0 +1,100 @@
+name: Create PR from CMS Updates
+
+on:
+  push:
+    branches:
+      - cms-updates
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if PR already exists
+        id: check-pr
+        run: |
+          existing_pr=$(gh pr list --head cms-updates --base main --json number --jq '.[0].number')
+          if [ "$existing_pr" != "null" ] && [ -n "$existing_pr" ]; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+            echo "pr_number=$existing_pr" >> $GITHUB_OUTPUT
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get commit info
+        id: commit-info
+        run: |
+          # Get the latest commit message and files changed
+          commit_message=$(git log -1 --pretty=format:"%s")
+          changed_files=$(git diff --name-only HEAD~1 HEAD)
+
+          echo "commit_message=$commit_message" >> $GITHUB_OUTPUT
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$changed_files" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create or update PR
+        run: |
+          if [ "${{ steps.check-pr.outputs.pr_exists }}" = "true" ]; then
+            # Update existing PR
+            gh pr edit ${{ steps.check-pr.outputs.pr_number }} --body "$(cat <<'EOF'
+          ## CMS Content Updates
+
+          This PR contains content updates made through the CMS.
+
+          ### Latest Changes
+          **Commit:** ${{ steps.commit-info.outputs.commit_message }}
+
+          **Files changed:**
+          ```
+          ${{ steps.commit-info.outputs.changed_files }}
+          ```
+
+          ### Review Notes
+          - ✅ Content has been automatically validated by CMS
+          - 🔍 Please review the changes for accuracy and consistency
+          - 🚀 Merge when ready to publish the updates
+
+          ---
+          *This PR is automatically managed by the CMS workflow*
+          EOF
+          )"
+            echo "Updated existing PR #${{ steps.check-pr.outputs.pr_number }}"
+          else
+            # Create new PR
+            gh pr create \
+              --title "CMS Content Updates" \
+              --body "$(cat <<'EOF'
+          ## CMS Content Updates
+
+          This PR contains content updates made through the CMS.
+
+          ### Latest Changes
+          **Commit:** ${{ steps.commit-info.outputs.commit_message }}
+
+          **Files changed:**
+          ```
+          ${{ steps.commit-info.outputs.changed_files }}
+          ```
+
+          ### Review Notes
+          - ✅ Content has been automatically validated by CMS
+          - 🔍 Please review the changes for accuracy and consistency
+          - 🚀 Merge when ready to publish the updates
+
+          ---
+          *This PR is automatically managed by the CMS workflow*
+          EOF
+          )" \
+              --head cms-updates \
+              --base main
+            echo "Created new PR"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
