@@ -1,60 +1,68 @@
 ---
-import coimbra from "@/assets/cities/coimbra.svg";
-import lisboa from "@/assets/cities/lisboa.svg";
-import porto from "@/assets/cities/porto.svg";
-import santaIria from "@/assets/cities/santa-iria-de-azoia.svg";
-import viana from "@/assets/cities/viana.svg";
-import plus from "@/assets/plus.svg";
+import { getCollection } from "astro:content";
 import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
+import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
-const cards = [
-  {
-    index: 1,
-    titleTop: "Porto",
-    titleBottom: "Praça do Marquês 18h30",
-    img: porto,
-    link: "https://www.instagram.com/massacriticaporto/",
-  },
-  {
-    index: 2,
-    titleTop: "Lisboa",
-    titleBottom: "Praça Marquês de Pombal 18h30",
-    img: lisboa,
-    link: "https://www.instagram.com/massacriticalisboa/",
-  },
-  {
-    index: 3,
-    titleTop: "Viana",
-    titleBottom: "Praça da República 18h30",
-    img: viana,
-    link: "https://www.instagram.com/massacriticaviana/",
-  },
-  {
-    index: 4,
-    titleTop: "Coimbra",
-    titleBottom: "Largo da Portagem 18h30",
-    img: coimbra,
-    link: "https://www.instagram.com/coimbrapedal/",
-  },
-  {
-    index: 5,
-    titleTop: "Santa Iria de Azóia",
-    date: `1º ${m.location_sunday()} ${m.location_ofEveryMonth()}`,
-    titleBottom: "Pirescoxe 10H",
-    img: santaIria,
-    link: "https://www.facebook.com/bicicletada.santairia",
-  },
-  {
-    index: 100,
-    titleTop: m.locations_moreComingSoon(),
-    titleBottom: m.locations_createYourMovement(),
-    img: plus,
-    link: "mailto:afonsojorgeramos@gmail.com",
-  },
-];
+const locationsData = await getCollection("locations");
+const locations = locationsData.sort((a, b) => a.data.index - b.data.index);
+
+const cards = locations.map((location) => {
+  const isSpecial = location.data.index === 100;
+
+  // Build date string from components
+  let dateText: string | undefined;
+  if (location.data.customDate) {
+    dateText = location.data.customDate;
+  } else if (location.data.dateFrequency && location.data.dayOfWeek) {
+    // Map day names to translation keys
+    const dayMap: Record<string, () => string> = {
+      Sunday: m.location_sunday,
+      Monday: m.location_monday,
+      Tuesday: m.location_tuesday,
+      Wednesday: m.location_wednesday,
+      Thursday: m.location_thursday,
+      Friday: m.location_friday,
+      Saturday: m.location_saturday,
+    };
+
+    // Map frequency to localized format with gender agreement
+    const masculineDays = ["Sunday", "Saturday"];
+    const isMasculine = masculineDays.includes(location.data.dayOfWeek);
+
+    const frequencyMap: Record<string, string> = isMasculine
+      ? {
+          "1st": "1º",
+          "2nd": "2º",
+          "3rd": "3º",
+          "4th": "4º",
+          Last: "Último",
+        }
+      : {
+          "1st": "1ª",
+          "2nd": "2ª",
+          "3rd": "3ª",
+          "4th": "4ª",
+          Last: "Última",
+        };
+
+    const dayTranslation = dayMap[location.data.dayOfWeek]?.() || location.data.dayOfWeek;
+    const frequencyTranslation =
+      frequencyMap[location.data.dateFrequency] || location.data.dateFrequency;
+    dateText = `${frequencyTranslation} ${dayTranslation} ${m.location_ofEveryMonth()}`;
+  }
+
+  return {
+    index: location.data.index,
+    titleTop: isSpecial ? m.locations_moreComingSoon : location.data.titleTop,
+    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.titleBottom,
+    img: getOptimizedImage(location.data.image),
+    link: location.data.link,
+    date: dateText,
+  };
+});
 ---
 
 <Section id="locations">

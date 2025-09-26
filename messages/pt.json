@@ -41,5 +41,11 @@
   "nav_gallery": "Galeria",
   "gallery_noImages": "Nenhuma imagem disponível ainda.",
   "location_sunday": "Domingo",
+  "location_monday": "Segunda-feira",
+  "location_tuesday": "Terça-feira",
+  "location_wednesday": "Quarta-feira",
+  "location_thursday": "Quinta-feira",
+  "location_friday": "Sexta-feira",
+  "location_saturday": "Sábado",
   "location_ofEveryMonth": "do mês"
 }

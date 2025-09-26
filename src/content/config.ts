@@ -45,9 +45,26 @@ const galleryCollection = defineCollection({
   }),
 });
 
+const locationsCollection = defineCollection({
+  type: "data",
+  schema: z.object({
+    titleTop: z.string(),
+    titleBottom: z.string(),
+    image: z.string(),
+    link: z.string(),
+    index: z.number(),
+    dateFrequency: z.enum(["1st", "2nd", "3rd", "4th", "Last"]).optional(),
+    dayOfWeek: z
+      .enum(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
+      .optional(),
+    customDate: z.string().optional(),
+  }),
+});
+
 export const collections = {
   authors: authorsCollection,
   blog: blogCollection,
   events: eventsCollection,
   gallery: galleryCollection,
+  locations: locationsCollection,
 };

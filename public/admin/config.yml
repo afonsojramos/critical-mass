@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: afonsojramos/critical-mass
-  branch: main
+  branch: cms-updates
   site_domain: massacritica.pt
   base_url: https://massacritica.pt
   auth_endpoint: oauth
@@ -192,4 +192,55 @@ collections:
           display_fields: ["name"],
           required: false,
           i18n: duplicate,
+        }
+
+  # Locations (Language neutral)
+  - name: "locations"
+    label: "Locations"
+    folder: "src/content/locations"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    media_folder: "/src/assets/cities"
+    public_folder: "/cities"
+    fields:
+      - { label: "Title Top", name: "titleTop", widget: "string" }
+      - { label: "Title Bottom", name: "titleBottom", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - {
+          label: "Link",
+          name: "link",
+          widget: "string",
+          hint: "Full URL (e.g., https://www.instagram.com/massacriticaporto/)"
+        }
+      - {
+          label: "Index",
+          name: "index",
+          widget: "number",
+          value_type: "int",
+          hint: "Order number for display (1-99 for regular locations, 100+ for special entries)"
+        }
+      - {
+          label: "Date Frequency",
+          name: "dateFrequency",
+          widget: "select",
+          required: false,
+          options: ["1st", "2nd", "3rd", "4th", "Last"],
+          hint: "Which occurrence in the month (optional)"
+        }
+      - {
+          label: "Day of Week",
+          name: "dayOfWeek",
+          widget: "select",
+          required: false,
+          options: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          hint: "Day of the week (optional)"
+        }
+      - {
+          label: "Custom Date",
+          name: "customDate",
+          widget: "string",
+          required: false,
+          hint: "Override with custom date text (optional)"
         }
