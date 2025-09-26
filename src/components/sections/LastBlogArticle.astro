@@ -6,6 +6,7 @@ import Section from "@/components/sections/Section.astro";
 import Card from "@/components/ui/Card.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
+import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
 const lang = Astro.currentLocale || "en";
 
@@ -14,17 +15,9 @@ const allBlogArticles = (await getCollection("blog")).filter((article: Collectio
 );
 const lastBlogArticle = allBlogArticles[0] || null;
 
-// Dynamically import the image from assets
-const images = import.meta.glob("/src/assets/images/**/*", { eager: true });
-let optimizedImage: ImageMetadata | undefined;
-
-if (lastBlogArticle?.data.image) {
-  // Convert CMS path (/images/blog/filename.jpg) to asset path (blog/filename.jpg)
-  const relativeImagePath = lastBlogArticle.data.image.replace(/^\/images\//, "");
-  const imagePath = `/src/assets/images/${relativeImagePath}`;
-  const imageModule = images[imagePath] as { default: ImageMetadata };
-  optimizedImage = imageModule?.default;
-}
+const optimizedImage = lastBlogArticle?.data.image
+  ? (getOptimizedImage(lastBlogArticle.data.image) as ImageMetadata)
+  : undefined;
 ---
 
 {

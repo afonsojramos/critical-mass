@@ -4,6 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
 import type { ImageMetadata } from "astro";
 import { translateTag } from "@/lib/tagMapper";
+import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
 type Props = {
   galleryItem: CollectionEntry<"gallery">;
@@ -15,13 +16,7 @@ const locale = Astro.currentLocale as "pt" | "en";
 // Get author data if available
 const author = galleryItem.data.author ? await getEntry(galleryItem.data.author) : null;
 
-// Dynamically import the image from assets
-const images = import.meta.glob("/src/assets/images/**/*", { eager: true });
-// Convert CMS path (/images/gallery/filename.jpg) to asset path (gallery/filename.jpg)
-const relativeImagePath = galleryItem.data.image.replace(/^\/images\//, "");
-const imagePath = `/src/assets/images/${relativeImagePath}`;
-const imageModule = images[imagePath] as { default: ImageMetadata };
-const optimizedImage = imageModule?.default;
+const optimizedImage = getOptimizedImage(galleryItem.data.image) as ImageMetadata;
 ---
 
 <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">

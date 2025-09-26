@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import type { ImageMetadata } from "astro";
 import * as m from "@/paraglide/messages";
+import { getOptimizedImage } from "@/utils/getOptimizedImage";
 import Card from "./Card.astro";
 
 type Props = {
@@ -12,17 +13,10 @@ type Props = {
 
 const { event, index } = Astro.props as Props;
 
-// Dynamically import the image from assets
-const images = import.meta.glob("/src/assets/images/**/*", { eager: true });
-let optimizedImage: ImageMetadata | undefined;
-
-if (event.data.images && event.data.images.length > 0) {
-  // Convert CMS path (/images/events/filename.jpg) to asset path (events/filename.jpg)
-  const relativeImagePath = event.data.images[0].replace(/^\/images\//, "");
-  const imagePath = `/src/assets/images/${relativeImagePath}`;
-  const imageModule = images[imagePath] as { default: ImageMetadata };
-  optimizedImage = imageModule?.default;
-}
+const optimizedImage =
+  event.data.images && event.data.images.length > 0
+    ? (getOptimizedImage(event.data.images[0]) as ImageMetadata)
+    : undefined;
 ---
 
 <Card isUnderline={true}>
@@ -36,8 +30,8 @@ if (event.data.images && event.data.images.length > 0) {
             src={optimizedImage}
             alt={event.data.title}
             class="h-full w-full object-cover"
-            width={600}
-            height={300}
+            width={700}
+            height={500}
             loading="lazy"
           />
         ) : (
