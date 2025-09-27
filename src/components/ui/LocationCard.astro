@@ -20,7 +20,7 @@ const getSVG = async (src: string) => {
     throw new Error(`${filePath} not found`);
   }
 
-  const root = parse(cityImages[filePath]);
+  const root = parse(cityImages[filePath] as unknown as string);
 
   const svg = root.querySelector("svg") as unknown as SVGElement;
   const { attributes, innerHTML } = svg;
@@ -54,9 +54,9 @@ const { attributes: svgAttributes, innerHTML } = await getSVG(img);
       </span>
     </h3>
     <picture
-      class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center lg:justify-end lg:items-end" alt={alt}
+      class="w-full h-full row-span-1 order-1 lg:order-none lg:row-span-2 flex justify-center items-center lg:justify-end lg:items-end"
     >
-        <svg {...svgAttributes} set:html={innerHTML} class={`object-cover ${newLocation ? 'h-16 w-16' : 'h-auto w-3/4'} ${index % 3 === 0 && 'fill-white'}`} />
+        <svg {...svgAttributes} set:html={innerHTML} aria-label={alt} class={`object-cover ${newLocation ? 'h-16 w-16' : 'h-auto w-3/4'} ${index % 3 === 0 && 'fill-white'}`} />
     </picture>
 
     <div class="flex items-end">
