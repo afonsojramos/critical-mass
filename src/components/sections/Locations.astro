@@ -4,7 +4,6 @@ import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
-import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
 const locationsData = await getCollection("locations");
 const locations = locationsData.sort((a, b) => a.data.index - b.data.index);
@@ -58,7 +57,7 @@ const cards = locations.map((location) => {
     index: location.data.index,
     titleTop: isSpecial ? m.locations_moreComingSoon : location.data.city,
     titleBottom: isSpecial ? m.locations_createYourMovement : location.data.exactLocation,
-    img: getOptimizedImage(location.data.image),
+    img: location.data.image,
     link: location.data.link,
     date: dateText,
   };
