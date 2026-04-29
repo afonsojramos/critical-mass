@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "massacritica",
+  "name": "critical-mass",
   "compatibility_date": "2026-01-15",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [
