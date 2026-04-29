@@ -1,21 +1,25 @@
 ---
-import { getCollection } from "astro:content";
+import { getEmDashCollection } from "emdash";
 import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
 
-const locationsData = await getCollection("locations");
-const locations = locationsData.sort((a, b) => a.data.index - b.data.index);
+const { entries } = await getEmDashCollection("locations", {
+  status: "published",
+});
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const locationsData = entries as any[];
+const locations = locationsData.sort((a, b) => a.data.sort_index - b.data.sort_index);
 
 const cards = locations.map((location) => {
-  const isSpecial = location.data.index === 100;
+  const isSpecial = location.data.sort_index === 100;
 
   // Build date string from components
   let dateText: string | undefined;
-  if (location.data.customDate) {
-    dateText = location.data.customDate;
-  } else if (location.data.dateFrequency && location.data.dayOfWeek) {
+  if (location.data.custom_date) {
+    dateText = location.data.custom_date;
+  } else if (location.data.date_frequency && location.data.day_of_week) {
     // Map day names to translation keys
     const dayMap: Record<string, () => string> = {
       Sunday: m.location_sunday,
@@ -29,7 +33,7 @@ const cards = locations.map((location) => {
 
     // Map frequency to localized format with gender agreement
     const masculineDays = ["Sunday", "Saturday"];
-    const isMasculine = masculineDays.includes(location.data.dayOfWeek);
+    const isMasculine = masculineDays.includes(location.data.day_of_week);
 
     const frequencyMap: Record<string, string> = isMasculine
       ? {
@@ -47,16 +51,16 @@ const cards = locations.map((location) => {
           Last: "Última",
         };
 
-    const dayTranslation = dayMap[location.data.dayOfWeek]?.() || location.data.dayOfWeek;
+    const dayTranslation = dayMap[location.data.day_of_week]?.() || location.data.day_of_week;
     const frequencyTranslation =
-      frequencyMap[location.data.dateFrequency] || location.data.dateFrequency;
+      frequencyMap[location.data.date_frequency] || location.data.date_frequency;
     dateText = `${frequencyTranslation} ${dayTranslation} ${m.location_ofEveryMonth()}`;
   }
 
   return {
-    index: location.data.index,
+    index: location.data.sort_index,
     titleTop: isSpecial ? m.locations_moreComingSoon : location.data.city,
-    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.exactLocation,
+    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.exact_location,
     img: location.data.image,
     link: location.data.link,
     date: dateText,

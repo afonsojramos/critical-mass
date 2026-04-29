@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import FeaturedEvents from "@/components/sections/FeaturedEvents.astro";
 import Hero from "@/components/sections/Hero.astro";
@@ -7,13 +7,8 @@ import LastBlogArticle from "@/components/sections/LastBlogArticle.astro";
 import Locations from "@/components/sections/Locations.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
-import { locales } from "@/paraglide/runtime";
 
-export async function getStaticPaths() {
-  return locales.map((locale) => ({
-    params: { locale },
-  }));
-}
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout description={m.description()}>

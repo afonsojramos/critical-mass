@@ -1,8 +1,7 @@
 ---
-import { Image } from "astro:assets";
 import { parse } from "node-html-parser";
-import gob from "@/assets/icons/icon6.svg";
-import wob from "@/assets/icons/icon7.svg";
+import gobSvg from "@/assets/icons/icon6.svg?raw";
+import wobSvg from "@/assets/icons/icon7.svg?raw";
 import Card from "@/components/ui/Card.astro";
 import * as m from "@/paraglide/messages";
 
@@ -61,7 +60,7 @@ const { attributes: svgAttributes, innerHTML } = await getSVG(img);
 
     <div class="flex items-end">
       <a href={link} class="flex items-center gap-3.5">
-        <Image src={index % 3 === 1 || index % 3 === 2 ? gob : wob} alt={alt} />
+        <Fragment set:html={index % 3 === 1 || index % 3 === 2 ? gobSvg : wobSvg} />
         <span class="hidden sm:block md:hidden lg:block"
           >{!newLocation ? m.events_serviceInfo : m.locations_sendEmail}</span
         >

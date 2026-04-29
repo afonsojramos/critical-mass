@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getEmDashCollection } from "emdash";
 import GalleryCard from "@/components/ui/GalleryCard.astro";
 import ImageModal from "@/components/ui/ImageModal.astro";
 import { translateTag } from "@/lib/tagMapper";
@@ -12,23 +12,35 @@ interface Props {
 const { filterCategory = "all" } = Astro.props;
 const locale = Astro.currentLocale as "pt" | "en";
 
-const allGalleryItems = await getCollection("gallery", ({ id }) => {
-  const isCorrectLang = id.startsWith(`${Astro.currentLocale}/`);
-  return isCorrectLang;
+// Fetch filtered items for display (pushes filter to DB when category is set)
+const { entries } = await getEmDashCollection("gallery", {
+  status: "published",
+  locale,
+  ...(filterCategory !== "all" && { where: { category: filterCategory } }),
 });
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const filteredGalleryItems = entries as any[];
 
-// Filter items based on category
-const filteredGalleryItems =
-  filterCategory === "all"
-    ? allGalleryItems
-    : allGalleryItems.filter((item) => item.data.category === filterCategory);
+// Fetch all items to derive unique categories for filter buttons
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+let allGalleryItems: any[];
+if (filterCategory === "all") {
+  allGalleryItems = filteredGalleryItems;
+} else {
+  const { entries: allEntries } = await getEmDashCollection("gallery", {
+    status: "published",
+    locale,
+  });
+  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+  allGalleryItems = allEntries as any[];
+}
 
 // Sort by date (newest first) if date is available, otherwise by title
 const sortedGalleryItems = filteredGalleryItems.sort((a, b) => {
   if (a.data.date && b.data.date) {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    return new Date(b.data.date as string).getTime() - new Date(a.data.date as string).getTime();
   }
-  return a.data.title.localeCompare(b.data.title);
+  return (a.data.title as string).localeCompare(b.data.title as string);
 });
 
 // Get unique categories for filter buttons

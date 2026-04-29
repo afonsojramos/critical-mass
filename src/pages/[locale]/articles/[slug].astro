@@ -1,36 +1,34 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import { Image } from "astro:assets";
-import { getCollection, getEntry, render } from "astro:content";
+import { PortableText } from "astro-portabletext";
+import { getEmDashEntry } from "emdash";
 import Tags from "@/components/ui/Tags.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { formatDate } from "@/utils";
 
-export async function getStaticPaths() {
-  const allBlogArticles = await getCollection("blog");
+const { slug } = Astro.params;
 
-  return allBlogArticles.map((article) => {
-    const locale = article.id.split("/")[0];
-
-    return {
-      params: {
-        locale,
-        slug: article.slug.replace(`${locale}/`, ""),
-      },
-      props: { article },
-    };
-  });
-}
-
-if (!Astro.params.slug) {
+if (!slug) {
   return Astro.redirect(`/${Astro.currentLocale}/articles`);
 }
 
-const { article } = Astro.props;
-const { Content } = await render(article);
-const author = await getEntry(article.data.author);
+const locale = Astro.currentLocale;
+const { entry } = await getEmDashEntry("blog", slug, { locale });
+
+if (!entry) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const article = entry as any;
+const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const author = authorEntry as any;
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout title={article.data.title} description={article.data.summary}>
@@ -77,7 +75,7 @@ const author = await getEntry(article.data.author);
                 {m.blog_writtenBy()}
                 {author?.data.name}
                 {m.blog_on()}
-                {formatDate(article.data.pubDate, Astro.currentLocale)}
+                {formatDate(article.data.pub_date, Astro.currentLocale)}
               </h3>
             </div>
           </div>
@@ -91,7 +89,7 @@ const author = await getEntry(article.data.author);
             loading="eager"
           />
           <div class="prose prose-lg max-w-none">
-            <Content />
+            <PortableText value={article.data.body} />
           </div>
         </div>
       </div>

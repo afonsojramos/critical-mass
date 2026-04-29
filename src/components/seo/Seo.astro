@@ -1,5 +1,4 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import jsonLDGenerator from "@/utils/jsonLD";
 
 type Props = {
@@ -13,7 +12,8 @@ type Props = {
   url: string;
   image?: { src: string; alt: string };
   robots?: boolean;
-  frontmatter?: CollectionEntry<"blog">;
+  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+  frontmatter?: any;
 };
 
 const siteData = {

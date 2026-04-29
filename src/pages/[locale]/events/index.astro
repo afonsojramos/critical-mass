@@ -1,24 +1,19 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
-import { getCollection } from "astro:content";
+import { getEmDashCollection } from "emdash";
 import EventCard from "@/components/ui/EventCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
-import { locales } from "@/paraglide/runtime";
 
-export async function getStaticPaths() {
-  return locales.map((locale) => ({
-    params: { locale },
-  }));
-}
+const locale = Astro.currentLocale;
 
-const { locale } = Astro.params;
-
-const allEvents = await getCollection("events", ({ id }) => {
-  const isCorrectLang = id.startsWith(`${locale}/`);
-  return isCorrectLang;
+const { entries: allEvents } = await getEmDashCollection("events", {
+  status: "published",
+  locale,
 });
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout title={m.events_title()} description={m.events_description()}>

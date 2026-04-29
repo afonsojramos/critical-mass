@@ -1,15 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import BragaCiclavel from "@/assets/communities/braga-ciclavel.png";
-import Ciclaveiro from "@/assets/communities/ciclaveiro.svg";
+import ciclaveiro from "@/assets/communities/ciclaveiro.svg?raw";
 import Cicloda from "@/assets/communities/cicloda.png";
 import CicloficinaPorto from "@/assets/communities/cicloficina-porto.png";
 import EstradaViva from "@/assets/communities/estrada-viva.png";
 import FPC from "@/assets/communities/FPC.png";
 import FPCUB from "@/assets/communities/FPCUB.jpg";
-import KidicalMass from "@/assets/communities/kidical-mass.svg";
+import kidicalMass from "@/assets/communities/kidical-mass.svg?raw";
 import Mubi from "@/assets/communities/mubi-cropped.png";
-import Logo from "@/assets/logo-alt.svg";
+import logo from "@/assets/logo-alt.svg?raw";
 import * as m from "@/paraglide/messages";
 
 const contacts = {
@@ -25,12 +25,9 @@ const contacts = {
     class="flex flex-col items-center justify-around bg-dark text-gray py-[55px] px-4 lg:px-0 sm:rounded-t-[45px] gap-8"
   >
     <a href="#home" class="flex items-center">
-      <Image
-        src={Logo}
-        alt="Logo for Critical Mass"
-        class="size-24 text-white"
-        loading="lazy"
-      />
+      <div class="size-24 text-white [&>svg]:size-full">
+        <Fragment set:html={logo} />
+      </div>
       <h2 class="text-white text-2xl font-bold uppercase">
         {
           m
@@ -63,14 +60,11 @@ const contacts = {
             class="h-12 w-auto"
             title="Kidical Mass"
           >
-            <Image
-              src={KidicalMass}
-              alt="Logo for Kidical Mass"
-              class="text-white h-full w-full object-contain"
-              loading="lazy"
-            />
+            <div class="text-white h-full w-full [&>svg]:h-full [&>svg]:w-full">
+              <Fragment set:html={kidicalMass} />
+            </div>
           </a>
-          <a href="https://fpciclaveiro.pt" class="h-12 w-auto" title="FPC">
+          <a href="https://fpciclaveiro.pt" class="h-12 w-auto bg-white rounded-lg p-1" title="FPC">
             <Image
               src={FPC}
               alt="Logo for FPC"
@@ -80,7 +74,7 @@ const contacts = {
           </a>
           <a
             href="https://cicloficina.cicloda.pt"
-            class="h-12 w-auto"
+            class="h-12 w-auto bg-white rounded-lg p-1"
             title="Cicloficina Porto"
           >
             <Image
@@ -90,7 +84,7 @@ const contacts = {
               loading="lazy"
             />
           </a>
-          <a href="https://fpcub.pt" class="h-12 w-auto" title="FPCUB">
+          <a href="https://fpcub.pt" class="h-12 w-auto bg-white rounded-lg p-1" title="FPCUB">
             <Image
               src={FPCUB}
               alt="Logo for FPCUB"
@@ -100,7 +94,7 @@ const contacts = {
           </a>
           <a
             href="https://bragaciclavel.pt"
-            class="h-12 w-auto"
+            class="h-12 w-auto bg-white rounded-lg p-1"
             title="Braga Ciclável"
           >
             <Image
@@ -112,19 +106,16 @@ const contacts = {
           </a>
           <a
             href="https://ciclaveiro.pt"
-            class="h-12 w-auto"
+            class="h-12 w-auto bg-white rounded-lg p-1"
             title="Ciclaveiro"
           >
-            <Image
-              src={Ciclaveiro}
-              alt="Logo for Ciclaveiro"
-              class="h-full w-full object-contain"
-              loading="lazy"
-            />
+            <div class="h-full w-full [&>svg]:h-full [&>svg]:w-full">
+              <Fragment set:html={ciclaveiro} />
+            </div>
           </a>
           <a
             href="https://estradaviva.pt"
-            class="h-12 w-auto"
+            class="h-12 w-auto bg-white rounded-lg p-1"
             title="Estrada Viva"
           >
             <Image

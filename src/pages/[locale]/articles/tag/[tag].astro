@@ -1,35 +1,12 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { getEmDashCollection } from "emdash";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { createTagSlug, translateTag } from "@/lib/tagMapper";
 import * as m from "@/paraglide/messages";
 import { capitalize } from "@/utils";
-
-export async function getStaticPaths() {
-  const allBlogArticles = await getCollection("blog");
-  const paths = new Set();
-
-  for (const article of allBlogArticles) {
-    const locale = article.id.split("/")[0];
-    for (const tag of article.data.tags) {
-      // Use tag slug for URL
-      const tagSlug = createTagSlug(tag);
-      paths.add(JSON.stringify({ locale, tag: tagSlug }));
-    }
-  }
-
-  return Array.from(paths).map((path) => {
-    const { locale, tag } = JSON.parse(path as string);
-    return {
-      params: { locale, tag },
-      props: { tag },
-    };
-  });
-}
 
 const { tag } = Astro.params;
 const locale = Astro.currentLocale as "pt" | "en";
@@ -38,24 +15,26 @@ if (!tag) {
   return Astro.redirect(`/${locale}/articles`);
 }
 
-const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
-  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
-// Filter articles by matching tag slug with actual tag
-const tagArticles = allBlogArticles.filter((article) =>
-  article.data.tags.some((articleTag) => createTagSlug(articleTag) === tag),
-);
+const { entries } = await getEmDashCollection("blog", {
+  status: "published",
+  locale,
+  where: { tags: tag },
+  orderBy: { pub_date: "desc" },
+});
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const tagArticles = entries as any[];
 
 // Get the actual English tag for translation (find first match)
 const actualTag =
-  allBlogArticles
-    .flatMap((article) => article.data.tags)
-    .find((articleTag) => createTagSlug(articleTag) === tag) || tag;
+  tagArticles
+    // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+    .flatMap((article: any) => article.data.tags)
+    .find((articleTag: string) => createTagSlug(articleTag) === tag) || tag;
 
 // Translate tag for display
 const displayTag = translateTag(actualTag, locale);
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout title={m.articles_tag()}>

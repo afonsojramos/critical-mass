@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "massacritica",
+  "compatibility_date": "2026-01-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "massacritica-db",
+      "database_id": "1dae8032-a741-4af5-ab0e-f9adebf9aff7",
+      "remote": true
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "massacritica-media",
+      "remote": true
+    }
+  ]
+}

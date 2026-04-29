@@ -1,8 +1,7 @@
 ---
 export const prerender = false;
 
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { search } from "emdash";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import SearchForm from "@/components/ui/SearchForm.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
@@ -10,23 +9,17 @@ import MainLayout from "@/layouts/MainLayout.astro";
 const query: string | null = Astro.url.searchParams.get("query");
 const lang = Astro.currentLocale;
 
-const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog")).filter((article) =>
-  article.filePath?.includes(`/${lang}/`),
-);
-
 if (query === null) {
   return Astro.redirect(`/${lang}/articles`);
 }
 
-const searchResults = allBlogArticles.filter((article) => {
-  const titleMatch: boolean = article.data.title.toLowerCase().includes(query.toLowerCase());
-
-  const bodyMatch: boolean = article.body.toLowerCase().includes(query.toLowerCase());
-
-  const slugMatch: boolean = article.slug.toLowerCase().includes(query.toLowerCase());
-
-  return titleMatch || bodyMatch || slugMatch;
+const { items: searchResults } = await search(query, {
+  collections: ["blog"],
+  limit: 20,
+  locale: lang,
 });
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=60, stale-while-revalidate=3600");
 ---
 
 <MainLayout title="Search Results">
