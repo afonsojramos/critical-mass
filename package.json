@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro check && astro build",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro check && astro build && bash scripts/patch-astro-cloudflare.sh",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "biome check . --error-on-warnings --files-ignore-unknown=true",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
-    "@astrojs/cloudflare": "^13.1.7",
+    "@astrojs/cloudflare": "^13.2.2",
     "@astrojs/react": "^5.0.2",
     "@astrojs/sitemap": "^3.7.2",
     "@emdash-cms/auth-atproto": "^0.2.0",
