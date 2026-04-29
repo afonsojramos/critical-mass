@@ -19,3 +19,16 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Emdash local dev
+data.db
+data.db-journal
+uploads/
+seed.json
+.wrangler/
+emdash-env.d.ts
+
+# Playwright/test artifacts
+.playwright-mcp/
+test-*.png
+homepage-*.png
