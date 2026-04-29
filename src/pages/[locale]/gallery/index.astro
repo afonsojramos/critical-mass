@@ -1,16 +1,11 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
 import GalleryView from "@/components/sections/GalleryView.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
-import { locales } from "@/paraglide/runtime";
 
-export async function getStaticPaths() {
-  return locales.map((locale) => ({
-    params: { locale },
-  }));
-}
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout title={m.gallery_title()} description={m.gallery_description()}>

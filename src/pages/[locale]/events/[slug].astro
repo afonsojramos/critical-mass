@@ -1,29 +1,29 @@
 ---
-export const prerender = true;
+export const prerender = false;
 
-import { getCollection } from "astro:content";
+import { PortableText } from "astro-portabletext";
+import { getEmDashEntry } from "emdash";
 import EventCarousel from "@/components/ui/EventCarousel.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 
-export async function getStaticPaths() {
-  const allEvents = await getCollection("events");
+const { slug } = Astro.params;
 
-  return allEvents.map((event) => {
-    const locale = event.id.split("/")[0];
-
-    return {
-      params: {
-        locale,
-        slug: event.slug.replace(`${locale}/`, ""),
-      },
-      props: { event },
-    };
-  });
+if (!slug) {
+  return Astro.redirect(`/${Astro.currentLocale}/events`);
 }
 
-const { event } = Astro.props;
-const { Content } = await event.render();
+const locale = Astro.currentLocale;
+const { entry } = await getEmDashEntry("events", slug, { locale });
+
+if (!entry) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const event = entry as any;
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
 <MainLayout title={event.data.title} description={event.data.description}>
@@ -73,7 +73,7 @@ const { Content } = await event.render();
       </div>
       <!-- Event content -->
       <div class="prose prose-lg max-w-none">
-        <Content />
+        <PortableText value={event.data.body} />
       </div>
     </div>
   </article>
