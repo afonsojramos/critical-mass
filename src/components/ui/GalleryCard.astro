@@ -1,20 +1,24 @@
 ---
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
 import type { ImageMetadata } from "astro";
+import { getEmDashEntry } from "emdash";
 import { translateTag } from "@/lib/tagMapper";
 import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
 type Props = {
-  galleryItem: CollectionEntry<"gallery">;
+  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+  galleryItem: any;
 };
 
 const { galleryItem } = Astro.props as Props;
 const locale = Astro.currentLocale as "pt" | "en";
 
 // Get author data if available
-const author = galleryItem.data.author ? await getEntry(galleryItem.data.author) : null;
+const { entry: authorEntry } = galleryItem.data.author
+  ? await getEmDashEntry("authors", galleryItem.data.author)
+  : { entry: null };
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const author = authorEntry as any;
 
 const optimizedImage = getOptimizedImage(galleryItem.data.image) as ImageMetadata;
 ---
@@ -25,10 +29,9 @@ const optimizedImage = getOptimizedImage(galleryItem.data.image) as ImageMetadat
     alt={galleryItem.data.title}
     class="w-full h-auto object-cover"
     width={400}
-    height={300}
     loading="lazy"
   />
-  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.socialMediaLink || ""}>
+  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.social_media_link || ""}>
     <div class="p-4 pt-6 text-white bg-gradient-to-t from-black/80 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full cursor-default gallery-content">
       <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
       {galleryItem.data.description && (
@@ -36,9 +39,9 @@ const optimizedImage = getOptimizedImage(galleryItem.data.image) as ImageMetadat
       )}
       {author && (
         <p class="text-xs text-gray-300 mb-2">
-          By {author.data.socialMediaLink ? (
+          By {author.data.social_media_link ? (
             <a
-              href={author.data.socialMediaLink}
+              href={author.data.social_media_link}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-white underline decoration-dotted underline-offset-2"

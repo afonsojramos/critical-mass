@@ -1,17 +1,24 @@
 ---
-import { getCollection } from "astro:content";
+import { getEmDashCollection } from "emdash";
 import Section from "@/components/sections/Section.astro";
 import EventCard from "@/components/ui/EventCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
 
-const lang = Astro.currentLocale || "en";
+const lang = Astro.currentLocale || "pt";
 
-const allEvents = await getCollection("events");
-
-const featuredEvents = allEvents
-  .filter((event) => event.data.featured)
-  .filter((event) => event.filePath?.includes(`/${lang}/`));
+// Filter for featured client-side since boolean where filters need a string match
+// in Emdash but the field is stored as integer (0/1)
+const { entries: allEvents } = await getEmDashCollection("events", {
+  status: "published",
+  locale: lang,
+});
+const featuredEvents = (allEvents as Array<{ id: string; data: Record<string, unknown> }>).filter(
+  (e) => {
+    const featured = e.data.featured;
+    return featured === true || featured === 1 || featured === "true";
+  },
+);
 ---
 
 <Section id="events">

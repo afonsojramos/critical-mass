@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Calendar from "@/assets/calendar.svg";
+import calendarSvg from "@/assets/calendar.svg?raw";
 import HeroIlust from "@/assets/hero.png";
 import Section from "@/components/sections/Section.astro";
 import * as m from "@/paraglide/messages";
@@ -48,13 +48,9 @@ const currentLang = Astro.currentLocale;
             aria-label="Download calendar event"
             title={m.hero_downloadCalendar()}
           >
-            <Image
-              src={Calendar}
-              alt="Calendar"
-              class="w-6 h-6 text-black"
-              priority
-              loading="eager"
-            />
+            <div class="w-6 h-6 [&>svg]:size-full">
+              <Fragment set:html={calendarSvg} />
+            </div>
           </a>
         </div>
       </div>

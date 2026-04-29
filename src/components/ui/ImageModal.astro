@@ -33,15 +33,22 @@ const { id } = Astro.props;
         modalImg.alt = imageAlt;
         modalTitle.textContent = imageAlt;
 
-        // Handle author display
+        // Handle author display (using DOM API to prevent XSS)
+        modalAuthor.textContent = '';
         if (authorName) {
-          if (authorLink) {
-            modalAuthor.innerHTML = `By <a href="${authorLink}" target="_blank" rel="noopener noreferrer" class="hover:text-white underline decoration-dotted underline-offset-2 pointer-events-auto">${authorName}</a>`;
+          const byText = document.createTextNode('By ');
+          modalAuthor.appendChild(byText);
+          if (authorLink && (authorLink.startsWith('https://') || authorLink.startsWith('http://'))) {
+            const a = document.createElement('a');
+            a.href = authorLink;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'hover:text-white underline decoration-dotted underline-offset-2 pointer-events-auto';
+            a.textContent = authorName;
+            modalAuthor.appendChild(a);
           } else {
-            modalAuthor.innerHTML = `By ${authorName}`;
+            modalAuthor.appendChild(document.createTextNode(authorName));
           }
-        } else {
-          modalAuthor.innerHTML = '';
         }
 
         modal.classList.remove('opacity-0', 'invisible');

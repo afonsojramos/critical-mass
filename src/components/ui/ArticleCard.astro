@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
+import { getEmDashEntry } from "emdash";
 import ArticleIcon from "@/components/Icons/ArticleIcon.astro";
 import VideoIcon from "@/components/Icons/VideoIcon.astro";
 import Card from "@/components/ui/Card.astro";
@@ -12,10 +11,13 @@ const lang = Astro.currentLocale;
 const { article } = Astro.props;
 
 interface Props {
-  article: CollectionEntry<"blog">;
+  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+  article: any;
 }
 
-const author = await getEntry(article.data.author);
+const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const author = authorEntry as any;
 ---
 
 <Card isUnderline={true}>
@@ -24,10 +26,10 @@ const author = await getEntry(article.data.author);
       <span
         class="bg-green text-black text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded"
       >
-        {article.data.type == "Article" ? <ArticleIcon /> : <VideoIcon />}
-        {article.data.type}
+        {article.data.content_type == "Article" ? <ArticleIcon /> : <VideoIcon />}
+        {article.data.content_type}
       </span>
-      <span class="text-sm">{formatDate(article.data.pubDate)}</span>
+      <span class="text-sm">{formatDate(article.data.pub_date)}</span>
     </div>
     <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
       {article.data.title}
@@ -45,9 +47,9 @@ const author = await getEntry(article.data.author);
           width={28}
         />
         <span class="font-medium">
-          {author?.data.socialMediaLink ? (
+          {author?.data.social_media_link ? (
             <a
-              href={author.data.socialMediaLink}
+              href={author.data.social_media_link}
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-green underline decoration-dotted underline-offset-2"
@@ -60,7 +62,7 @@ const author = await getEntry(article.data.author);
         </span>
       </div>
       <a
-        href={`/${lang}/articles/${article.slug.split("/")[1]}`}
+        href={`/${lang}/articles/${article.id}`}
         class="inline-flex items-center font-medium text-black hover:text-green"
       >
         Read more
