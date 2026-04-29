@@ -2,7 +2,14 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "massacritica",
   "compatibility_date": "2026-01-15",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat",
+    // Required: with nodejs_compat (process v2 enabled by default after
+    // 2025-09-15), Astro detects Node and returns Response bodies as async
+    // iterables. Workers' Response only handles those when this flag is on.
+    // Defaults true after 2026-02-19; we set explicitly for our compat date.
+    "fetch_iterable_type_support"
+  ],
   "d1_databases": [
     {
       "binding": "DB",
