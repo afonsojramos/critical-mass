@@ -40,6 +40,9 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "compile",
   }),
+  redirects: {
+    "/admin": "/_emdash/admin",
+  },
   i18n: {
     locales: [...locales],
     defaultLocale: baseLocale,
