@@ -24,5 +24,12 @@
       "bucket_name": "massacritica-media",
       "remote": true
     }
+  ],
+  "send_email": [
+    {
+      "name": "SEND_EMAIL",
+      "allowed_sender_addresses": ["auth@admin.massacritica.pt"],
+      "remote": true
+    }
   ]
 }
