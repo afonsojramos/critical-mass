@@ -26,9 +26,6 @@ bun run lint:fix            # Auto-fix Biome issues
 
 # Internationalization
 bun run machine-translate   # Auto-translate content using Inlang
-
-# Content Migration
-bun run scripts/migrate-content.ts  # Generate seed.json from legacy content files
 ```
 
 ## Architecture
