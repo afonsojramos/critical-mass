@@ -8,6 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { baseLocale, locales } from "./src/paraglide/runtime";
+import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,6 +34,12 @@ export default defineConfig({
     emdash({
       database: d1({ binding: "DB" }),
       storage: r2({ binding: "MEDIA" }),
+      plugins: [
+        emailCloudflare({
+          from: "auth@admin.massacritica.pt",
+          fromName: "Massa Crítica",
+        }),
+      ],
     }),
     sitemap(),
   ],
