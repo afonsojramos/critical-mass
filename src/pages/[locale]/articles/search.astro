@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import { search } from "emdash";
+import { getEmDashEntry, search } from "emdash";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import SearchForm from "@/components/ui/SearchForm.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
@@ -13,11 +13,16 @@ if (query === null) {
   return Astro.redirect(`/${lang}/articles`);
 }
 
-const { items: searchResults } = await search(query, {
+const { items } = await search(query, {
   collections: ["blog"],
   limit: 20,
   locale: lang,
 });
+
+const entries = await Promise.all(
+  items.map((item) => getEmDashEntry("blog", item.id, { locale: lang })),
+);
+const searchResults = entries.map(({ entry }) => entry).filter((entry) => entry !== null);
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=60, stale-while-revalidate=3600");
 ---
