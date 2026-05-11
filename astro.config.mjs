@@ -32,6 +32,7 @@ export default defineConfig({
     // In local dev, the Cloudflare Vite plugin emulates D1 with local SQLite
     // and R2 with local filesystem automatically.
     emdash({
+      siteUrl: "https://massacritica.pt",
       database: d1({ binding: "DB" }),
       storage: r2({ binding: "MEDIA" }),
       plugins: [
