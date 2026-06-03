@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is an Astro-based multilingual website for Critical Mass Portugal. The site features:
+
 - Multilingual support (Portuguese/English) via Inlang/Paraglide.js
 - Content management via Emdash CMS (database-first, Portable Text)
 - Server-side rendering with Cloudflare adapter
@@ -21,8 +22,8 @@ bun run build               # Build production site (includes i18n compile + ast
 bun run preview             # Preview build locally
 
 # Code Quality
-bun run lint                # Check code with Biome (fails on warnings)
-bun run lint:fix            # Auto-fix Biome issues
+bun run lint                # Lint JS/TS with Oxlint (Vite+)
+bun run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
 
 # Internationalization
 bun run machine-translate   # Auto-translate content using Inlang
@@ -31,6 +32,7 @@ bun run machine-translate   # Auto-translate content using Inlang
 ## Architecture
 
 ### Internationalization
+
 - Base locale: Portuguese (`pt`)
 - Supported locales: `pt`, `en`
 - UI strings: `messages/pt.json`, `messages/en.json` (Paraglide.js)
@@ -39,6 +41,7 @@ bun run machine-translate   # Auto-translate content using Inlang
 - Build process compiles translations before Astro build
 
 ### Content Management
+
 - CMS: Emdash CMS at `/_emdash/admin`
 - Database: Cloudflare D1 (production) / SQLite (local dev)
 - Media: Cloudflare R2 (production) / local filesystem (local dev)
@@ -49,6 +52,7 @@ bun run machine-translate   # Auto-translate content using Inlang
 - Legacy content files in `src/content/` (kept for reference during migration)
 
 ### Key Directories
+
 - `src/components/sections/` - Page sections (Hero, FeaturedEvents, etc.)
 - `src/components/ui/` - Reusable UI components
 - `src/pages/[locale]/` - Localized pages with dynamic routing
@@ -57,13 +61,19 @@ bun run machine-translate   # Auto-translate content using Inlang
 - `scripts/` - Migration and utility scripts
 
 ### Infrastructure
+
 - `wrangler.jsonc` - Cloudflare Workers config (D1 + R2 bindings)
 - Environment variables: `EMDASH_AUTH_SECRET`, `EMDASH_PREVIEW_SECRET`
 
 ### Styling
+
 - TailwindCSS v4 with Vite plugin
 - Global styles in `src/styles/global.css`
-- Biome formatting with 2-space indentation, 100-char line width
+
+### Tooling
+
+- Linting and formatting via Vite+ (`vp`): Oxlint (`bun run lint`) and Oxfmt (`bun run format`). Requires the global `vp` CLI (https://vite.plus); the pre-commit hook skips checks with a warning if it is missing.
+- Oxfmt formats JS/TS, CSS, JSON/JSONC, and Markdown. It does not yet support `.astro`, so `.astro` files are currently left unformatted.
 
 ## Important Notes
 
