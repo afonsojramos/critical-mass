@@ -1,15 +1,15 @@
 {
   "name": "critical-mass",
-  "type": "module",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "biome check . --error-on-warnings --files-ignore-unknown=true",
-    "format": "biome check --write . --error-on-warnings --files-ignore-unknown=true",
+    "lint": "vp lint .",
+    "format": "vp fmt . --write",
     "machine-translate": "inlang machine translate --project project.inlang",
     "optimize": "optimizt --webp public/images",
     "svg": "svgo -r -f",
@@ -40,7 +40,6 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.16",
     "@funboxteam/optimizt": "^5.0.2",
     "@inlang/cli": "^3.1.11",
     "@inlang/paraglide-js": "^2.18.2",
