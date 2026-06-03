@@ -6,6 +6,7 @@ images:
 description: A sétima edição da Kidical Mass foi um sucesso, com o verão a aquecer, pedalámos pela cidade ao pôr do sol, de norte a sul do país.
 featured: true
 ---
+
 A primeira edição da Kidical Mass de 2025 reuniu ciclistas de todo o Portugal em passeios simultâneos ao pôr do sol. De Lisboa ao Porto, de Braga a Faro, famílias e entusiastas do ciclismo participaram nesta celebração nacional da cultura da bicicleta.
 
 ## Participação Nacional

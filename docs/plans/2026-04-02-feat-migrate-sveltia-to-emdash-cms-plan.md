@@ -64,6 +64,7 @@ After:
 Upgrade Astro from 5.13.5 to 6.x in a separate PR. This isolates framework breaking changes from the CMS migration.
 
 **Tasks:**
+
 - [ ] Upgrade `astro` to `^6.0.0` in `package.json`
 - [ ] Upgrade `@astrojs/cloudflare` to Astro 6-compatible version
 - [ ] Upgrade `@astrojs/check` and `@astrojs/sitemap` to compatible versions
@@ -77,6 +78,7 @@ Upgrade Astro from 5.13.5 to 6.x in a separate PR. This isolates framework break
 **Success criteria:** Site deploys on Astro 6 with identical behavior to Astro 5.
 
 **Files:**
+
 - `package.json`
 - `astro.config.mjs` (if adapter/integration APIs changed)
 - Potentially `src/content/config.ts` (if content collections API changed)
@@ -88,6 +90,7 @@ Upgrade Astro from 5.13.5 to 6.x in a separate PR. This isolates framework break
 Install Emdash and configure infrastructure. The old CMS continues to work — this is additive only.
 
 **Tasks:**
+
 - [ ] Install dependencies: `bun add emdash @emdash-cms/cloudflare astro-portabletext`
 - [ ] Remove `astro-decap-cms-oauth` from dependencies
 - [ ] Configure Emdash integration in `astro.config.mjs`:
@@ -131,15 +134,19 @@ export default defineConfig({
   "name": "massacritica",
   "compatibility_date": "2026-01-15",
   "compatibility_flags": ["nodejs_compat"],
-  "d1_databases": [{
-    "binding": "DB",
-    "database_name": "massacritica-db",
-    "database_id": "<to-be-created>"
-  }],
-  "r2_buckets": [{
-    "binding": "MEDIA",
-    "bucket_name": "massacritica-media"
-  }]
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "massacritica-db",
+      "database_id": "<to-be-created>",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "massacritica-media",
+    },
+  ],
 }
 ```
 
@@ -158,7 +165,7 @@ emdash({
       },
     },
   },
-})
+});
 ```
 
 - [ ] Create `src/live.config.ts` with Emdash loader:
@@ -181,6 +188,7 @@ export const collections = {
 **Success criteria:** Emdash admin panel loads. Collections can be created via CLI/admin. Old content files still exist but are no longer served by a CMS.
 
 **Files:**
+
 - `package.json`
 - `astro.config.mjs`
 - `wrangler.jsonc` (new)
@@ -198,6 +206,7 @@ Define Emdash collections matching the current schema, then migrate all existing
 **2a. Create collection schemas via CLI:**
 
 - [ ] Create `authors` collection:
+
   ```bash
   npx emdash schema create authors --label "Authors" --labelSingular "Author"
   npx emdash schema add-field authors --slug name --type string --required
@@ -207,6 +216,7 @@ Define Emdash collections matching the current schema, then migrate all existing
   ```
 
 - [ ] Create `blog` collection (with drafts, revisions, scheduling):
+
   ```bash
   npx emdash schema create blog --label "Blog" --labelSingular "Post" --supports drafts,revisions
   npx emdash schema add-field blog --slug title --type string --required
@@ -220,6 +230,7 @@ Define Emdash collections matching the current schema, then migrate all existing
   ```
 
 - [ ] Create `events` collection:
+
   ```bash
   npx emdash schema create events --label "Events" --labelSingular "Event" --supports drafts
   npx emdash schema add-field events --slug title --type string --required
@@ -230,6 +241,7 @@ Define Emdash collections matching the current schema, then migrate all existing
   ```
 
 - [ ] Create `gallery` collection:
+
   ```bash
   npx emdash schema create gallery --label "Gallery" --labelSingular "Gallery Item"
   npx emdash schema add-field gallery --slug title --type string --required
@@ -241,6 +253,7 @@ Define Emdash collections matching the current schema, then migrate all existing
   ```
 
 - [ ] Create `locations` collection:
+
   ```bash
   npx emdash schema create locations --label "Locations" --labelSingular "Location"
   npx emdash schema add-field locations --slug city --type string --required
@@ -282,6 +295,7 @@ Define Emdash collections matching the current schema, then migrate all existing
 **Success criteria:** All 5 collections populated in D1. Every content entry accessible via `getEmDashEntry()` with correct locale, slug, and data.
 
 **Files:**
+
 - `scripts/migrate-content.ts` (new)
 - `src/types/emdash.ts` (new, generated)
 
@@ -305,7 +319,9 @@ export function cfImage(src: string, opts: { width: number; height?: number; qua
     opts.height ? `height=${opts.height}` : null,
     `quality=${opts.quality ?? 75}`,
     "format=auto",
-  ].filter(Boolean).join(",");
+  ]
+    .filter(Boolean)
+    .join(",");
   return `/cdn-cgi/image/${params}${src}`;
 }
 ```
@@ -333,6 +349,7 @@ const components = {
 **3b. Migrate page files (remove `prerender = true`, replace queries):**
 
 Each file follows this pattern:
+
 - Remove `export const prerender = true` and `getStaticPaths()`
 - Replace `getCollection("x")` with `getEmDashCollection("x", { locale, status: "published" })`
 - Replace `getEntry(ref)` with `getEmDashEntry("authors", id)`
@@ -379,6 +396,7 @@ Each file follows this pattern:
 **Success criteria:** All pages render content from D1. Portable Text renders with correct formatting. Images load from R2 via Cloudflare Image Resizing. Search works with FTS5. All URLs return 200.
 
 **Files:** (22 files modified/created)
+
 - `src/utils/cfImage.ts` (new)
 - `src/components/PortableTextRenderer.astro` (new)
 - `src/components/blocks/ImageBlock.astro` (new)
@@ -395,6 +413,7 @@ Each file follows this pattern:
 Comprehensive testing before declaring the migration complete.
 
 **Tasks:**
+
 - [ ] Create URL smoke test script that verifies all existing URLs return 200:
   - All blog article URLs (both locales)
   - All event URLs (both locales)
@@ -447,6 +466,7 @@ Only after Phase 5 is confirmed stable.
 **Success criteria:** Repository is clean. No legacy CMS artifacts remain. CLAUDE.md reflects the new architecture.
 
 **Files:**
+
 - `.github/workflows/cms-pr.yml` (delete)
 - `.github/workflows/sync-cms-branch.yml` (delete)
 - `CMS_SETUP.md` (delete)
@@ -495,14 +515,14 @@ Media upload in Emdash Admin
 
 ### API Surface Parity
 
-| Interface | Current | After Migration |
-|-----------|---------|-----------------|
-| Content query | `getCollection()` / `getEntry()` from `astro:content` | `getEmDashCollection()` / `getEmDashEntry()` from `emdash` |
-| Content types | `CollectionEntry<"blog">` | Generated types from `npx emdash types` |
-| Rich text render | `<Content />` from `astro:content` | `<PortableText />` from `astro-portabletext` |
-| Image optimization | `<Image>` with `ImageMetadata` | `<img>` with `cfImage()` URL helper |
-| Search | In-memory `body.includes(query)` | `searchCollection("blog", query, { locale })` |
-| CMS admin | `/admin/` (Sveltia) | `/_emdash/admin` (Emdash) |
+| Interface          | Current                                               | After Migration                                            |
+| ------------------ | ----------------------------------------------------- | ---------------------------------------------------------- |
+| Content query      | `getCollection()` / `getEntry()` from `astro:content` | `getEmDashCollection()` / `getEmDashEntry()` from `emdash` |
+| Content types      | `CollectionEntry<"blog">`                             | Generated types from `npx emdash types`                    |
+| Rich text render   | `<Content />` from `astro:content`                    | `<PortableText />` from `astro-portabletext`               |
+| Image optimization | `<Image>` with `ImageMetadata`                        | `<img>` with `cfImage()` URL helper                        |
+| Search             | In-memory `body.includes(query)`                      | `searchCollection("blog", query, { locale })`              |
+| CMS admin          | `/admin/` (Sveltia)                                   | `/_emdash/admin` (Emdash)                                  |
 
 ### Integration Test Scenarios
 
@@ -555,14 +575,14 @@ Media upload in Emdash Admin
 
 ## Risk Analysis & Mitigation
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
-| Emdash beta instability | Medium | High | Pin version, keep git content as rollback, D1 Time Travel for data recovery |
-| Astro 6 breaking changes | Medium | Medium | Upgrade in separate PR, verify before CMS migration |
-| Portable Text conversion loss | Low | Medium | Manual review of each converted article, visual comparison |
-| Cloudflare Image Resizing not available | Low | High | Verify account capabilities before Phase 3. Fallback: use Astro `<Image>` with remote images |
-| Editor lockout during transition | Low | High | Retain GitHub OAuth in Emdash, test auth before cutover |
-| D1 query performance | Low | Medium | D1 read replication, Cloudflare cache headers, monitor latency |
+| Risk                                    | Likelihood | Impact | Mitigation                                                                                   |
+| --------------------------------------- | ---------- | ------ | -------------------------------------------------------------------------------------------- |
+| Emdash beta instability                 | Medium     | High   | Pin version, keep git content as rollback, D1 Time Travel for data recovery                  |
+| Astro 6 breaking changes                | Medium     | Medium | Upgrade in separate PR, verify before CMS migration                                          |
+| Portable Text conversion loss           | Low        | Medium | Manual review of each converted article, visual comparison                                   |
+| Cloudflare Image Resizing not available | Low        | High   | Verify account capabilities before Phase 3. Fallback: use Astro `<Image>` with remote images |
+| Editor lockout during transition        | Low        | High   | Retain GitHub OAuth in Emdash, test auth before cutover                                      |
+| D1 query performance                    | Low        | Medium | D1 read replication, Cloudflare cache headers, monitor latency                               |
 
 ## Future Considerations
 
@@ -602,49 +622,20 @@ Media upload in Emdash Admin
 ### Complete File Change Manifest
 
 **DELETE (4 files):**
+
 1. `public/admin/config.yml`
 2. `.github/workflows/cms-pr.yml`
 3. `.github/workflows/sync-cms-branch.yml`
 4. `CMS_SETUP.md`
 
-**CREATE (6+ files):**
-5. `wrangler.jsonc`
-6. `src/live.config.ts`
-7. `src/types/emdash.ts` (generated)
-8. `src/utils/cfImage.ts`
-9. `src/components/PortableTextRenderer.astro`
-10. `src/components/blocks/ImageBlock.astro`
-11. `scripts/migrate-content.ts`
+**CREATE (6+ files):** 5. `wrangler.jsonc` 6. `src/live.config.ts` 7. `src/types/emdash.ts` (generated) 8. `src/utils/cfImage.ts` 9. `src/components/PortableTextRenderer.astro` 10. `src/components/blocks/ImageBlock.astro` 11. `scripts/migrate-content.ts`
 
-**MODIFY (19 files):**
-12. `package.json`
-13. `astro.config.mjs`
-14. `src/content/config.ts` (remove or replace)
-15. `src/utils/getOptimizedImage.ts`
-16. `src/utils/jsonLD.js`
-17. `src/components/seo/Seo.astro`
-18. `src/pages/[locale]/articles/index.astro`
-19. `src/pages/[locale]/articles/[slug].astro`
-20. `src/pages/[locale]/articles/search.astro`
-21. `src/pages/[locale]/articles/tag/[tag].astro`
-22. `src/pages/[locale]/events/index.astro`
-23. `src/pages/[locale]/events/[slug].astro`
-24. `src/pages/[locale]/gallery/[category].astro`
-25. `src/pages/articles/api/search.json.ts`
-26. `src/components/sections/FeaturedEvents.astro`
-27. `src/components/sections/LastBlogArticle.astro`
-28. `src/components/sections/Locations.astro`
-29. `src/components/sections/GalleryView.astro`
-30. `src/components/ui/ArticleCard.astro`
-31. `src/components/ui/GalleryCard.astro`
-32. `src/components/ui/EventCard.astro` (type annotation only)
+**MODIFY (19 files):** 12. `package.json` 13. `astro.config.mjs` 14. `src/content/config.ts` (remove or replace) 15. `src/utils/getOptimizedImage.ts` 16. `src/utils/jsonLD.js` 17. `src/components/seo/Seo.astro` 18. `src/pages/[locale]/articles/index.astro` 19. `src/pages/[locale]/articles/[slug].astro` 20. `src/pages/[locale]/articles/search.astro` 21. `src/pages/[locale]/articles/tag/[tag].astro` 22. `src/pages/[locale]/events/index.astro` 23. `src/pages/[locale]/events/[slug].astro` 24. `src/pages/[locale]/gallery/[category].astro` 25. `src/pages/articles/api/search.json.ts` 26. `src/components/sections/FeaturedEvents.astro` 27. `src/components/sections/LastBlogArticle.astro` 28. `src/components/sections/Locations.astro` 29. `src/components/sections/GalleryView.astro` 30. `src/components/ui/ArticleCard.astro` 31. `src/components/ui/GalleryCard.astro` 32. `src/components/ui/EventCard.astro` (type annotation only)
 
-**DELETE IN CLEANUP (Phase 6):**
-33. `src/content/` directory (all content files)
-34. `src/assets/images/` content migrated to R2
-35. `scripts/migrate-content.ts`
+**DELETE IN CLEANUP (Phase 6):** 33. `src/content/` directory (all content files) 34. `src/assets/images/` content migrated to R2 35. `scripts/migrate-content.ts`
 
 **UNCHANGED:**
+
 - `src/lib/tagMapper.ts` (CMS-agnostic)
 - `src/middleware.ts` (Paraglide, CMS-agnostic)
 - `src/i18n/utils.ts`

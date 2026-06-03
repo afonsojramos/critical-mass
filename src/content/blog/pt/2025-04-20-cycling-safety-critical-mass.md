@@ -26,6 +26,7 @@ Antes de participares de qualquer passeio em grupo, especialmente um tão dinâm
 ### 2. Conhece a tua Bicicleta
 
 A Massa Crítica atrai ciclistas de todos os níveis de experiência. Se és mais novo no ciclismo:
+
 - Pratica começar, parar e sinalizar numa área tranquila
 - Fica confortável pedalando com uma mão para que possas sinalizar curvas
 - Familiariza-te com as tuas mudanças para lidar com vários terrenos
@@ -79,6 +80,7 @@ A Massa Crítica tem a sua própria cultura e fluxo, mas estes princípios unive
 ### 1. Conhece os Teus Direitos
 
 As leis referentes a passeios em grupo variam por localidade. Geralmente:
+
 - Bicicletas são legalmente consideradas veículos com os mesmos direitos e responsabilidades
 - Tens o direito de ocupar uma faixa inteira quando necessário para segurança
 - Deves obedecer a sinais e placas de trânsito, a menos que orientado de outra forma pela polícia
@@ -86,6 +88,7 @@ As leis referentes a passeios em grupo variam por localidade. Geralmente:
 ### 2. Interage Positivamente com Autoridades
 
 Se a polícia estiver presente:
+
 - **Mantém-te calmo e respeitoso**
 - **Cumpre instruções diretas**
 - **Evita intensificar tensões**
@@ -96,6 +99,7 @@ Se a polícia estiver presente:
 ### 1. Para Famílias com Crianças
 
 A Massa Crítica pode ser amigável para famílias com planeamento adequado:
+
 - **Posiciona crianças no meio do grupo** para máxima proteção
 - **Considera bicicletas de carga ou cadeirinhas infantis** em vez de deixar crianças pequenas pedalarem independentemente
 - **Elabora um plano de saída** se o passeio se tornar muito longo ou intenso
@@ -103,6 +107,7 @@ A Massa Crítica pode ser amigável para famílias com planeamento adequado:
 ### 2. Para Fotografia
 
 Muitos ciclistas documentam a Massa Crítica através de fotos e vídeos:
+
 - **Monta câmaras com segurança**
 - **Não deixes que a fotografia distraia do ciclismo seguro**
 - **Pede permissão** antes de fotografar indivíduos específicos
@@ -110,6 +115,7 @@ Muitos ciclistas documentam a Massa Crítica através de fotos e vídeos:
 ### 3. Para Sistemas de Som
 
 Música adiciona à atmosfera festiva:
+
 - **Fixa as colunas adequadamente** para prevenir acidentes
 - **Mantém o volume razoável** para permitir comunicações de segurança
 - **Escolhe música inclusiva** apropriada para todas as idades

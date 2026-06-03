@@ -26,6 +26,7 @@ Before joining any group ride, especially one as dynamic as Critical Mass:
 ### 2. Know Your Bike
 
 Critical Mass attracts riders of all experience levels. If you're newer to cycling:
+
 - Practice starting, stopping, and signaling in a quiet area
 - Become comfortable riding with one hand so you can signal turns
 - Familiarize yourself with your gears to handle various terrain
@@ -79,6 +80,7 @@ Critical Mass has its own culture and flow, but these universal group riding pri
 ### 1. Know Your Rights
 
 Laws regarding group rides vary by location. Generally:
+
 - Bicycles are legally considered vehicles with the same rights and responsibilities
 - You have the right to occupy a full lane when necessary for safety
 - You must obey traffic signals and signs unless directed otherwise by police
@@ -86,6 +88,7 @@ Laws regarding group rides vary by location. Generally:
 ### 2. Interact Positively with Authorities
 
 If police are present:
+
 - **Remain calm and respectful**
 - **Comply with direct instructions**
 - **Avoid escalating tensions**
@@ -96,6 +99,7 @@ If police are present:
 ### 1. For Families with Children
 
 Critical Mass can be family-friendly with proper planning:
+
 - **Position children in the middle of the group** for maximum protection
 - **Consider cargo bikes or child seats** rather than having young children ride independently
 - **Have a bail-out plan** if the ride becomes too long or intense
@@ -103,6 +107,7 @@ Critical Mass can be family-friendly with proper planning:
 ### 2. For Photography
 
 Many riders document Critical Mass through photos and video:
+
 - **Mount cameras securely**
 - **Don't let photography distract from safe riding**
 - **Ask permission** before photographing specific individuals
@@ -110,6 +115,7 @@ Many riders document Critical Mass through photos and video:
 ### 3. For Sound Systems
 
 Music adds to the festive atmosphere:
+
 - **Secure speakers properly** to prevent accidents
 - **Keep volume reasonable** to allow for safety communications
 - **Choose inclusive music** appropriate for all ages

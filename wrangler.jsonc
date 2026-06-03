@@ -8,28 +8,28 @@
     // 2025-09-15), Astro detects Node and returns Response bodies as async
     // iterables. Workers' Response only handles those when this flag is on.
     // Defaults true after 2026-02-19; we set explicitly for our compat date.
-    "fetch_iterable_type_support"
+    "fetch_iterable_type_support",
   ],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "massacritica-db",
       "database_id": "1dae8032-a741-4af5-ab0e-f9adebf9aff7",
-      "remote": true
-    }
+      "remote": true,
+    },
   ],
   "r2_buckets": [
     {
       "binding": "MEDIA",
       "bucket_name": "massacritica-media",
-      "remote": true
-    }
+      "remote": true,
+    },
   ],
   "send_email": [
     {
       "name": "SEND_EMAIL",
       "allowed_sender_addresses": ["auth@admin.massacritica.pt"],
-      "remote": true
-    }
-  ]
+      "remote": true,
+    },
+  ],
 }
