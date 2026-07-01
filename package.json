@@ -20,7 +20,7 @@
     "@astrojs/cloudflare": "^13.6.1",
     "@astrojs/react": "^5.0.7",
     "@astrojs/sitemap": "^3.7.3",
-    "@emdash-cms/auth-atproto": "^0.2.10",
+    "@emdash-cms/auth-atproto": "^0.2.23",
     "@emdash-cms/cloudflare": "^0.16.1",
     "@tailwindcss/vite": "^4.3.2",
     "@tanstack/react-query": "^5.101.2",
