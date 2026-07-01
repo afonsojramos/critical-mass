@@ -34,7 +34,7 @@
     "node-html-parser": "^8.0.4",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.3",
     "swiper": "^14.0.1",
     "tailwindcss": "^4.3.2",
     "typescript": "^6.0.3"
