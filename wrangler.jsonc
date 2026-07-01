@@ -1,6 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "critical-mass",
+  // Custom Worker entry (src/worker.ts) wraps Astro's Cloudflare handler with
+  // EmDash's scheduled() handler; the Cron Trigger below drives it.
+  "main": "src/worker.ts",
   "compatibility_date": "2026-01-15",
   "compatibility_flags": [
     "nodejs_compat",
@@ -32,4 +35,10 @@
       "remote": true,
     },
   ],
+  // Drives EmDash scheduled publishing, plugin cron, and system cleanup via the
+  // Worker's scheduled() handler (see src/worker.ts). Workers has no timer
+  // fallback, so this Cron Trigger is required for time-based background work.
+  "triggers": {
+    "crons": ["* * * * *"],
+  },
 }
