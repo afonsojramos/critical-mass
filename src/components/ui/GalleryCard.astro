@@ -1,9 +1,8 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import { getEmDashEntry } from "emdash";
+import ContentImage from "@/components/ui/ContentImage.astro";
 import { translateTag } from "@/lib/tagMapper";
-import { getOptimizedImage } from "@/utils/getOptimizedImage";
+import { toImageSource } from "@/utils/toImageSource";
 
 type Props = {
   // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
@@ -20,18 +19,20 @@ const { entry: authorEntry } = galleryItem.data.author
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
 
-const optimizedImage = getOptimizedImage(galleryItem.data.image) as ImageMetadata;
+// Modal needs a plain URL string; ImageMetadata exposes it via `.src`.
+const resolvedImage = toImageSource(galleryItem.data.image);
+const modalImageSrc = typeof resolvedImage === "string" ? resolvedImage : resolvedImage?.src;
 ---
 
 <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-  <Image
-    src={optimizedImage}
+  <ContentImage
+    value={galleryItem.data.image}
     alt={galleryItem.data.title}
     class="w-full h-auto object-cover"
     width={400}
     loading="lazy"
   />
-  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={optimizedImage?.src} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.social_media_link || ""}>
+  <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={modalImageSrc} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.social_media_link || ""}>
     <div class="p-4 pt-6 text-white bg-gradient-to-t from-black/80 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full cursor-default gallery-content">
       <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
       {galleryItem.data.description && (

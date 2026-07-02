@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import { toImageSource } from "@/utils/toImageSource";
+
+interface Props {
+  // Emdash image field: a legacy path string or a MediaValue object.
+  value: unknown;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+}
+
+const { value, alt, class: className, width, height, loading } = Astro.props;
+const source = toImageSource(value);
+---
+
+{
+  source &&
+    (typeof source === "string" ? (
+      // CMS media (R2) or unbundled path: render as-is, no build optimization.
+      <img src={source} alt={alt} class={className} width={width} height={height} loading={loading} />
+    ) : (
+      // Bundled repo asset: optimize via astro:assets.
+      <Image
+        src={source}
+        alt={alt}
+        class={className}
+        width={width}
+        height={height}
+        loading={loading}
+      />
+    ))
+}

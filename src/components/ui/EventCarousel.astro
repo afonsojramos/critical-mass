@@ -1,8 +1,9 @@
 ---
-import { Image } from "astro:assets";
+import ContentImage from "@/components/ui/ContentImage.astro";
 
 interface Props {
-  images: string[];
+  // Legacy path strings or emdash MediaValue objects.
+  images: unknown[];
   eventTitle: string;
 }
 
@@ -28,8 +29,8 @@ if (!images || images.length === 0) return null;
     images.map((image, index) => (
       <swiper-slide class="h-full">
         <div class="relative h-full w-full">
-          <Image
-            src={image}
+          <ContentImage
+            value={image}
             alt={`${eventTitle} - Image ${index + 1}`}
             class="h-full w-full object-cover"
             width={800}

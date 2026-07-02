@@ -1,9 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import { getEmDashEntry } from "emdash";
 import ArticleIcon from "@/components/Icons/ArticleIcon.astro";
 import VideoIcon from "@/components/Icons/VideoIcon.astro";
 import Card from "@/components/ui/Card.astro";
+import ContentImage from "@/components/ui/ContentImage.astro";
 import { formatDate } from "@/utils";
 
 const lang = Astro.currentLocale;
@@ -39,9 +39,9 @@ const author = authorEntry as any;
     </p>
     <div class="flex justify-between items-center">
       <div class="flex items-center space-x-4">
-        <Image
+        <ContentImage
           class="w-7 h-7 rounded-full"
-          src={author?.data.image}
+          value={author?.data.image}
           alt={author?.data.name + " avatar"}
           height={28}
           width={28}

@@ -1,12 +1,10 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import { getEmDashCollection } from "emdash";
 import Section from "@/components/sections/Section.astro";
 import Card from "@/components/ui/Card.astro";
+import ContentImage from "@/components/ui/ContentImage.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
-import { getOptimizedImage } from "@/utils/getOptimizedImage";
 
 const lang = Astro.currentLocale;
 
@@ -18,10 +16,6 @@ const { entries } = await getEmDashCollection("blog", {
 });
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const lastBlogArticle = (entries[0] as any) || null;
-
-const optimizedImage = lastBlogArticle?.data.image
-  ? (getOptimizedImage(lastBlogArticle.data.image) as ImageMetadata)
-  : undefined;
 ---
 
 {
@@ -43,15 +37,13 @@ const optimizedImage = lastBlogArticle?.data.image
               {m.button_readMore}
             </a>
           </div>
-          {optimizedImage && (
-            <Image
-              src={optimizedImage}
-              alt={lastBlogArticle.data.title}
-              width={500}
-              class="hidden md:block max-w-5/8 rounded object-cover"
-              loading="lazy"
-            />
-          )}
+          <ContentImage
+            value={lastBlogArticle.data.image}
+            alt={lastBlogArticle.data.title}
+            width={500}
+            class="hidden md:block max-w-5/8 rounded object-cover"
+            loading="lazy"
+          />
         </div>
       </Card>
     </Section>
