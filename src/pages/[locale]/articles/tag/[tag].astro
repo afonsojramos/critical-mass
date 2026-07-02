@@ -15,14 +15,19 @@ if (!tag) {
   return Astro.redirect(`/${locale}/articles`);
 }
 
+// Fetch all published articles, then match the slugged URL tag against each
+// article's `data.tags` in-memory. Emdash's `where` clause resolves keys as
+// taxonomy/column filters, not entry data fields, and the URL tag is a slug
+// (see createTagSlug), so the match has to happen here.
 const { entries } = await getEmDashCollection("blog", {
   status: "published",
   locale,
-  where: { tags: tag },
   orderBy: { pub_date: "desc" },
 });
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const tagArticles = entries as any[];
+const tagArticles = (entries as any[]).filter((article) =>
+  (article.data.tags ?? []).some((articleTag: string) => createTagSlug(articleTag) === tag),
+);
 
 // Get the actual English tag for translation (find first match)
 const actualTag =
