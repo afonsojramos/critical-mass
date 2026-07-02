@@ -32,3 +32,4 @@ emdash-env.d.ts
 .playwright-mcp/
 test-*.png
 homepage-*.png
+.gstack/
