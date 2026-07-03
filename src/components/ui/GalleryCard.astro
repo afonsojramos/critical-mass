@@ -75,8 +75,10 @@ const modalImageSrc = typeof resolvedImage === "string" ? resolvedImage : resolv
         const imageTitle = overlay.getAttribute('data-image-title');
         const authorName = overlay.getAttribute('data-author-name');
         const authorLink = overlay.getAttribute('data-author-link');
-        if (imageSrc && imageTitle && authorName && authorLink) {
-          window.openImageModal(imageSrc, imageTitle, authorName, authorLink);
+        // Author is optional (openImageModal handles a missing author); only the
+        // image is required to open the lightbox.
+        if (imageSrc) {
+          window.openImageModal(imageSrc, imageTitle ?? '', authorName ?? undefined, authorLink ?? undefined);
         }
       });
     });
