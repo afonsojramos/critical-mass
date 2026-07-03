@@ -1,6 +1,7 @@
 ---
 import * as m from "@/paraglide/messages";
 import ContentImage from "@/components/ui/ContentImage.astro";
+import { editable } from "@/utils/editable";
 import Card from "./Card.astro";
 
 type Props = {
@@ -12,11 +13,13 @@ type Props = {
 const { event, index } = Astro.props as Props;
 
 const coverImage = event.data.images?.[0];
+const edit = editable("events", event);
 ---
 
 <Card isUnderline={true}>
   <div
     class={`relative overflow-hidden rounded-[45px] border-0 h-full ${index % 2 === 0 ? "bg-gray" : "bg-green"}`}
+    {...edit}
   >
     <div class="relative h-64 w-full">
       {
@@ -28,6 +31,7 @@ const coverImage = event.data.images?.[0];
             width={700}
             height={500}
             loading="lazy"
+            {...edit.images}
           />
         ) : (
           <div
@@ -41,11 +45,11 @@ const coverImage = event.data.images?.[0];
     <div class="p-8 sm:p-[50px]">
       <div class="flex flex-col mb-6">
         <h3 class="text-2xl font-medium mb-4">
-          <span class={`rounded-md px-2 text-white bg-dark`}>
+          <span class={`rounded-md px-2 text-white bg-dark`} {...edit.title}>
             {event.data.title}
           </span>
         </h3>
-        <p class="text-dark">{event.data.description}</p>
+        <p class="text-dark" {...edit.description}>{event.data.description}</p>
       </div>
       <a
         href={`/${Astro.currentLocale}/events/${event.id}`}

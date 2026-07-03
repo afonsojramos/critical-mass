@@ -2,6 +2,7 @@
 import { getEmDashEntry } from "emdash";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import { translateTag } from "@/lib/tagMapper";
+import { editable } from "@/utils/editable";
 import { toImageSource } from "@/utils/toImageSource";
 
 type Props = {
@@ -22,21 +23,26 @@ const author = authorEntry as any;
 // Modal needs a plain URL string; ImageMetadata exposes it via `.src`.
 const resolvedImage = toImageSource(galleryItem.data.image);
 const modalImageSrc = typeof resolvedImage === "string" ? resolvedImage : resolvedImage?.src;
+
+// Visual editing annotations (noop outside edit mode).
+const edit = editable("gallery", galleryItem);
+const authorEdit = author ? editable("authors", author) : null;
 ---
 
-<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+<div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" {...edit}>
   <ContentImage
     value={galleryItem.data.image}
     alt={galleryItem.data.title}
     class="w-full h-auto object-cover"
     width={400}
     loading="lazy"
+    {...edit.image}
   />
   <div class="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end cursor-pointer gallery-overlay" data-image-src={modalImageSrc} data-image-title={galleryItem.data.title} data-author-name={author?.data.name || ""} data-author-link={author?.data.social_media_link || ""}>
     <div class="p-4 pt-6 text-white bg-gradient-to-t from-black/80 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 w-full cursor-default gallery-content">
-      <h3 class="text-lg font-medium mb-1">{galleryItem.data.title}</h3>
+      <h3 class="text-lg font-medium mb-1" {...edit.title}>{galleryItem.data.title}</h3>
       {galleryItem.data.description && (
-        <p class="text-sm text-gray-200 mb-2">{galleryItem.data.description}</p>
+        <p class="text-sm text-gray-200 mb-2" {...edit.description}>{galleryItem.data.description}</p>
       )}
       {author && (
         <p class="text-xs text-gray-300 mb-2">
@@ -46,11 +52,12 @@ const modalImageSrc = typeof resolvedImage === "string" ? resolvedImage : resolv
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-white underline decoration-dotted underline-offset-2"
+              {...(authorEdit?.name ?? {})}
             >
               {author.data.name}
             </a>
           ) : (
-            author.data.name
+            <span {...(authorEdit?.name ?? {})}>{author.data.name}</span>
           )}
         </p>
       )}
@@ -58,6 +65,7 @@ const modalImageSrc = typeof resolvedImage === "string" ? resolvedImage : resolv
         <span
           class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded cursor-pointer hover:bg-opacity-30 transition-all pointer-events-auto capitalize gallery-tag"
           data-category={galleryItem.data.category}
+          {...edit.category}
         >
           {translateTag(galleryItem.data.category, locale)}
         </span>

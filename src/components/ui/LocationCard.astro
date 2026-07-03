@@ -5,7 +5,7 @@ import wobSvg from "@/assets/icons/icon7.svg?raw";
 import Card from "@/components/ui/Card.astro";
 import * as m from "@/paraglide/messages";
 
-const { index, titleTop, titleBottom, date, img, alt, link, newLocation } = Astro.props;
+const { index, titleTop, titleBottom, date, img, alt, link, newLocation, edit } = Astro.props;
 const cityImages = import.meta.glob(`/src/assets/cities/*.svg`, {
   eager: true,
   query: "?raw",
@@ -36,10 +36,12 @@ const { attributes: svgAttributes, innerHTML } = await getSVG(img);
 <Card isUnderline={true}>
   <div
     class={`h-[300px] w-full sm:h-full lg:gap-[60px] grid auto-cols-auto auto-rows-auto grid-cols-2 grid-rows-1 p-8 sm:p-[50px] gap-2 rounded-[45px] ${index % 3 === 1 ? 'bg-gray' : index % 3 === 2 ? 'bg-green' : 'bg-dark text-gray'} ${newLocation ? 'border-2 border-dashed border-green' : ''}`}
+    {...(edit ?? {})}
   >
     <h3 class={`flex flex-col col-span-2 lg:col-span-1 gap-1`}>
       <span
         class={`w-[fit-content] text-2xl ${index % 3 === 1 ? 'greenhead' : 'whitehead'}`}
+        {...(edit?.city ?? {})}
       >
         {titleTop}
       </span>
@@ -48,6 +50,7 @@ const { attributes: svgAttributes, innerHTML } = await getSVG(img);
       )}
       <span
         class={`w-[fit-content] ${index % 3 === 1 ? 'greenhead' : 'whitehead'}`}
+        {...(edit?.exact_location ?? {})}
       >
         {titleBottom}
       </span>

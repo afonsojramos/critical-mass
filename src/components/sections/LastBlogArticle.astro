@@ -5,6 +5,7 @@ import Card from "@/components/ui/Card.astro";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
+import { editable } from "@/utils/editable";
 
 const lang = Astro.currentLocale;
 
@@ -16,20 +17,21 @@ const { entries } = await getEmDashCollection("blog", {
 });
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const lastBlogArticle = (entries[0] as any) || null;
+const edit = lastBlogArticle ? editable("blog", lastBlogArticle) : null;
 ---
 
 {
-  lastBlogArticle && (
+  lastBlogArticle && edit && (
     <Section>
       <SectionTitle
         sectionTitle={m.blog_title}
         description={m.blog_description}
       />
       <Card>
-        <div class="flex bg-gray rounded-[45px] p-[60px] relative mt-12 mb-24 justify-between gap-4">
+        <div class="flex bg-gray rounded-[45px] p-[60px] relative mt-12 mb-24 justify-between gap-4" {...edit}>
           <div class="w-full md:w-[40%] flex flex-col gap-[26px]">
-            <h2 class="text-3xl font-medium">{lastBlogArticle.data.title}</h2>
-            <p>{lastBlogArticle.data.summary}</p>
+            <h2 class="text-3xl font-medium" {...edit.title}>{lastBlogArticle.data.title}</h2>
+            <p {...edit.summary}>{lastBlogArticle.data.summary}</p>
             <a
               href={`/${lang}/articles/${lastBlogArticle.id}`}
               class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border"
@@ -43,6 +45,7 @@ const lastBlogArticle = (entries[0] as any) || null;
             width={500}
             class="hidden md:block max-w-5/8 rounded object-cover"
             loading="lazy"
+            {...edit.image}
           />
         </div>
       </Card>

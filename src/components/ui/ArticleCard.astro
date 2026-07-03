@@ -5,6 +5,7 @@ import VideoIcon from "@/components/Icons/VideoIcon.astro";
 import Card from "@/components/ui/Card.astro";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import { formatDate } from "@/utils";
+import { editable } from "@/utils/editable";
 
 const lang = Astro.currentLocale;
 
@@ -18,23 +19,27 @@ interface Props {
 const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
+
+const edit = editable("blog", article);
+const authorEdit = author ? editable("authors", author) : null;
 ---
 
 <Card isUnderline={true}>
-  <article class="p-6">
+  <article class="p-6" {...edit}>
     <div class="flex justify-between items-center mb-5 text-gray-500">
       <span
         class="bg-green text-black text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded"
+        {...edit.content_type}
       >
         {article.data.content_type == "Article" ? <ArticleIcon /> : <VideoIcon />}
         {article.data.content_type}
       </span>
-      <span class="text-sm">{formatDate(article.data.pub_date)}</span>
+      <span class="text-sm" {...edit.pub_date}>{formatDate(article.data.pub_date)}</span>
     </div>
-    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900" {...edit.title}>
       {article.data.title}
     </h2>
-    <p class="mb-5 font-light text-gray-500" style="white-space: pre-line">
+    <p class="mb-5 font-light text-gray-500" style="white-space: pre-line" {...edit.summary}>
       {article.data.summary}
     </p>
     <div class="flex justify-between items-center">
@@ -45,6 +50,7 @@ const author = authorEntry as any;
           alt={author?.data.name + " avatar"}
           height={28}
           width={28}
+          {...(authorEdit?.image ?? {})}
         />
         <span class="font-medium">
           {author?.data.social_media_link ? (
@@ -53,11 +59,12 @@ const author = authorEntry as any;
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-green underline decoration-dotted underline-offset-2"
+              {...(authorEdit?.name ?? {})}
             >
               {author.data.name}
             </a>
           ) : (
-            author?.data.name
+            <span {...(authorEdit?.name ?? {})}>{author?.data.name}</span>
           )}
         </span>
       </div>

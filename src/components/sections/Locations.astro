@@ -4,6 +4,7 @@ import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import * as m from "@/paraglide/messages";
+import { editable } from "@/utils/editable";
 
 const { entries } = await getEmDashCollection("locations", {
   status: "published",
@@ -64,6 +65,8 @@ const cards = locations.map((location) => {
     img: location.data.image,
     link: location.data.link,
     date: dateText,
+    // Real locations are editable; the "coming soon" placeholder is not.
+    edit: isSpecial ? null : editable("locations", location),
   };
 });
 ---
@@ -86,6 +89,7 @@ const cards = locations.map((location) => {
             link={card.link}
             newLocation={card.index === 100}
             date={card.date}
+            edit={card.edit}
           />
         ))
       }

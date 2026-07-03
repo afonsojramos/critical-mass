@@ -8,6 +8,7 @@ import Tags from "@/components/ui/Tags.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { formatDate } from "@/utils";
+import { editable } from "@/utils/editable";
 
 const { slug } = Astro.params;
 
@@ -27,6 +28,9 @@ const article = entry as any;
 const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
+
+const edit = editable("blog", article);
+const authorEdit = author ? editable("authors", author) : null;
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
@@ -59,7 +63,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
             </svg>
             <span class="ml-1 font-bold text-lg">{m.blog_allArticles()}</span>
           </a>
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900" {...edit.title}>
             {article.data.title}
           </h2>
           <div class="flex items-center space-x-3 mb-4">
@@ -69,17 +73,18 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
               alt={author?.data.name + " avatar"}
               width={40}
               height={40}
+              {...(authorEdit?.image ?? {})}
             />
             <div>
               <h3 class="text-lg">
                 {m.blog_writtenBy()}
-                {author?.data.name}
+                <span {...(authorEdit?.name ?? {})}>{author?.data.name}</span>
                 {m.blog_on()}
                 {formatDate(article.data.pub_date, Astro.currentLocale)}
               </h3>
             </div>
           </div>
-          <Tags tags={article.data.tags} />
+          <div {...edit.tags}><Tags tags={article.data.tags} /></div>
           <ContentImage
             value={article.data.image}
             alt="Article Image"
@@ -87,8 +92,9 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
             width={300}
             height={200}
             loading="eager"
+            {...edit.image}
           />
-          <div class="prose prose-lg max-w-none">
+          <div class="prose prose-lg max-w-none" {...edit.body}>
             <PortableText value={article.data.body} />
           </div>
         </div>
