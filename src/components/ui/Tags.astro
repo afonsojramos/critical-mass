@@ -1,23 +1,20 @@
 ---
-import { createTagSlug, translateTags } from "@/lib/tagMapper";
 import { capitalize } from "@/utils";
 
-const { tags } = Astro.props;
-const locale = Astro.currentLocale as "pt" | "en";
-
-// Translate English tags to current locale
-const translatedTags = translateTags(tags, locale);
-
-interface Props {
-  tags: string[];
+interface Term {
+  slug: string;
+  label: string;
 }
+
+const { terms } = Astro.props as { terms: Term[] };
+const locale = Astro.currentLocale as "pt" | "en";
 ---
 
 <div class="flex flex-wrap gap-2">
   {
-    tags.map((tag: string, index: number) => (
+    (terms ?? []).map((term) => (
       <span class="px-2 py-1 bg-lime text-black rounded-full text-xs hover:opacity-90">
-        <a href={`/${locale}/articles/tag/${createTagSlug(tag)}`}>#{capitalize(translatedTags[index])}</a>
+        <a href={`/${locale}/articles/tag/${term.slug}`}>#{capitalize(term.label)}</a>
       </span>
     ))
   }

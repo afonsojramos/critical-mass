@@ -1,9 +1,10 @@
 ---
-import { getEmDashCollection } from "emdash";
+import { getEmDashCollection, getEntriesByTerm, getTaxonomyTerms } from "emdash";
 import GalleryCard from "@/components/ui/GalleryCard.astro";
 import ImageModal from "@/components/ui/ImageModal.astro";
-import { translateTag } from "@/lib/tagMapper";
 import * as m from "@/paraglide/messages";
+import { capitalize } from "@/utils";
+import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
 interface Props {
   filterCategory?: string;
@@ -12,34 +13,29 @@ interface Props {
 const { filterCategory = "all" } = Astro.props;
 const locale = Astro.currentLocale as "pt" | "en";
 
-// Fetch all published items, then filter in-memory by category. Emdash's
-// `where` clause resolves keys as taxonomy/column filters, not entry data
-// fields, so it can't match `data.category`; filtering here keeps the shown
-// items in sync with the category buttons (also derived from data.category).
-const { entries } = await getEmDashCollection("gallery", {
-  status: "published",
-  locale,
-});
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const allGalleryItems = entries as any[];
-
-const filteredGalleryItems =
+// Filter by the `category` taxonomy term (DB JOIN) when a category is set;
+// otherwise list every published item. The URL slug is localized, so resolve
+// it to the base-locale slug the term filter matches.
+const entries =
   filterCategory === "all"
-    ? allGalleryItems
-    : allGalleryItems.filter((item) => (item.data.category || "none") === filterCategory);
+    ? (await getEmDashCollection("gallery", { status: "published", locale })).entries
+    : await getEntriesByTerm(
+        "gallery",
+        "category",
+        await resolveBaseTermSlug("category", filterCategory, locale),
+        { locale },
+      );
 
-// Sort by date (newest first) if date is available, otherwise by title
-const sortedGalleryItems = filteredGalleryItems.sort((a, b) => {
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const sortedGalleryItems = (entries as any[]).sort((a, b) => {
   if (a.data.date && b.data.date) {
     return new Date(b.data.date as string).getTime() - new Date(a.data.date as string).getTime();
   }
   return (a.data.title as string).localeCompare(b.data.title as string);
 });
 
-// Get unique categories for filter buttons
-const uniqueCategories = [
-  ...new Set(allGalleryItems.map((item) => item.data.category || "none").filter(Boolean)),
-];
+// Filter buttons come from the taxonomy terms (managed in the CMS).
+const categoryTerms = await getTaxonomyTerms("category", { locale });
 ---
 
 <main class="space-y-20">
@@ -51,7 +47,7 @@ const uniqueCategories = [
       </p>
     </div>
 
-    {uniqueCategories.length > 0 && (
+    {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
           href={`/${locale}/gallery/`}
@@ -63,18 +59,18 @@ const uniqueCategories = [
         >
           All
         </a>
-        {uniqueCategories.map((category) => {
-          const isActive = filterCategory === category;
+        {categoryTerms.map((term) => {
+          const isActive = filterCategory === term.slug;
           return (
             <a
-              href={`/${locale}/gallery/${encodeURIComponent(category)}/`}
+              href={`/${locale}/gallery/${term.slug}/`}
               class={`px-4 py-2 rounded-full border-2 transition-colors capitalize ${
                 isActive
                   ? "bg-black text-white border-black"
                   : "border-gray-300 hover:border-gray-400"
               }`}
             >
-              {translateTag(category, locale)}
+              {capitalize(term.label)}
             </a>
           );
         })}

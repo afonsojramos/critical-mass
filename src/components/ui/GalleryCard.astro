@@ -1,9 +1,9 @@
 ---
 import { getEmDashEntry } from "emdash";
 import ContentImage from "@/components/ui/ContentImage.astro";
-import { translateTag } from "@/lib/tagMapper";
 import { editable } from "@/utils/editable";
 import { toImageSource } from "@/utils/toImageSource";
+import { capitalize } from "@/utils";
 
 type Props = {
   // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
@@ -11,7 +11,9 @@ type Props = {
 };
 
 const { galleryItem } = Astro.props as Props;
-const locale = Astro.currentLocale as "pt" | "en";
+
+// Category taxonomy term (localized), managed in the CMS.
+const categoryTerm = galleryItem.data.terms?.category?.[0];
 
 // Get author data if available
 const { entry: authorEntry } = galleryItem.data.author
@@ -61,13 +63,12 @@ const authorEdit = author ? editable("authors", author) : null;
           )}
         </p>
       )}
-      {galleryItem.data.category && (
+      {categoryTerm && (
         <span
           class="inline-block px-2 py-1 text-xs bg-white text-black bg-opacity-20 rounded cursor-pointer hover:bg-opacity-30 transition-all pointer-events-auto capitalize gallery-tag"
-          data-category={galleryItem.data.category}
-          {...edit.category}
+          data-category={categoryTerm.slug}
         >
-          {translateTag(galleryItem.data.category, locale)}
+          {capitalize(categoryTerm.label)}
         </span>
       )}
     </div>

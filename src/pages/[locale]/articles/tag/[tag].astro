@@ -1,12 +1,12 @@
 ---
 export const prerender = false;
 
-import { getEmDashCollection } from "emdash";
+import { getEntriesByTerm, getTaxonomyTerms } from "emdash";
 import ArticleCard from "@/components/ui/ArticleCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
-import { createTagSlug, translateTag } from "@/lib/tagMapper";
 import * as m from "@/paraglide/messages";
 import { capitalize } from "@/utils";
+import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
 const { tag } = Astro.params;
 const locale = Astro.currentLocale as "pt" | "en";
@@ -15,29 +15,17 @@ if (!tag) {
   return Astro.redirect(`/${locale}/articles`);
 }
 
-// Fetch all published articles, then match the slugged URL tag against each
-// article's `data.tags` in-memory. Emdash's `where` clause resolves keys as
-// taxonomy/column filters, not entry data fields, and the URL tag is a slug
-// (see createTagSlug), so the match has to happen here.
-const { entries } = await getEmDashCollection("blog", {
-  status: "published",
-  locale,
-  orderBy: { pub_date: "desc" },
-});
+// The URL slug is localized; the term filter matches the base-locale slug.
+const baseSlug = await resolveBaseTermSlug("tag", tag, locale);
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const tagArticles = (entries as any[]).filter((article) =>
-  (article.data.tags ?? []).some((articleTag: string) => createTagSlug(articleTag) === tag),
+const tagArticles = ((await getEntriesByTerm("blog", "tag", baseSlug, { locale })) as any[]).sort(
+  (a, b) => new Date(b.data.pub_date as string).getTime() - new Date(a.data.pub_date as string).getTime(),
 );
 
-// Get the actual English tag for translation (find first match)
-const actualTag =
-  tagArticles
-    // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-    .flatMap((article: any) => article.data.tags)
-    .find((articleTag: string) => createTagSlug(articleTag) === tag) || tag;
-
-// Translate tag for display
-const displayTag = translateTag(actualTag, locale);
+// Term label for the heading (falls back to the slug).
+const terms = await getTaxonomyTerms("tag", { locale });
+// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
+const displayTag = (terms as any[]).find((t) => t.slug === tag)?.label ?? tag;
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---

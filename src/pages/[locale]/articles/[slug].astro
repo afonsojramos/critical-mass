@@ -84,7 +84,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
               </h3>
             </div>
           </div>
-          <div {...edit.tags}><Tags tags={article.data.tags} /></div>
+          <Tags terms={article.data.terms?.tag ?? []} />
           <ContentImage
             value={article.data.image}
             alt="Article Image"
