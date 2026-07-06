@@ -6,6 +6,7 @@ import ArticleCard from "@/components/ui/ArticleCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { capitalize } from "@/utils";
+import { termLocaleSwitchHref } from "@/utils/localeSwitch";
 import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
 const { tag } = Astro.params;
@@ -27,10 +28,13 @@ const terms = await getTaxonomyTerms("tag", { locale });
 // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const displayTag = (terms as any[]).find((t) => t.slug === tag)?.label ?? tag;
 
+// Language switch lands on this tag's translated term URL.
+const localeSwitchHref = await termLocaleSwitchHref("tag", tag, locale, "articles/tag", "articles");
+
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout title={m.articles_tag()}>
+<MainLayout title={m.articles_tag()} localeSwitchHref={localeSwitchHref}>
   <main class="space-y-20 flex-grow">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
       <a

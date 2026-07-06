@@ -2,7 +2,13 @@
 import { getRouteFromUrl } from "@/i18n/utils";
 import { baseLocale, locales } from "@/paraglide/runtime";
 
-const route = getRouteFromUrl(Astro.url);
+interface Props {
+  // Precomputed other-locale URL (used on content/term pages where the slug
+  // differs per locale). When omitted, we swap the locale prefix in place.
+  href?: string;
+}
+
+const { href } = Astro.props;
 const currentLang = Astro.currentLocale;
 const otherLang = locales.find((lang) => lang !== currentLang) || baseLocale;
 const langLabels = {
@@ -10,8 +16,8 @@ const langLabels = {
   pt: "Português",
 };
 
-// Simple language switching - just replace the locale in the current route
-const targetUrl = route ? `/${otherLang}/${route}` : `/${otherLang}`;
+const route = getRouteFromUrl(Astro.url);
+const targetUrl = href ?? (route ? `/${otherLang}/${route}` : `/${otherLang}`);
 ---
 
 <a href={targetUrl} class="hover:underline">

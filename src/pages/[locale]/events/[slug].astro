@@ -7,6 +7,7 @@ import EventCarousel from "@/components/ui/EventCarousel.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { editable } from "@/utils/editable";
+import { entryLocaleSwitchHref } from "@/utils/localeSwitch";
 
 const { slug } = Astro.params;
 
@@ -26,10 +27,17 @@ const event = entry as any;
 
 const edit = editable("events", event);
 
+// Language switch lands on this event's translation (slugs differ per locale).
+const localeSwitchHref = await entryLocaleSwitchHref("events", event.data.id, locale as string, "events");
+
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout title={event.data.title} description={event.data.description}>
+<MainLayout
+  title={event.data.title}
+  description={event.data.description}
+  localeSwitchHref={localeSwitchHref}
+>
   <article class="py-12 bg-white">
     <div class="px-8 mx-auto max-w-4xl">
       <a

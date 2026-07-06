@@ -9,6 +9,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
 import { formatDate } from "@/utils";
 import { editable } from "@/utils/editable";
+import { entryLocaleSwitchHref } from "@/utils/localeSwitch";
 
 const { slug } = Astro.params;
 
@@ -32,10 +33,17 @@ const author = authorEntry as any;
 const edit = editable("blog", article);
 const authorEdit = author ? editable("authors", author) : null;
 
+// Language switch lands on this article's translation (slugs differ per locale).
+const localeSwitchHref = await entryLocaleSwitchHref("blog", article.data.id, locale as string, "articles");
+
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout title={article.data.title} description={article.data.summary}>
+<MainLayout
+  title={article.data.title}
+  description={article.data.summary}
+  localeSwitchHref={localeSwitchHref}
+>
   <main class="space-y-20">
     <section class="px-8 mx-auto max-w-4xl bg-white">
       <div

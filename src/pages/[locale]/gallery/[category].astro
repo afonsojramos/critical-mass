@@ -5,6 +5,7 @@ import { getTaxonomyTerms } from "emdash";
 import GalleryView from "@/components/sections/GalleryView.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import * as m from "@/paraglide/messages";
+import { termLocaleSwitchHref } from "@/utils/localeSwitch";
 
 const { category } = Astro.params;
 const locale = Astro.currentLocale as "pt" | "en";
@@ -15,9 +16,16 @@ const terms = await getTaxonomyTerms("category", { locale });
 const categoryLabel = (terms as any[]).find((t) => t.slug === category)?.label ?? category;
 const categoryTitle = `${m.gallery_title()} - ${categoryLabel}`;
 
+// Language switch lands on this category's translated term URL.
+const localeSwitchHref = await termLocaleSwitchHref("category", category as string, locale, "gallery", "gallery");
+
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout title={categoryTitle} description={m.gallery_description()}>
+<MainLayout
+  title={categoryTitle}
+  description={m.gallery_description()}
+  localeSwitchHref={localeSwitchHref}
+>
   <GalleryView filterCategory={category} />
 </MainLayout>

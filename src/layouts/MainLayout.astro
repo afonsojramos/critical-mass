@@ -3,10 +3,14 @@ import Footer from "@/components/ui/Footer.astro";
 import Navbar from "@/components/ui/Navbar.astro";
 import MainHead from "./MainHead.astro";
 import "@/styles/global.css";
+
+// `localeSwitchHref` (optional) is the precomputed other-locale URL for the
+// language switcher on content/term pages; the rest are head/meta props.
+const { localeSwitchHref, ...headProps } = Astro.props;
 ---
 
 <html lang={Astro.currentLocale}>
-  <MainHead {...Astro.props} />
+  <MainHead {...headProps} />
   <style>
     html.lenis {
       height: auto;
@@ -23,7 +27,7 @@ import "@/styles/global.css";
   </style>
   <script src="../utils/lenis"></script>
   <body class="bg-white font-grotesk">
-    <Navbar />
+    <Navbar localeSwitchHref={localeSwitchHref} />
     <main class="flex flex-col min-h-screen lg:mt-20">
       <slot />
       <Footer />
