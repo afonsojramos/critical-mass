@@ -7,6 +7,8 @@ import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
+import { github } from "emdash/auth/providers/github";
+import { google } from "emdash/auth/providers/google";
 import { baseLocale, locales } from "./src/paraglide/runtime";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
@@ -35,6 +37,9 @@ export default defineConfig({
       siteUrl: "https://massacritica.pt",
       database: d1({ binding: "DB" }),
       storage: r2({ binding: "MEDIA" }),
+      // "Sign in with Google/GitHub" alongside passkeys. Requires the
+      // EMDASH_OAUTH_{GOOGLE,GITHUB}_CLIENT_ID/SECRET secrets.
+      authProviders: [google(), github()],
       plugins: [
         emailCloudflare({
           from: "auth@admin.massacritica.pt",
