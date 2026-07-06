@@ -18,6 +18,11 @@ export const onRequest = defineMiddleware((context, next) => {
   const firstSegment = pathname.split("/")[1];
   if ((locales as readonly string[]).includes(firstSegment)) {
     setLocale(firstSegment as (typeof locales)[number], { reload: false });
+  } else {
+    // No locale prefix (a malformed or shared URL, e.g. /events/<slug>). Fall
+    // back to the base locale so message lookups — including the 404 page —
+    // don't throw "No locale found" and turn a plain 404 into a 500.
+    setLocale(baseLocale, { reload: false });
   }
 
   return next();
