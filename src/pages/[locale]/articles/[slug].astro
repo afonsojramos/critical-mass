@@ -73,18 +73,52 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
             {article.data.title}
           </h2>
           <div class="flex items-center space-x-3 mb-4">
-            <ContentImage
-              class="w-10 h-10 rounded-full"
-              value={author?.data.image}
-              alt={author?.data.name + " avatar"}
-              width={40}
-              height={40}
-              {...(authorEdit?.image ?? {})}
-            />
+            {
+              author?.data.social_media_link ? (
+                <a
+                  href={author.data.social_media_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="shrink-0"
+                >
+                  <ContentImage
+                    class="w-10 h-10 rounded-full"
+                    value={author?.data.image}
+                    alt={author?.data.name + " avatar"}
+                    width={40}
+                    height={40}
+                    {...(authorEdit?.image ?? {})}
+                  />
+                </a>
+              ) : (
+                <ContentImage
+                  class="w-10 h-10 rounded-full"
+                  value={author?.data.image}
+                  alt={author?.data.name + " avatar"}
+                  width={40}
+                  height={40}
+                  {...(authorEdit?.image ?? {})}
+                />
+              )
+            }
             <div>
               <h3 class="text-lg">
                 {m.blog_writtenBy()}
-                <span {...(authorEdit?.name ?? {})}>{author?.data.name}</span>
+                {
+                  author?.data.social_media_link ? (
+                    <a
+                      href={author.data.social_media_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hover:text-green underline decoration-dotted underline-offset-2"
+                      {...(authorEdit?.name ?? {})}
+                    >
+                      {author?.data.name}
+                    </a>
+                  ) : (
+                    <span {...(authorEdit?.name ?? {})}>{author?.data.name}</span>
+                  )
+                }
                 {m.blog_on()}
                 {formatDate(article.data.pub_date, Astro.currentLocale)}
               </h3>
