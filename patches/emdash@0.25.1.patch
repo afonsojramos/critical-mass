@@ -44,3 +44,67 @@ index 4169c8f..418b90a 100644
  		if (!providers[provider]) return redirect(`${errorRedirectBase}?error=provider_not_configured&message=${encodeURIComponent(`OAuth provider ${provider} is not configured. Set either EMDASH_OAUTH_${provider.toUpperCase()}_CLIENT_ID and EMDASH_OAUTH_${provider.toUpperCase()}_CLIENT_SECRET, or ${provider.toUpperCase()}_CLIENT_ID and ${provider.toUpperCase()}_CLIENT_SECRET.`)}`);
  		const { url: authUrl } = await createAuthorizationUrl({
  			baseUrl: `${getPublicOrigin(url, emdash?.config)}/_emdash`,
+diff --git a/src/auth/providers/github-admin.tsx b/src/auth/providers/github-admin.tsx
+index 79283bd..c787948 100644
+--- a/src/auth/providers/github-admin.tsx
++++ b/src/auth/providers/github-admin.tsx
+@@ -4,7 +4,7 @@
+  * LoginButton for the login page, rendered via the auth provider virtual module.
+  */
+ 
+-import { LinkButton } from "@cloudflare/kumo";
++import { Button } from "@cloudflare/kumo";
+ import * as React from "react";
+ 
+ function GitHubIcon({ className }: { className?: string }) {
+@@ -17,13 +17,15 @@ function GitHubIcon({ className }: { className?: string }) {
+ 
+ export function LoginButton() {
+ 	return (
+-		<LinkButton
+-			href="/_emdash/api/auth/oauth/github"
++		<Button
+ 			variant="outline"
+ 			className="w-full justify-center"
++			onClick={() => {
++				window.location.href = "/_emdash/api/auth/oauth/github";
++			}}
+ 		>
+ 			<GitHubIcon className="h-5 w-5" />
+ 			<span>GitHub</span>
+-		</LinkButton>
++		</Button>
+ 	);
+ }
+diff --git a/src/auth/providers/google-admin.tsx b/src/auth/providers/google-admin.tsx
+index 5284f09..9da7574 100644
+--- a/src/auth/providers/google-admin.tsx
++++ b/src/auth/providers/google-admin.tsx
+@@ -4,7 +4,7 @@
+  * LoginButton for the login page, rendered via the auth provider virtual module.
+  */
+ 
+-import { LinkButton } from "@cloudflare/kumo";
++import { Button } from "@cloudflare/kumo";
+ import * as React from "react";
+ 
+ function GoogleIcon({ className }: { className?: string }) {
+@@ -32,13 +32,15 @@ function GoogleIcon({ className }: { className?: string }) {
+ 
+ export function LoginButton() {
+ 	return (
+-		<LinkButton
+-			href="/_emdash/api/auth/oauth/google"
++		<Button
+ 			variant="outline"
+ 			className="w-full justify-center"
++			onClick={() => {
++				window.location.href = "/_emdash/api/auth/oauth/google";
++			}}
+ 		>
+ 			<GoogleIcon className="h-5 w-5" />
+ 			<span>Google</span>
+-		</LinkButton>
++		</Button>
+ 	);
+ }
