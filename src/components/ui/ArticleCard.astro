@@ -12,12 +12,10 @@ const lang = Astro.currentLocale;
 const { article } = Astro.props;
 
 interface Props {
-  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
   article: any;
 }
 
 const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
 
 const edit = editable("blog", article);

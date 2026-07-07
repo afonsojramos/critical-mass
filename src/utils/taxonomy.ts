@@ -14,11 +14,9 @@ export async function resolveBaseTermSlug(
   locale: string,
 ): Promise<string> {
   if (locale === "pt") return slug;
-  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped terms
-  const localized = (await getTaxonomyTerms(taxonomy, { locale })) as any[];
+  const localized = await getTaxonomyTerms(taxonomy, { locale });
   const group = localized.find((t) => t.slug === slug)?.translationGroup;
   if (!group) return slug;
-  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped terms
-  const base = (await getTaxonomyTerms(taxonomy, { locale: "pt" })) as any[];
+  const base = await getTaxonomyTerms(taxonomy, { locale: "pt" });
   return base.find((t) => t.translationGroup === group)?.slug ?? slug;
 }

@@ -14,7 +14,6 @@ import { createEditable, createNoop, getRequestContext } from "emdash";
  * `entry.data.id` (a ULID); `entry.id` is the slug, which the overlay can't
  * resolve.
  */
-// biome-ignore lint/suspicious/noExplicitAny: emdash returns untyped entries
 export function editable(collection: string, entry: any) {
   const id = entry?.data?.id ?? entry?.id;
   return getRequestContext()?.editMode && id ? createEditable(collection, id) : createNoop();

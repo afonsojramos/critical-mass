@@ -12,8 +12,7 @@ const locale = Astro.currentLocale as "pt" | "en";
 
 // Page title from the category taxonomy term label (falls back to the slug).
 const terms = await getTaxonomyTerms("category", { locale });
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const categoryLabel = (terms as any[]).find((t) => t.slug === category)?.label ?? category;
+const categoryLabel = terms.find((t) => t.slug === category)?.label ?? category;
 const categoryTitle = `${m.gallery_title()} - ${categoryLabel}`;
 
 // Language switch lands on this category's translated term URL.

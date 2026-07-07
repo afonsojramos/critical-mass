@@ -15,7 +15,6 @@ const { entries } = await getEmDashCollection("blog", {
   limit: 1,
   orderBy: { pub_date: "desc" },
 });
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const lastBlogArticle = (entries[0] as any) || null;
 const edit = lastBlogArticle ? editable("blog", lastBlogArticle) : null;
 ---

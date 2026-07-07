@@ -22,7 +22,6 @@ if (!entry) {
   return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const event = entry as any;
 
 const edit = editable("events", event);

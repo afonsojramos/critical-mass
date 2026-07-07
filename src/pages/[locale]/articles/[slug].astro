@@ -24,10 +24,8 @@ if (!entry) {
   return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const article = entry as any;
 const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
 
 const edit = editable("blog", article);

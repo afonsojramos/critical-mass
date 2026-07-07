@@ -18,15 +18,13 @@ if (!tag) {
 
 // The URL slug is localized; the term filter matches the base-locale slug.
 const baseSlug = await resolveBaseTermSlug("tag", tag, locale);
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const tagArticles = ((await getEntriesByTerm("blog", "tag", baseSlug, { locale })) as any[]).sort(
+const tagArticles = (await getEntriesByTerm("blog", "tag", baseSlug, { locale })).sort(
   (a, b) => new Date(b.data.pub_date as string).getTime() - new Date(a.data.pub_date as string).getTime(),
 );
 
 // Term label for the heading (falls back to the slug).
 const terms = await getTaxonomyTerms("tag", { locale });
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
-const displayTag = (terms as any[]).find((t) => t.slug === tag)?.label ?? tag;
+const displayTag = terms.find((t) => t.slug === tag)?.label ?? tag;
 
 // Language switch lands on this tag's translated term URL.
 const localeSwitchHref = await termLocaleSwitchHref("tag", tag, locale, "articles/tag", "articles");

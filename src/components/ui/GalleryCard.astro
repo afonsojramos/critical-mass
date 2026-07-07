@@ -6,7 +6,6 @@ import { toImageSource } from "@/utils/toImageSource";
 import { capitalize } from "@/utils";
 
 type Props = {
-  // biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
   galleryItem: any;
 };
 
@@ -19,7 +18,6 @@ const categoryTerm = galleryItem.data.terms?.category?.[0];
 const { entry: authorEntry } = galleryItem.data.author
   ? await getEmDashEntry("authors", galleryItem.data.author)
   : { entry: null };
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const author = authorEntry as any;
 
 // Modal needs a plain URL string; ImageMetadata exposes it via `.src`.

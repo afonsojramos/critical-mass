@@ -26,7 +26,6 @@ const entries =
         { locale },
       );
 
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const sortedGalleryItems = (entries as any[]).sort((a, b) => {
   if (a.data.date && b.data.date) {
     return new Date(b.data.date as string).getTime() - new Date(a.data.date as string).getTime();

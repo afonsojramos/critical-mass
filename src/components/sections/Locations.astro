@@ -9,7 +9,6 @@ import { editable } from "@/utils/editable";
 const { entries } = await getEmDashCollection("locations", {
   status: "published",
 });
-// biome-ignore lint/suspicious/noExplicitAny: Emdash returns untyped data
 const locationsData = entries as any[];
 const locations = locationsData.sort((a, b) => a.data.sort_index - b.data.sort_index);
 
