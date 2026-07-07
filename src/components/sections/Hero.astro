@@ -23,7 +23,7 @@ const currentLang = Astro.currentLocale;
               .hero_title()
               .split("\n")
               .map((line, index) => (
-                <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
+                <span class={`block ${index > 0 ? "text-4xl" : "uppercase"}`}>{line}</span>
               ))
           }
         </h1>
