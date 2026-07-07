@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import FeaturedEvents from "@/components/sections/FeaturedEvents.astro";
+import LatestEvents from "@/components/sections/LatestEvents.astro";
 import Hero from "@/components/sections/Hero.astro";
 import LastBlogArticle from "@/components/sections/LastBlogArticle.astro";
 import Locations from "@/components/sections/Locations.astro";
@@ -14,6 +14,6 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
 <MainLayout description={m.description()}>
   <Hero />
   <Locations />
-  <FeaturedEvents />
+  <LatestEvents />
   <LastBlogArticle />
 </MainLayout>

@@ -7,18 +7,12 @@ import * as m from "@/paraglide/messages";
 
 const lang = Astro.currentLocale || "pt";
 
-// Filter for featured client-side since boolean where filters need a string match
-// in Emdash but the field is stored as integer (0/1)
-const { entries: allEvents } = await getEmDashCollection("events", {
+const { entries: events } = await getEmDashCollection("events", {
   status: "published",
   locale: lang,
+  orderBy: { published_at: "desc" },
+  limit: 2,
 });
-const featuredEvents = (allEvents as Array<{ id: string; data: Record<string, unknown> }>).filter(
-  (e) => {
-    const featured = e.data.featured;
-    return featured === true || featured === 1 || featured === "true";
-  },
-);
 ---
 
 <Section id="events">
@@ -29,11 +23,7 @@ const featuredEvents = (allEvents as Array<{ id: string; data: Record<string, un
     />
 
     <div class="grid lg:grid-cols-2 gap-10">
-      {
-        featuredEvents.map((event, index) => (
-          <EventCard event={event} index={index} />
-        ))
-      }
+      {events.map((event, index) => <EventCard event={event} index={index} />)}
     </div>
 
     <div class="mt-12 text-center">
