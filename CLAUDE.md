@@ -72,7 +72,8 @@ bun run machine-translate   # Auto-translate content using Inlang
 
 ### Tooling
 
-- Linting and formatting via Vite+ (`vp`): Oxlint (`bun run lint`) and Oxfmt (`bun run format`). Requires the global `vp` CLI (https://vite.plus); the pre-commit hook skips checks with a warning if it is missing.
+- Linting and formatting via Vite+ (`vp`): Oxlint (`bun run lint`) and Oxfmt (`bun run format`). `vite-plus` is pinned as a devDependency, so `bun install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
+- Suppress a lint rule with an oxlint directive (`// oxlint-disable-next-line <rule>`), not Biome's `biome-ignore` (which oxlint ignores). Note oxlint's default config does not enable `no-explicit-any`.
 - Oxfmt formats JS/TS, CSS, JSON/JSONC, and Markdown. It does not yet support `.astro`, so `.astro` files are currently left unformatted.
 
 ## Important Notes

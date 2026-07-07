@@ -1,7 +1,8 @@
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 
-# vp lives outside PATH in non-interactive git hooks; resolve it directly.
-VP="$(command -v vp || echo "$HOME/.vite-plus/bin/vp")"
+# vp ships as the vite-plus devDependency; prefer the local binary (it is not
+# on PATH in non-interactive git hooks), falling back to a global install.
+VP="$(command -v vp || echo "$PWD/node_modules/.bin/vp")"
 
 if [ -n "$STAGED_FILES" ]; then
   # Oxfmt does not support .astro yet, so format only the types it handles.
@@ -14,7 +15,7 @@ if [ -n "$STAGED_FILES" ]; then
       [ -n "$FMT_FILES" ] && "$VP" fmt $FMT_FILES --write
       [ -n "$LINT_FILES" ] && "$VP" lint $LINT_FILES --fix
     else
-      echo "warn: Vite+ (vp) not found — skipping format/lint. Install: https://vite.plus"
+      echo "warn: Vite+ (vp) not found — skipping format/lint. Run: bun install"
     fi
   fi
 
