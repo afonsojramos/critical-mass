@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/cloudflare": "^14.0.2",
+    "@astrojs/cloudflare": "^14.1.1",
     "@astrojs/react": "^6.0.0",
     "@astrojs/sitemap": "^3.7.3",
     "@emdash-cms/auth-atproto": "^0.2.23",
@@ -40,6 +40,7 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.43.2",
     "@funboxteam/optimizt": "^5.0.2",
     "@inlang/cli": "^3.1.14",
     "@inlang/paraglide-js": "^2.20.2",
@@ -50,7 +51,8 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "unified": "^11.0.5",
-    "vite-plus": "^0.2.2"
+    "vite-plus": "^0.2.2",
+    "wrangler": "^4.108.0"
   },
   "patchedDependencies": {
     "emdash@0.25.1": "patches/emdash@0.25.1.patch"
