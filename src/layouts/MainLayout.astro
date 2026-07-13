@@ -32,5 +32,31 @@ const { localeSwitchHref, ...headProps } = Astro.props;
       <slot />
       <Footer />
     </main>
+    <script>
+      import { BlockRate } from "blockrate";
+
+      // Measures which analytics providers ad blockers block for visitors and
+      // reports to the same-origin /api/block-rate route (which forwards
+      // server-side to blockrate.app). Consent-free: no cookies, no storage,
+      // no identifiers. See https://blockrate.app.
+      new BlockRate({
+        providers: [
+          "amplitude",
+          "ga4",
+          "gtm",
+          "hotjar",
+          "intercom",
+          "meta-pixel",
+          "mixpanel",
+          "optimizely",
+          "posthog",
+          "segment",
+        ],
+        service: "massacritica.pt",
+        reporter: (result) => {
+          navigator.sendBeacon("/api/block-rate", JSON.stringify(result));
+        },
+      }).check();
+    </script>
   </body>
 </html>
