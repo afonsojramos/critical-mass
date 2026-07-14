@@ -8,7 +8,7 @@ import { formatDate } from "@/utils";
 import { editable } from "@/utils/editable";
 import { entryRouteSlug } from "@/utils/entryRouteSlug";
 
-const lang = Astro.currentLocale;
+const lang = Astro.currentLocale ?? "pt";
 
 const { article } = Astro.props;
 
