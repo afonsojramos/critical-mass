@@ -2,6 +2,7 @@
 import * as m from "@/paraglide/messages";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import { editable } from "@/utils/editable";
+import { entryRouteSlug } from "@/utils/entryRouteSlug";
 import Card from "./Card.astro";
 
 type Props = {
@@ -51,7 +52,7 @@ const edit = editable("events", event);
         <p class="text-dark" {...edit.description}>{event.data.description}</p>
       </div>
       <a
-        href={`/${Astro.currentLocale}/events/${event.id}`}
+        href={`/${Astro.currentLocale}/events/${entryRouteSlug(event.id, Astro.currentLocale)}`}
         class="btn-primary inline-block mt-4"
       >
         {m.events_join}

@@ -6,6 +6,7 @@ import Card from "@/components/ui/Card.astro";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import { formatDate } from "@/utils";
 import { editable } from "@/utils/editable";
+import { entryRouteSlug } from "@/utils/entryRouteSlug";
 
 const lang = Astro.currentLocale;
 
@@ -67,7 +68,7 @@ const authorEdit = author ? editable("authors", author) : null;
         </span>
       </div>
       <a
-        href={`/${lang}/articles/${article.id}`}
+        href={`/${lang}/articles/${entryRouteSlug(article.id, lang)}`}
         class="inline-flex items-center font-medium text-black hover:text-green"
       >
         Read more

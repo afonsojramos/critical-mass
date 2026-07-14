@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getEmDashCollection, getTaxonomyTerms } from "emdash";
+import { entryRouteSlug } from "@/utils/entryRouteSlug";
 
 const ORIGIN = "https://massacritica.pt";
 const LOCALES = ["pt", "en"] as const;
@@ -29,10 +30,10 @@ export const GET: APIRoute = async () => {
     ]);
 
     for (const article of articles) {
-      paths.add(`/${locale}/articles/${article.id}`);
+      paths.add(`/${locale}/articles/${entryRouteSlug(article.id, locale)}`);
     }
     for (const event of events) {
-      paths.add(`/${locale}/events/${event.id}`);
+      paths.add(`/${locale}/events/${entryRouteSlug(event.id, locale)}`);
     }
     for (const category of categories) {
       paths.add(`/${locale}/gallery/${category.slug}`);
