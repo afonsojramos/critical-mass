@@ -1,7 +1,6 @@
 // @ts-check
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
-import sitemap from "@astrojs/sitemap";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
@@ -47,7 +46,6 @@ export default defineConfig({
         }),
       ],
     }),
-    sitemap(),
   ],
   output: "server",
   adapter: cloudflare({
@@ -55,6 +53,8 @@ export default defineConfig({
   }),
   redirects: {
     "/admin": "/_emdash/admin",
+    "/sitemap-index.xml": "/sitemap.xml",
+    "/sitemap-0.xml": "/sitemap.xml",
   },
   i18n: {
     locales: [...locales],

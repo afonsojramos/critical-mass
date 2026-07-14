@@ -13,6 +13,14 @@
     // Defaults true after 2026-02-19; we set explicitly for our compat date.
     "fetch_iterable_type_support",
   ],
+  // Route the legacy www hostname through this Worker so it can issue a
+  // canonical redirect instead of falling through to the defunct origin.
+  "routes": [
+    {
+      "pattern": "www.massacritica.pt/*",
+      "zone_name": "massacritica.pt",
+    },
+  ],
   "d1_databases": [
     {
       "binding": "DB",

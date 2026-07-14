@@ -24,6 +24,16 @@ const siteData = {
 
 const { title, description, url = Astro.url, image, frontmatter, robots } = Astro.props;
 
+const canonicalUrl = new URL(url, Astro.site);
+canonicalUrl.protocol = "https:";
+canonicalUrl.hostname = "massacritica.pt";
+canonicalUrl.port = "";
+canonicalUrl.search = "";
+canonicalUrl.hash = "";
+if (canonicalUrl.pathname.length > 1) {
+  canonicalUrl.pathname = canonicalUrl.pathname.replace(/\/+$/, "");
+}
+
 // Again, frontmatter triggers CMS post type
 const jsonLD = jsonLDGenerator({
   type: frontmatter ? "post" : "website",
@@ -33,13 +43,13 @@ const jsonLD = jsonLDGenerator({
 ---
 
 <!-- SEO -->
-<link rel="canonical" href={url} />
+<link rel="canonical" href={canonicalUrl} />
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="Site Name" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={url} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={image?.src || siteData.image.src} />
 <meta property="og:image:url" content={image?.src || siteData.image.src} />
 <meta
