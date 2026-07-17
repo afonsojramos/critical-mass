@@ -5,6 +5,14 @@ export const PRIVATE_RESPONSE_HEADERS = {
 
 const PUBLIC_MEDIA_PREFIX = "/_emdash/api/media/file/";
 
+export function privateRouteRedirectUrl(requestUrl: string): URL | null {
+  const url = new URL(requestUrl);
+  if (url.pathname !== "/admin") return null;
+
+  url.pathname = "/_emdash/admin";
+  return url;
+}
+
 export function isPrivateResponseRequest(request: Request, pathname: string): boolean {
   if (request.headers.has("cookie") || request.headers.has("authorization")) {
     return true;

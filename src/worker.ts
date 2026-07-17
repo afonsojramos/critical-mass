@@ -6,7 +6,11 @@
 // resolves against the entry module. Requires `"main": "src/worker.ts"` and a
 // `triggers.crons` entry in wrangler.jsonc.
 import emdashWorker from "@emdash-cms/cloudflare/worker";
-import { isPrivateResponseRequest, withPrivateResponseHeaders } from "./private-response";
+import {
+  isPrivateResponseRequest,
+  privateRouteRedirectUrl,
+  withPrivateResponseHeaders,
+} from "./private-response";
 
 export { PluginBridge } from "@emdash-cms/cloudflare/worker";
 
@@ -42,6 +46,13 @@ export function canonicalRedirectUrl(requestUrl: string): URL | null {
 export default {
   ...emdashWorker,
   async fetch(request, env, ctx) {
+    // Keep private redirects inside the Worker. Astro's static redirect layer
+    // runs before this wrapper and cannot attach the response privacy policy.
+    const privateRedirectUrl = privateRouteRedirectUrl(request.url);
+    if (privateRedirectUrl) {
+      return withPrivateResponseHeaders(Response.redirect(privateRedirectUrl, 308));
+    }
+
     // Historical www/http/trailing-slash URLs are still in Google's index.
     // Normalize them at the edge so every variant permanently redirects to the
     // same URL emitted by canonical tags and the sitemap.

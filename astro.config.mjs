@@ -52,7 +52,6 @@ export default defineConfig({
     imageService: "compile",
   }),
   redirects: {
-    "/admin": "/_emdash/admin",
     "/sitemap-index.xml": "/sitemap.xml",
     "/sitemap-0.xml": "/sitemap.xml",
   },

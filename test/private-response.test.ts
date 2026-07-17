@@ -1,7 +1,18 @@
 import { describe, expect, test } from "bun:test";
-import { isPrivateResponseRequest, withPrivateResponseHeaders } from "../src/private-response";
+import {
+  isPrivateResponseRequest,
+  privateRouteRedirectUrl,
+  withPrivateResponseHeaders,
+} from "../src/private-response";
 
 describe("private response policy", () => {
+  test("keeps the /admin redirect inside the private Worker policy", () => {
+    expect(privateRouteRedirectUrl("https://massacritica.pt/admin")?.href).toBe(
+      "https://massacritica.pt/_emdash/admin",
+    );
+    expect(privateRouteRedirectUrl("https://massacritica.pt/pt")).toBeNull();
+  });
+
   test.each([
     "/admin",
     "/_emdash/admin",
