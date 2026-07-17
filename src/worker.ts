@@ -6,6 +6,7 @@
 // resolves against the entry module. Requires `"main": "src/worker.ts"` and a
 // `triggers.crons` entry in wrangler.jsonc.
 import emdashWorker from "@emdash-cms/cloudflare/worker";
+import { isPrivateResponseRequest, withPrivateResponseHeaders } from "./private-response";
 
 export { PluginBridge } from "@emdash-cms/cloudflare/worker";
 
@@ -40,13 +41,16 @@ export function canonicalRedirectUrl(requestUrl: string): URL | null {
 
 export default {
   ...emdashWorker,
-  fetch(request, env, ctx) {
+  async fetch(request, env, ctx) {
     // Historical www/http/trailing-slash URLs are still in Google's index.
     // Normalize them at the edge so every variant permanently redirects to the
     // same URL emitted by canonical tags and the sitemap.
     const redirectUrl = canonicalRedirectUrl(request.url);
     if (redirectUrl) {
-      return Response.redirect(redirectUrl, 308);
+      const response = Response.redirect(redirectUrl, 308);
+      return isPrivateResponseRequest(request, new URL(request.url).pathname)
+        ? withPrivateResponseHeaders(response)
+        : response;
     }
 
     const fetchHandler = emdashWorker.fetch;
@@ -54,6 +58,9 @@ export default {
       return new Response("Worker fetch handler unavailable", { status: 500 });
     }
 
-    return fetchHandler(request, env, ctx);
+    const response = await fetchHandler(request, env, ctx);
+    return isPrivateResponseRequest(request, new URL(request.url).pathname)
+      ? withPrivateResponseHeaders(response)
+      : response;
   },
 } satisfies ExportedHandler;
