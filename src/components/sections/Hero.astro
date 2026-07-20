@@ -6,63 +6,99 @@ import Section from "@/components/sections/Section.astro";
 import * as m from "@/paraglide/messages";
 
 const currentLang = Astro.currentLocale;
+
+const features = [m.hero_feature1(), m.hero_feature2(), m.hero_feature3()];
 ---
 
 <Section id="home">
   <div
-    class="relative flex flex-col-reverse items-center md:flex-row md:mt-10"
+    class="relative flex flex-col-reverse items-center gap-4 md:flex-row md:mt-10"
     id="hero"
   >
     <div class="row items-center py-5 md:w-6/12">
-      <div class="text-left space-y-3">
-        <h1
-          class="text-4xl font-medium leading-none md:text-6xl text-center md:text-left"
+      <div class="flex flex-col items-center text-center md:items-start md:text-left">
+        <!-- Eyebrow badge -->
+        <span
+          class="inline-flex items-center gap-2 rounded-full border border-dark bg-green px-4 py-1.5 text-sm font-medium text-black"
         >
+          <span class="relative flex h-2.5 w-2.5">
+            <span
+              class="absolute inline-flex h-full w-full animate-ping rounded-full bg-black opacity-75"
+            ></span>
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-black"></span>
+          </span>
+          {m.hero_badge()}
+        </span>
+
+        <h1 class="mt-6 text-5xl font-medium leading-none md:text-7xl">
           {
             m
               .hero_title()
               .split("\n")
               .map((line, index) => (
-                <span class={`block ${index > 0 ? "text-4xl" : "uppercase"}`}>{line}</span>
+                <span class={`block ${index === 0 ? "uppercase" : "text-green font-outline-sm"}`}>
+                  {line}
+                </span>
               ))
           }
         </h1>
-        <p
-          class="mt-6 mb-8 text-lg font-normal leading-7 sm:mb-12 text-center md:text-left md:pr-12"
-        >
+
+        <p class="mt-6 max-w-xl text-lg font-normal leading-7">
           {m.hero_description()}
         </p>
-        <div
-          class="w-full justify-center md:justify-start items-center inline-flex gap-4"
-        >
-          <a
-            href="#locations"
-            class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border text-xl font-normal leading-7"
-          >
+
+        <!-- Feature pills -->
+        <ul class="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
+          {
+            features.map((feature) => (
+              <li class="inline-flex items-center gap-2 rounded-full border border-dark/15 bg-gray px-3.5 py-1.5 text-sm font-medium">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  class="size-4 text-black"
+                  aria-hidden="true"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+                {feature}
+              </li>
+            ))
+          }
+        </ul>
+
+        <!-- Actions -->
+        <div class="mt-8 flex w-full items-center justify-center gap-4 md:justify-start">
+          <a href="#locations" class="btn-primary text-xl font-normal leading-7">
             {m.hero_button()}
           </a>
           <a
             href={`/critical-mass-${currentLang}.ics`}
             download
-            class="flex items-center justify-center w-14 h-14rounded-2xl transition-colors"
-            aria-label="Download calendar event"
+            class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-dark text-black transition-all hover:scale-105 hover:bg-green"
+            aria-label={m.hero_downloadCalendar()}
             title={m.hero_downloadCalendar()}
           >
-            <div class="w-6 h-6 [&>svg]:size-full">
+            <div class="h-6 w-6 [&>svg]:size-full">
               <Fragment set:html={calendarSvg} />
             </div>
           </a>
         </div>
       </div>
     </div>
-    <div class="flex items-center py-5 md:w-6/12">
+
+    <div class="relative flex items-center justify-center py-5 md:w-6/12">
+      <div class="bg-radial-white absolute inset-0 -z-10"></div>
       <Image
         src={HeroIlust}
-        alt="Hero Ilustration"
+        alt="Illustration of cyclists riding together down a green bike lane through the city"
         loading="eager"
         priority
-        width={372*1.5}
-        height={248*1.5}
+        width={372 * 1.6}
+        height={248 * 1.6}
+        class="no-drag h-auto w-full max-w-[600px]"
       />
     </div>
   </div>
