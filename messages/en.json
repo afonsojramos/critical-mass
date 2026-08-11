@@ -50,5 +50,6 @@
   "location_thursday": "Thursday",
   "location_friday": "Friday",
   "location_saturday": "Saturday",
+  "location_last_friday_of_month": "Last Friday of the month",
   "location_of_every_month": "of the month"
 }

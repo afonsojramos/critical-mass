@@ -51,6 +51,7 @@ export interface SiteCopy {
   location_thursday: string;
   location_friday: string;
   location_saturday: string;
+  location_last_friday_of_month: string;
   location_of_every_month: string;
 }
 

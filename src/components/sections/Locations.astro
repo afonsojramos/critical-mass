@@ -56,6 +56,8 @@ const cards = locations.map((location) => {
     const frequencyTranslation =
       frequencyMap[location.data.date_frequency] || location.data.date_frequency;
     dateText = `${frequencyTranslation} ${dayTranslation} ${m.location_of_every_month}`;
+  } else if (!isSpecial) {
+    dateText = m.location_last_friday_of_month;
   }
 
   return {
