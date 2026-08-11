@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an Astro-based multilingual website for Critical Mass Portugal. The site features:
 
-- Multilingual support (Portuguese/English) via Astro i18n and Emdash
+- Multilingual support (Portuguese/English) via Paraglide and Emdash
 - Content management via Emdash CMS (database-first, Portable Text)
 - Server-side rendering with Cloudflare adapter
 - TailwindCSS for styling
@@ -35,10 +35,10 @@ EMDASH_TOKEN=... nub run cms:migrate
 
 - Base locale: Portuguese (`pt`)
 - Supported locales: `pt`, `en`
-- UI strings: localized `site_copy` entries in Emdash
+- UI strings: Paraglide catalogs in `messages/{locale}.json`
 - Content i18n: Emdash row-per-locale with `translation_group` linking
-- Locale constants and the typed query helper live in `src/i18n/`
-- Astro derives `Astro.currentLocale` from the locale-prefixed public URL
+- Generated Paraglide modules live in `src/paraglide/` and must not be edited by hand
+- Middleware sets Paraglide's locale from the locale-prefixed public URL
 
 ### Content Management
 
@@ -46,8 +46,8 @@ EMDASH_TOKEN=... nub run cms:migrate
 - Database: Cloudflare D1 (production) / SQLite (local dev)
 - Media: Cloudflare R2 (production) / local filesystem (local dev)
 - Content format: Portable Text (structured JSON), rendered via `astro-portabletext`
-- Collections: authors, blog, events, gallery, locations, site_copy
-- Gallery's `author` field is an Emdash reference to the authors content type
+- Collections: authors, blog, events, gallery, locations
+- Gallery's `author` field is an Emdash reference to the authors content type, rendered by the custom `content-reference` admin plugin
 - Query API: `getEmDashCollection()` and `getEmDashEntry()` from `emdash`
 - Search: FTS5 full-text search via `search()` from `emdash`
 - Legacy content files in `src/content/` (kept for reference during migration)
@@ -57,7 +57,8 @@ EMDASH_TOKEN=... nub run cms:migrate
 - `src/components/sections/` - Page sections (Hero, FeaturedEvents, etc.)
 - `src/components/ui/` - Reusable UI components
 - `src/pages/[locale]/` - Localized pages with dynamic routing
-- `src/i18n/` - Internationalization utilities
+- `messages/` - Paraglide source translation catalogs
+- `src/i18n/` - Typed interface-copy adapter
 - `src/content/` - Legacy content files (Markdown/JSON)
 - `scripts/` - Migration and utility scripts
 
@@ -79,7 +80,7 @@ EMDASH_TOKEN=... nub run cms:migrate
 
 ## Important Notes
 
-- Always run the build command to test Emdash-backed locale queries and Astro checks before committing
+- Always run the build command to compile Paraglide messages, test Emdash-backed content queries, and run Astro checks before committing
 - Content pages are SSR-only (no prerendering) since they query D1 at runtime
 - Local dev uses SQLite (`data.db`) and local filesystem (`uploads/`) — both gitignored
 - Site deploys to Cloudflare with server-side rendering

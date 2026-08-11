@@ -1,5 +1,4 @@
-import { getEmDashEntry } from "emdash";
-import { resolveLocale, type Locale } from "./config";
+import { m as messages } from "../paraglide/messages.js";
 
 export interface SiteCopy {
   title: string;
@@ -55,23 +54,19 @@ export interface SiteCopy {
   location_of_every_month: string;
 }
 
-/**
- * Load interface copy from Emdash's localized `site_copy` content type.
- * Emdash request caching deduplicates this lookup when several components
- * render during the same request.
- */
+type MessageFunction = (
+  inputs?: Record<string, never>,
+  options?: { locale?: "en" | "pt" },
+) => string;
+
+/** Resolve the generated Paraglide messages for the requested locale. */
 export async function getSiteCopy(locale?: string): Promise<SiteCopy> {
-  const resolvedLocale: Locale = resolveLocale(locale);
-  const { entry, error } = await getEmDashEntry<"site_copy", SiteCopy>("site_copy", "site-copy", {
-    locale: resolvedLocale,
-  });
-
-  if (!entry) {
-    const detail = error ? `: ${error.message}` : "";
-    throw new Error(
-      `Missing published Emdash site copy for locale "${resolvedLocale}"${detail}. Run \`nub run cms:migrate\` before deploying this revision.`,
-    );
-  }
-
-  return entry.data;
+  const resolvedLocale = locale === "en" ? "en" : "pt";
+  const messageFunctions = messages as unknown as Record<keyof SiteCopy, MessageFunction>;
+  return Object.fromEntries(
+    Object.entries(messageFunctions).map(([key, message]) => [
+      key,
+      message({}, { locale: resolvedLocale }),
+    ]),
+  ) as unknown as SiteCopy;
 }

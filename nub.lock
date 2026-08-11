@@ -16,19 +16,22 @@ importers:
         version: 0.9.10(typescript@6.0.3)
       '@astrojs/cloudflare':
         specifier: ^14.2.0
-        version: 14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))
+        version: 14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))
       '@astrojs/react':
         specifier: ^6.0.2
         version: 6.0.2(@types/node@24.13.3)(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
+      '@emdash-cms/admin':
+        specifier: ^0.32.0
+        version: 0.32.0(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)(zod@4.4.3)
       '@emdash-cms/auth-atproto':
         specifier: ^0.2.32
-        version: 0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
+        version: 0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
       '@emdash-cms/cloudflare':
         specifier: ^0.32.0
-        version: 0.32.0(@astrojs/cloudflare@14.2.0(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1)))(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@cloudflare/workers-types@5.20260809.1)(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(@types/react@19.2.18)(astro@7.2.0)(kysely@0.29.5)(pg@8.23.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(typescript@6.0.3)
+        version: 0.32.0(@astrojs/cloudflare@14.2.0(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1)))(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(echarts@6.1.0)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3))(@cloudflare/workers-types@5.20260809.1)(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(@types/react@19.2.18)(astro@7.2.0)(kysely@0.29.5)(pg@8.23.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(typescript@6.0.3)
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.1(@types/node@24.13.3))
@@ -40,19 +43,19 @@ importers:
         version: 1.170.25(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
       astro:
         specifier: ^7.2.0
-        version: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
+        version: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
       astro-navbar:
         specifier: ^2.4.0
         version: 2.4.0
       astro-portabletext:
         specifier: ^0.13.0
-        version: 0.13.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)
+        version: 0.13.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)
       blockrate:
         specifier: ^1.1.0
         version: 1.1.0(react@19.2.8)
       emdash:
         specifier: ^0.32.0
-        version: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
+        version: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -87,9 +90,21 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^5.20260809.1
         version: 5.20260809.1
+      '@inlang/cli':
+        specifier: ^3.3.0
+        version: 3.3.0
+      '@inlang/paraglide-js':
+        specifier: ^2.23.2
+        version: 2.23.2(typescript@6.0.3)(vite@8.2.1(@types/node@24.13.3))
       '@tailwindcss/typography':
         specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
+      '@types/react':
+        specifier: ^19.2.18
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.2.4
+        version: 19.2.4(@types/react@19.2.18)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -1381,6 +1396,30 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@inlang/cli@3.3.0':
+    resolution: {integrity: sha512-Uv1yu55BAJuc2T6dOsCwMV0YzzrTGIdpicqigbQb8fyr7lyHWMq6EhLu2BEmSeJV6XQ/fooYjIRUtEtJX3GJiA==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
+  '@inlang/paraglide-js@2.23.2':
+    resolution: {integrity: sha512-tzWnZ6DEQ3JRxpSM/lsmfUFSNXLymvlfUei4uX1lo/Qh3a8OfxZ5nchGrEM+p0aLX4m5ZMrVuMKfaD0qXJFeoA==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=5.6'
+      vite: '>=5.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      vite:
+        optional: true
+
+  '@inlang/recommend-sherlock@0.2.1':
+    resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
+
+  '@inlang/sdk@2.10.2':
+    resolution: {integrity: sha512-O1ki72SNK6LPagaGrvlioBb1mWKvump7cO7P85hfGZjdFTmDdn3icI0A6MvaBsB3P9KQHAjzyubnN1OslGufTw==}
+    engines: {node: '>=20.0.0'}
+
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -1484,6 +1523,13 @@ packages:
         optional: true
       babel-plugin-macros:
         optional: true
+
+  '@lix-js/sdk@0.4.10':
+    resolution: {integrity: sha512-0dMInAJK/67guTG5rRZaCEhvzC5cCXENOjaePA5AqMXrCE97kaY7SRor9e2vnoGsFIiGqXKlT0MCIoZj36G0gg==}
+    engines: {node: '>=18'}
+
+  '@lix-js/server-protocol-schema@0.1.1':
+    resolution: {integrity: sha512-jBeALB6prAbtr5q4vTuxnRZZv1M2rKe8iNqRQhFJ4Tv7150unEa0vKyz0hs8Gl3fUGsWaNJBh3J8++fpbrpRBQ==}
 
   '@messageformat/parser@5.1.1':
     resolution: {integrity: sha512-3p0YRGCcTUCYvBKLIxtDDyrJ0YijGIwrTRu1DT8gIviIDZru8H23+FkY6MJBzM1n9n20CiM4VeDYuBsrrwnLjg==}
@@ -1996,12 +2042,19 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
+  '@sinclair/typebox@0.31.30':
+    resolution: {integrity: sha512-MGsM7bVmHg3sUKCphlu3SGQ+T+5JTbygZWYArfKQCW5anJeACHeqLhcnf+R7XlCWZ+QR3C8JTBx3kCKJTN69ow==}
+
   '@sindresorhus/is@7.2.0':
     resolution: {integrity: sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw==}
     engines: {node: '>=18'}
 
   '@speed-highlight/core@1.2.24':
     resolution: {integrity: sha512-qeW2e1l78afw8VhRPfPQ1Gjj+KU5XFQ/OFV5ti6eTa9bruO7mJyZtA4vw0ofqmA3tKCkROE9xLk3VZoeRc98nw==}
+
+  '@sqlite.org/sqlite-wasm@3.48.0-build4':
+    resolution: {integrity: sha512-hI6twvUkzOmyGZhQMza1gpfqErZxXRw6JEsiVjUbo7tFanVD+8Oil0Ih3l2nGzHdxPI41zFmfUQG7GHqhciKZQ==}
+    hasBin: true
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
@@ -2819,6 +2872,11 @@ packages:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
     engines: {node: '>= 0.6'}
 
+  acorn@8.18.0:
+    resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
   ajv-draft-04@1.0.0:
     resolution: {integrity: sha512-mv00Te6nmYbRp5DCwclxtt7yV/joXJPGS7nM+97GdxvuttCOfgI3K4U25zboyeX0O+myI8ERluxQe5wljMmVIw==}
     peerDependencies:
@@ -2886,6 +2944,9 @@ packages:
   aria-query@5.3.2:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
+
+  array-timsort@1.0.3:
+    resolution: {integrity: sha512-/+3GRL7dDAGEfM6TseQk/U+mi18TU2Ms9I3UlLdUMhz2hbvGNTKdj9xniwXfUqgYhHxRx0+8UnKkvlNwVU+cWQ==}
 
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
@@ -3039,9 +3100,17 @@ packages:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
 
+  comment-json@4.6.2:
+    resolution: {integrity: sha512-R2rze/hDX30uul4NZoIZ76ImSJLFxn/1/ZxtKC1L77y2X1k+yYu1joKbAtMA2Fg3hZrTOiw0I5mwVMo0cf250w==}
+    engines: {node: '>= 6'}
+
   common-ancestor-path@2.0.0:
     resolution: {integrity: sha512-dnN3ibLeoRf2HNC+OlCiNc5d2zxbLJXOtiZUudNFSXZrNSydxcCsSpRzXwfu7BBWCIfHPw+xTayeBvJCP/D8Ng==}
     engines: {node: '>= 18'}
+
+  consola@3.4.0:
+    resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
+    engines: {node: ^14.18.0 || >=16.10.0}
 
   consola@3.4.2:
     resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
@@ -3160,6 +3229,14 @@ packages:
   decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
+
+  dedent@1.5.1:
+    resolution: {integrity: sha512-+LxW+KLWxu3HW3M2w2ympwtqPrqYRzU8fqi6Fhd18fBALe15blJPI/I4+UHveMVG6lJqB4JNd4UG0S5cnVHwIg==}
+    peerDependencies:
+      babel-plugin-macros: ^3.1.0
+    peerDependenciesMeta:
+      babel-plugin-macros:
+        optional: true
 
   deep-extend@0.6.0:
     resolution: {integrity: sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==}
@@ -3312,6 +3389,11 @@ packages:
   es-object-atoms@1.1.2:
     resolution: {integrity: sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==}
     engines: {node: '>= 0.4'}
+
+  esbuild-wasm@0.19.12:
+    resolution: {integrity: sha512-Zmc4hk6FibJZBcTx5/8K/4jT3/oG1vkGTEeKJUQFCUQKimD6Q7+adp/bdVQyYJFolMKaXkQnVZdV4O5ZaTYmyQ==}
+    engines: {node: '>=12'}
+    hasBin: true
 
   esbuild@0.28.1:
     resolution: {integrity: sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw==}
@@ -3567,6 +3649,10 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
+  human-id@4.2.0:
+    resolution: {integrity: sha512-K3GbkIWqyvvlpfhBPlbEvD97TtqBpAYA4kt+cn2lD2x2HuohzZCibcA2nOlnJT6exqvJLggoB5nv2dNf192nEA==}
+    hasBin: true
+
   husky@9.1.7:
     resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
     engines: {node: '>=18'}
@@ -3650,6 +3736,9 @@ packages:
   js-sha256@0.10.1:
     resolution: {integrity: sha512-5obBtsz9301ULlsgggLg542s/jqtddfOpV5KJc4hajc9JV8GeY2gZHSVpYBn4nWqAUTJ9v+xwtbJ1mIBgIH5Vw==}
 
+  js-sha256@0.11.1:
+    resolution: {integrity: sha512-o6WSo/LUvY2uC4j7mO50a2ms7E/EAdbP0swigLV+nzHKTTaYnaLIWJ02VdXrsJX0vGedDESQnLsOekr94ryfjg==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -3704,6 +3793,10 @@ packages:
     resolution: {integrity: sha512-wUcVvQNtm30OTfuo7Ad5vYJ1qHqPXOCZc+zWchVKNyuvqY3u8OuGw4gmUx1Ypdx2wRVFLHVQC9I7v0pTmF7Nkw==}
     peerDependencies:
       kysely: '*'
+
+  kysely@0.28.17:
+    resolution: {integrity: sha512-nbD8lB9EB3wNdMhOCdx5Li8DxnLbvKByylRLcJ1h+4SkrowVeECAyZlyiKMThF7xFdRz0jSQ2MoJr+wXux2y0Q==}
+    engines: {node: '>=20.0.0'}
 
   kysely@0.29.5:
     resolution: {integrity: sha512-ooa+eSbBNPTo3MycPEuW5jdrxQdQwdtB3LC3h43FiXQbIry5tR0C5lDG7eealK0E4D7XjrnOP5DIUg/LyjRMYQ==}
@@ -4639,6 +4732,11 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
+  sqlite-wasm-kysely@0.3.0:
+    resolution: {integrity: sha512-TzjBNv7KwRw6E3pdKdlRyZiTmUIE0UttT/Sl56MVwVARl/u5gp978KepazCJZewFUnlWHz9i3NQd4kOtP/Afdg==}
+    peerDependencies:
+      kysely: '*'
+
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
 
@@ -4854,6 +4952,10 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
+  unplugin@2.3.11:
+    resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
+    engines: {node: '>=18.12.0'}
+
   unstorage@1.17.5:
     resolution: {integrity: sha512-0i3iqvRfx29hkNntHyQvJTpf5W9dQ9ZadSoRU8+xVlhVtT7jAX57fazYO9EHvcRCfBCyi5YRya7XCDOsbTgkPg==}
     peerDependencies:
@@ -4925,6 +5027,9 @@ packages:
   upng-js@2.1.0:
     resolution: {integrity: sha512-d3xzZzpMP64YkjP5pr8gNyvBt7dLk/uGI67EctzDuVp4lCZyVMo0aJO6l/VDlgbInJYDY6cnClLoBp29eKWI6g==}
 
+  urlpattern-polyfill@10.1.0:
+    resolution: {integrity: sha512-IGjKp/o0NL3Bso1PymYURCJxMPNAf/ILOpendP9f5B6e1rTJgdgiOvgfoT8VxCAdY+Wisb9uhGaJJf3yZ2V9nw==}
+
   use-sync-external-store@1.6.0:
     resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
     peerDependencies:
@@ -4932,6 +5037,10 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  uuid@14.0.1:
+    resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
+    hasBin: true
 
   valibot@1.4.2:
     resolution: {integrity: sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg==}
@@ -5180,6 +5289,9 @@ packages:
     resolution: {integrity: sha512-BMhLD/Sw+GbJC21C/UgyaZX41nPt8bUTg+jWyDeg7e7YN4xOM05YPSIXceACnXVtqyEw/LMClUQMtMZ+PGGpqQ==}
     engines: {node: '>=20'}
 
+  webpack-virtual-modules@0.6.2:
+    resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
+
   whatwg-mimetype@5.0.0:
     resolution: {integrity: sha512-sXcNcHOC51uPGF0P/D4NVtrkjSU2fNsm9iog4ZvZJsL3rjoDAzXZhkm2MWt1y+PUdggKAYVoMAIYcs78wJ51Cw==}
     engines: {node: '>=20'}
@@ -5347,12 +5459,12 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))':
+  '@astrojs/cloudflare@14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.10.2
       '@astrojs/underscore-redirects': 1.0.3
       '@cloudflare/vite-plugin': 1.51.1(vite@8.2.1(@types/node@24.13.3))(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
       piccolore: 0.1.3
       vite: 8.2.1(@types/node@24.13.3)
       wrangler: 4.120.0(@cloudflare/workers-types@5.20260809.1)
@@ -5389,9 +5501,9 @@ snapshots:
   '@astrojs/compiler-binding-linux-x64-musl@0.3.2':
     optional: true
 
-  '@astrojs/compiler-binding-wasm32-wasi@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)':
+  '@astrojs/compiler-binding-wasm32-wasi@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.2.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
+      '@napi-rs/wasm-runtime': 1.2.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
     optional: true
 
   '@astrojs/compiler-binding-win32-arm64-msvc@0.3.2':
@@ -5400,7 +5512,7 @@ snapshots:
   '@astrojs/compiler-binding-win32-x64-msvc@0.3.2':
     optional: true
 
-  '@astrojs/compiler-binding@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)':
+  '@astrojs/compiler-binding@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     optionalDependencies:
       '@astrojs/compiler-binding-darwin-arm64': 0.3.2
       '@astrojs/compiler-binding-darwin-x64': 0.3.2
@@ -5408,13 +5520,13 @@ snapshots:
       '@astrojs/compiler-binding-linux-arm64-musl': 0.3.2
       '@astrojs/compiler-binding-linux-x64-gnu': 0.3.2
       '@astrojs/compiler-binding-linux-x64-musl': 0.3.2
-      '@astrojs/compiler-binding-wasm32-wasi': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
+      '@astrojs/compiler-binding-wasm32-wasi': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
       '@astrojs/compiler-binding-win32-arm64-msvc': 0.3.2
       '@astrojs/compiler-binding-win32-x64-msvc': 0.3.2
 
-  '@astrojs/compiler-rs@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)':
+  '@astrojs/compiler-rs@0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     dependencies:
-      '@astrojs/compiler-binding': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
+      '@astrojs/compiler-binding': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
 
   '@astrojs/compiler@2.13.1': {}
 
@@ -5791,43 +5903,6 @@ snapshots:
       - '@emotion/is-prop-valid'
       - date-fns
 
-  '@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))':
-    dependencies:
-      '@base-ui/react': 1.7.0(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      '@phosphor-icons/react': 2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      '@shikijs/langs': 4.4.2
-      '@shikijs/themes': 4.4.2
-      clsx: 2.1.1
-      motion: 12.43.0(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      react: 19.2.8
-      react-day-picker: 9.14.0(react@19.2.8)
-      react-dom: 19.2.8(react@19.2.8)
-      shiki: 4.4.2
-      tailwind-merge: 3.6.0
-    transitivePeerDependencies:
-      - '@date-fns/tz'
-      - '@emotion/is-prop-valid'
-      - date-fns
-
-  '@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3)':
-    dependencies:
-      '@base-ui/react': 1.7.0(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      '@phosphor-icons/react': 2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      '@shikijs/langs': 4.4.2
-      '@shikijs/themes': 4.4.2
-      clsx: 2.1.1
-      motion: 12.43.0(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      react: 19.2.8
-      react-day-picker: 9.14.0(react@19.2.8)
-      react-dom: 19.2.8(react@19.2.8)
-      shiki: 4.4.2
-      tailwind-merge: 3.6.0
-      zod: 4.4.3
-    transitivePeerDependencies:
-      - '@date-fns/tz'
-      - '@emotion/is-prop-valid'
-      - date-fns
-
   '@cloudflare/kv-asset-handler@0.5.0': {}
 
   '@cloudflare/unenv-preset@2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260801.1)':
@@ -5920,11 +5995,11 @@ snapshots:
       react: 19.2.8
       tslib: 2.8.1
 
-  '@emdash-cms/admin@0.32.0(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)(zod@4.4.3)':
+  '@emdash-cms/admin@0.32.0(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)(zod@4.4.3)':
     dependencies:
       '@atcute/identity-resolver': 2.0.1(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(typescript@6.0.3)
       '@atcute/lexicons': 2.0.3
-      '@cloudflare/kumo': 2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3)
+      '@cloudflare/kumo': 2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(echarts@6.1.0)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3)
       '@dnd-kit/core': 6.3.1(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
       '@dnd-kit/sortable': 10.0.0(@dnd-kit/core@6.3.1(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(react@19.2.8)
       '@dnd-kit/utilities': 3.2.2(react@19.2.8)
@@ -5979,24 +6054,23 @@ snapshots:
       - '@lingui/babel-plugin-lingui-macro'
       - babel-plugin-macros
       - date-fns
-      - echarts
 
-  '@emdash-cms/auth-atproto@0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)':
+  '@emdash-cms/auth-atproto@0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)':
     dependencies:
       '@atcute/identity-resolver': 2.0.1(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(typescript@6.0.3)
       '@atcute/oauth-node-client': 2.0.1(@atcute/identity-resolver@2.0.1(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(typescript@6.0.3)
-      '@emdash-cms/auth': 0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
-      emdash: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
+      '@emdash-cms/auth': 0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
+      emdash: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
       kysely: 0.29.5
       react: 19.2.8
 
-  '@emdash-cms/auth@0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)':
+  '@emdash-cms/auth@0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)':
     dependencies:
       '@oslojs/crypto': 1.0.1
       '@oslojs/encoding': 1.1.0
       '@oslojs/webauthn': 1.0.0
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
       kysely: 0.29.5
       ulidx: 2.4.1
       zod: 4.4.3
@@ -6015,15 +6089,15 @@ snapshots:
       - '@emotion/is-prop-valid'
       - date-fns
 
-  '@emdash-cms/cloudflare@0.32.0(@astrojs/cloudflare@14.2.0(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1)))(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@cloudflare/workers-types@5.20260809.1)(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(@types/react@19.2.18)(astro@7.2.0)(kysely@0.29.5)(pg@8.23.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(typescript@6.0.3)':
+  '@emdash-cms/cloudflare@0.32.0(@astrojs/cloudflare@14.2.0(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1)))(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@cloudflare/kumo@2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(echarts@6.1.0)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3))(@cloudflare/workers-types@5.20260809.1)(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(@types/react@19.2.18)(astro@7.2.0)(kysely@0.29.5)(pg@8.23.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(typescript@6.0.3)':
     dependencies:
-      '@astrojs/cloudflare': 14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))
+      '@astrojs/cloudflare': 14.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(wrangler@4.120.0(@cloudflare/workers-types@5.20260809.1))
       '@cloudflare/ai-search-snippet': 0.0.42
-      '@cloudflare/kumo': 2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
+      '@cloudflare/kumo': 2.6.0(@phosphor-icons/react@2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@types/react@19.2.18)(echarts@6.1.0)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(zod@4.4.3)
       '@cloudflare/workers-types': 5.20260809.1
       '@phosphor-icons/react': 2.1.10(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
-      emdash: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
+      emdash: 0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
       jose: 6.2.8
       kysely: 0.29.5
       kysely-d1: 0.4.0(kysely@0.29.5)
@@ -6038,7 +6112,6 @@ snapshots:
       - babel-plugin-macros
       - bufferutil
       - date-fns
-      - echarts
       - pg-native
       - supports-color
       - utf-8-validate
@@ -6505,6 +6578,41 @@ snapshots:
   '@img/sharp-win32-x64@0.35.3':
     optional: true
 
+  '@inlang/cli@3.3.0':
+    dependencies:
+      '@inlang/sdk': 2.10.2
+      esbuild-wasm: 0.19.12
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
+  '@inlang/paraglide-js@2.23.2(typescript@6.0.3)(vite@8.2.1(@types/node@24.13.3))':
+    dependencies:
+      '@inlang/recommend-sherlock': 0.2.1
+      '@inlang/sdk': 2.10.2
+      commander: 11.1.0
+      consola: 3.4.0
+      json5: 2.2.3
+      typescript: 6.0.3
+      unplugin: 2.3.11
+      urlpattern-polyfill: 10.1.0
+      vite: 8.2.1(@types/node@24.13.3)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
+  '@inlang/recommend-sherlock@0.2.1':
+    dependencies:
+      comment-json: 4.6.2
+
+  '@inlang/sdk@2.10.2':
+    dependencies:
+      '@lix-js/sdk': 0.4.10
+      '@sinclair/typebox': 0.31.30
+      kysely: 0.28.17
+      sqlite-wasm-kysely: 0.3.0(kysely@0.28.17)
+      uuid: 14.0.1
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -6618,6 +6726,20 @@ snapshots:
       - '@lingui/babel-plugin-lingui-macro'
       - babel-plugin-macros
 
+  '@lix-js/sdk@0.4.10':
+    dependencies:
+      '@lix-js/server-protocol-schema': 0.1.1
+      dedent: 1.5.1
+      human-id: 4.2.0
+      js-sha256: 0.11.1
+      kysely: 0.28.17
+      sqlite-wasm-kysely: 0.3.0(kysely@0.28.17)
+      uuid: 14.0.1
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
+  '@lix-js/server-protocol-schema@0.1.1': {}
+
   '@messageformat/parser@5.1.1':
     dependencies:
       moo: 0.5.3
@@ -6648,13 +6770,6 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.11.1
       '@emnapi/runtime': 1.11.1
-      '@tybys/wasm-util': 0.10.3
-    optional: true
-
-  '@napi-rs/wasm-runtime@1.2.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)':
-    dependencies:
-      '@emnapi/core': 1.11.1
-      '@emnapi/runtime': 1.11.3
       '@tybys/wasm-util': 0.10.3
     optional: true
 
@@ -6956,9 +7071,13 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
+  '@sinclair/typebox@0.31.30': {}
+
   '@sindresorhus/is@7.2.0': {}
 
   '@speed-highlight/core@1.2.24': {}
+
+  '@sqlite.org/sqlite-wasm@3.48.0-build4': {}
 
   '@standard-schema/spec@1.1.0': {}
 
@@ -7731,6 +7850,8 @@ snapshots:
       mime-types: 3.0.2
       negotiator: 1.0.0
 
+  acorn@8.18.0: {}
+
   ajv-draft-04@1.0.0(ajv@8.20.0):
     dependencies:
       ajv: 8.20.0
@@ -7787,25 +7908,27 @@ snapshots:
 
   aria-query@5.3.2: {}
 
+  array-timsort@1.0.3: {}
+
   assertion-error@2.0.1: {}
 
   astro-navbar@2.4.0: {}
 
-  astro-portabletext@0.11.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0):
+  astro-portabletext@0.11.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0):
     dependencies:
       '@portabletext/toolkit': 3.0.3
       '@portabletext/types': 2.0.15
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
 
-  astro-portabletext@0.13.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0):
+  astro-portabletext@0.13.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0):
     dependencies:
       '@portabletext/toolkit': 5.0.2
       '@portabletext/types': 4.0.2
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
 
-  astro@7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3):
+  astro@7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3):
     dependencies:
-      '@astrojs/compiler-rs': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
+      '@astrojs/compiler-rs': 0.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
       '@astrojs/internal-helpers': 0.10.2
       '@astrojs/markdown-satteri': 0.3.5
       '@astrojs/telemetry': 3.3.3
@@ -8010,7 +8133,14 @@ snapshots:
 
   commander@11.1.0: {}
 
+  comment-json@4.6.2:
+    dependencies:
+      array-timsort: 1.0.3
+      esprima: 4.0.1
+
   common-ancestor-path@2.0.0: {}
+
+  consola@3.4.0: {}
 
   consola@3.4.2: {}
 
@@ -8106,6 +8236,8 @@ snapshots:
     dependencies:
       mimic-response: 3.1.0
 
+  dedent@1.5.1: {}
+
   deep-extend@0.6.0: {}
 
   deepmerge@4.3.1: {}
@@ -8190,15 +8322,15 @@ snapshots:
 
   electron-to-chromium@1.5.403: {}
 
-  emdash@0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3):
+  emdash@0.32.0(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@emdash-cms/auth-atproto@0.2.32)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3):
     dependencies:
       '@astrojs/react': 6.0.2(@types/node@24.13.3)(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8))
       '@atcute/client': 5.1.1(@atcute/lexicons@2.0.3)(typescript@6.0.3)
       '@atcute/lexicons': 2.0.3
       '@atcute/multibase': 1.2.5
-      '@emdash-cms/admin': 0.32.0(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)(zod@4.4.3)
-      '@emdash-cms/auth': 0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)
-      '@emdash-cms/auth-atproto': 0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
+      '@emdash-cms/admin': 0.32.0(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(echarts@6.1.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)(zod@4.4.3)
+      '@emdash-cms/auth': 0.32.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)(kysely@0.29.5)
+      '@emdash-cms/auth-atproto': 0.2.32(@astrojs/react@6.0.2(@types/react@19.2.18)(@types/react-dom@19.2.4(@types/react@19.2.18))(react@19.2.8)(react-dom@19.2.8(react@19.2.8)))(@atcute/identity@2.0.2(@atcute/lexicons@2.0.3))(@atcute/lexicons@2.0.3)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.29.2(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)(@types/node@24.13.3)(astro@7.2.0)(echarts@6.1.0)(emdash@0.32.0)(prosemirror-model@1.25.11)(prosemirror-state@1.4.4)(prosemirror-view@1.42.2)(react@19.2.8)(react-dom@19.2.8(react@19.2.8))(typescript@6.0.3)
       '@emdash-cms/gutenberg-to-portable-text': 0.32.0
       '@emdash-cms/plugin-types': 0.3.0
       '@emdash-cms/registry-client': 0.3.4(typescript@6.0.3)
@@ -8222,8 +8354,8 @@ snapshots:
       '@tiptap/suggestion': 3.29.2(@floating-ui/dom@1.8.0)(@tiptap/core@3.29.2(@tiptap/pm@3.29.2))(@tiptap/pm@3.29.2)
       '@unpic/placeholder': 0.1.2
       arctic: 3.7.0
-      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)
-      astro-portabletext: 0.11.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(astro@7.2.0)
+      astro: 7.2.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)
+      astro-portabletext: 0.11.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(astro@7.2.0)
       better-sqlite3: 12.11.1
       blurhash: 2.0.5
       citty: 0.1.6
@@ -8254,7 +8386,6 @@ snapshots:
       - babel-plugin-macros
       - bufferutil
       - date-fns
-      - echarts
       - pg-native
       - supports-color
       - utf-8-validate
@@ -8294,6 +8425,8 @@ snapshots:
   es-object-atoms@1.1.2:
     dependencies:
       es-errors: 1.3.0
+
+  esbuild-wasm@0.19.12: {}
 
   esbuild@0.28.1:
     optionalDependencies:
@@ -8641,6 +8774,8 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
+  human-id@4.2.0: {}
+
   husky@9.1.7: {}
 
   iconv-lite@0.7.3:
@@ -8689,6 +8824,8 @@ snapshots:
     optional: true
 
   js-sha256@0.10.1: {}
+
+  js-sha256@0.11.1: {}
 
   js-tokens@4.0.0: {}
 
@@ -8746,6 +8883,8 @@ snapshots:
   kysely-d1@0.4.0(kysely@0.29.5):
     dependencies:
       kysely: 0.29.5
+
+  kysely@0.28.17: {}
 
   kysely@0.29.5: {}
 
@@ -9850,6 +9989,11 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
+  sqlite-wasm-kysely@0.3.0(kysely@0.28.17):
+    dependencies:
+      '@sqlite.org/sqlite-wasm': 3.48.0-build4
+      kysely: 0.28.17
+
   stackback@0.0.2: {}
 
   statuses@2.0.2: {}
@@ -10053,6 +10197,13 @@ snapshots:
 
   unpipe@1.0.0: {}
 
+  unplugin@2.3.11:
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      acorn: 8.18.0
+      picomatch: 4.0.5
+      webpack-virtual-modules: 0.6.2
+
   unstorage@1.17.5:
     dependencies:
       anymatch: 3.1.3
@@ -10074,11 +10225,15 @@ snapshots:
     dependencies:
       pako: 1.0.11
 
+  urlpattern-polyfill@10.1.0: {}
+
   use-sync-external-store@1.6.0(react@19.2.8):
     dependencies:
       react: 19.2.8
 
   util-deprecate@1.0.2: {}
+
+  uuid@14.0.1: {}
 
   valibot@1.4.2(typescript@6.0.3):
     dependencies:
@@ -10322,6 +10477,8 @@ snapshots:
     optional: true
 
   webidl-conversions@8.0.1: {}
+
+  webpack-virtual-modules@0.6.2: {}
 
   whatwg-mimetype@5.0.0: {}
 

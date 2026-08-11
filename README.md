@@ -22,23 +22,24 @@ Join us on the last Friday of every month as we ride together through Portuguese
 
 All commands are run from the root of the project, from a terminal:
 
-| Command               | Action                                                   |
-| :-------------------- | :------------------------------------------------------- |
-| `nub install`         | Installs dependencies                                    |
-| `nub run dev`         | Starts local dev server at `localhost:4321`              |
-| `nub run build`       | Builds the production site to `./dist/`                  |
-| `nub run preview`     | Previews the production build locally                    |
-| `nub run astro ...`   | Runs CLI commands like `astro add`, `astro check`        |
-| `nub run cms:migrate` | Migrates localized UI copy and Gallery authors to Emdash |
+| Command               | Action                                               |
+| :-------------------- | :--------------------------------------------------- |
+| `nub install`         | Installs dependencies                                |
+| `nub run dev`         | Starts local dev server at `localhost:4321`          |
+| `nub run build`       | Builds the production site to `./dist/`              |
+| `nub run preview`     | Previews the production build locally                |
+| `nub run astro ...`   | Runs CLI commands like `astro add`, `astro check`    |
+| `nub run cms:migrate` | Connects Gallery authors to the Authors content type |
 
-Before deploying this version, run the one-time content migration with an Emdash API token:
+To create or repair the Gallery author relationship, run the idempotent schema migration with an Emdash API token:
 
 ```sh
 EMDASH_TOKEN=... nub run cms:migrate
 ```
 
-The migration creates the localized `site_copy` entries and changes Gallery's `author`
-field into a reference to the `authors` content type. It is safe to rerun.
+The migration changes Gallery's `author` field into a reference to the `authors`
+content type, assigns its entry-picker widget, and normalizes existing values to
+author entry IDs. It is safe to rerun.
 
 Performance measurements and regression checks are defined in the
 [`web performance playbook`](docs/web-performance-playbook.md).
@@ -48,7 +49,7 @@ Performance measurements and regression checks are defined in the
 ### 🌐 **Multilingual Experience**
 
 - **Portuguese** and **English** support with seamless language switching
-- Localized interface and editorial content managed in Emdash
+- Interface copy managed in Paraglide message catalogs; editorial content managed in Emdash
 - SEO-optimized
 
 ### 📝 **Dynamic Content**
@@ -73,12 +74,12 @@ This project leverages modern web technologies for optimal performance and devel
 
 ### **Internationalization**
 
-- **[Emdash](https://emdashcms.com/)** - Row-per-locale content and interface copy
-- **Astro i18n** - Locale-aware routing and language detection
+- **[Paraglide.js](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)** - Type-safe interface translations
+- **[Inlang](https://inlang.com/)** - Translation catalog tooling
 
 ### **Content Management**
 
-- **[Emdash](https://emdashcms.com/)** - D1-backed content types, references, revisions, and editing
+- **[Emdash](https://emdashcms.com/)** - D1-backed editorial content, references, revisions, and editing
 - **Astro Live Content Collections** - Runtime content backed by Emdash
 
 ### **Infrastructure**

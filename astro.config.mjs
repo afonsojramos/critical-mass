@@ -2,19 +2,31 @@
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { github } from "emdash/auth/providers/github";
 import { google } from "emdash/auth/providers/google";
-import { baseLocale, locales } from "./src/i18n/config";
+import { baseLocale, locales } from "./src/paraglide/runtime";
+import { contentReference } from "./src/plugins/content-reference";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://massacritica.pt",
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      paraglideVitePlugin({
+        project: "./project.inlang",
+        outdir: "./src/paraglide",
+        disableAsyncLocalStorage: true,
+        // Set per request by src/middleware.ts. This survives nested request
+        // contexts created by Emdash's middleware.
+        strategy: ["globalVariable", "url", "cookie"],
+      }),
+    ],
   },
   integrations: [
     react(),
@@ -29,6 +41,7 @@ export default defineConfig({
       // EMDASH_OAUTH_{GOOGLE,GITHUB}_CLIENT_ID/SECRET secrets.
       authProviders: [google(), github()],
       plugins: [
+        contentReference(),
         emailCloudflare({
           from: "auth@admin.massacritica.pt",
           fromName: "Massa Crítica",
@@ -47,9 +60,8 @@ export default defineConfig({
   i18n: {
     locales: [...locales],
     defaultLocale: baseLocale,
-    fallback: { en: baseLocale },
-    // Keep public URLs prefixed while preventing Astro's automatic router from
-    // intercepting Emdash's unprefixed admin routes.
+    // Paraglide handles locale selection; manual routing keeps Emdash's
+    // unprefixed admin routes outside Astro's locale router.
     routing: "manual",
   },
 });
