@@ -1,5 +1,5 @@
 import { getTaxonomyTerms, getTranslations } from "emdash";
-import { baseLocale, locales } from "@/paraglide/runtime";
+import { baseLocale, locales } from "@/i18n/config";
 
 function otherLocale(current: string): string {
   return (locales as readonly string[]).find((l) => l !== current) ?? baseLocale;

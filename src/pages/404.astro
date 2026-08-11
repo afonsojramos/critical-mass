@@ -1,7 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 import MainLayout from "../layouts/MainLayout.astro";
+
+const m = await getSiteCopy(Astro.currentLocale);
 ---
 
 <MainLayout title="404">
@@ -21,7 +23,7 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
         <div class="text-center space-y-10">
           <h2 class="text-2xl font-medium leading-none md:text-4xl">
-            {m.pageNotFound_title()}
+            {m.page_not_found_title}
           </h2>
           <a
             class="px-9 py-5 bg-black hover:bg-white text-white hover:text-black border rounded-2xl justify-items-center md:justify-items-start gap-2.5 inline-flex"
@@ -29,7 +31,7 @@ import MainLayout from "../layouts/MainLayout.astro";
             href="/"
           >
             <h2 class="text-center text-xl font-normal leading-7">
-              {m.pageNotFound_backHome()}
+              {m.page_not_found_back_home}
             </h2>
           </a>
         </div>

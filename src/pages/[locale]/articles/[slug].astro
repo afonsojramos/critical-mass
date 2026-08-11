@@ -5,8 +5,8 @@ import { PortableText } from "astro-portabletext";
 import { getEmDashEntry } from "emdash";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import Tags from "@/components/ui/Tags.astro";
+import { getSiteCopy } from "@/i18n/site-copy";
 import MainLayout from "@/layouts/MainLayout.astro";
-import * as m from "@/paraglide/messages";
 import { formatDate } from "@/utils";
 import { editable } from "@/utils/editable";
 import { entryLocaleSwitchHref } from "@/utils/localeSwitch";
@@ -18,6 +18,7 @@ if (!slug) {
 }
 
 const locale = Astro.currentLocale;
+const m = await getSiteCopy(locale);
 const { entry } = await getEmDashEntry("blog", slug, { locale });
 
 if (!entry) {
@@ -67,7 +68,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
               >
               </path>
             </svg>
-            <span class="ml-1 font-bold text-lg">{m.blog_allArticles()}</span>
+                <span class="ml-1 font-bold text-lg">{m.blog_all_articles}</span>
           </a>
           <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900" {...edit.title}>
             {article.data.title}
@@ -103,7 +104,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
             }
             <div>
               <h3 class="text-lg">
-                {m.blog_writtenBy()}
+                {m.blog_written_by}
                 {
                   author?.data.social_media_link ? (
                     <a
@@ -119,7 +120,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
                     <span {...(authorEdit?.name ?? {})}>{author?.data.name}</span>
                   )
                 }
-                {m.blog_on()}
+                {m.blog_on}
                 {formatDate(article.data.pub_date, Astro.currentLocale)}
               </h3>
             </div>

@@ -1,0 +1,285 @@
+---
+export const prerender = false;
+
+import MainLayout from "@/layouts/MainLayout.astro";
+
+type PolicySection = {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  items?: string[];
+};
+
+type PolicyContent = {
+  title: string;
+  description: string;
+  eyebrow: string;
+  updated: string;
+  intro: string;
+  summaryTitle: string;
+  summary: string;
+  navigationLabel: string;
+  contactLabel: string;
+  sections: PolicySection[];
+};
+
+const locale = Astro.currentLocale === "en" ? "en" : "pt";
+const otherLocale = locale === "en" ? "pt" : "en";
+
+const policy: Record<"en" | "pt", PolicyContent> = {
+  en: {
+    title: "Privacy Policy",
+    description:
+      "How Massa Crítica Portugal accesses, uses, stores, protects, and deletes data, including information received through Google Sign-In.",
+    eyebrow: "Massa Crítica Portugal",
+    updated: "Last updated: 17 July 2026",
+    intro:
+      "This policy explains how massacritica.pt handles personal data on the public website and in the private Emdash content-management area used by authorised editors.",
+    summaryTitle: "Google Sign-In at a glance",
+    summary:
+      "Google Sign-In is available only for authorised editors. It is used to authenticate access to the private content-management area and does not provide access to Gmail, Google Calendar, Drive, Contacts, or other Google services.",
+    navigationLabel: "On this page",
+    contactLabel: "Privacy contact",
+    sections: [
+      {
+        id: "data-accessed",
+        title: "1. Data we access",
+        paragraphs: [
+          "When an authorised editor chooses Google Sign-In, we request only the standard OpenID Connect scopes openid, email, and profile.",
+        ],
+        items: [
+          "Your Google Account's stable identifier, used to link the sign-in to an editor account.",
+          "Your email address and whether Google has verified it, used to identify you and apply account-access rules.",
+          "Your name and profile image, used to identify you inside the private administration interface.",
+        ],
+      },
+      {
+        id: "data-use",
+        title: "2. How we use Google user data",
+        paragraphs: [
+          "We use this information solely to authenticate authorised editors, create or link their Massa Crítica editor account, enforce role and permitted-domain rules, maintain a secure session, and show the editor's identity in the private administration interface.",
+          "We do not use Google user data for advertising, profiling, analytics, credit decisions, or any purpose unrelated to authentication and account administration.",
+        ],
+      },
+      {
+        id: "data-sharing",
+        title: "3. Data sharing",
+        paragraphs: [
+          "We do not sell, rent, or disclose Google user data to advertisers or unrelated third parties. Data is available only to authorised Massa Crítica administrators and to Cloudflare, our infrastructure processor, to the extent necessary to host the application and its database.",
+          "We do not allow people outside the authorised editorial team to view editor account information, and we do not transfer Google user data to other applications.",
+        ],
+      },
+      {
+        id: "storage-protection",
+        title: "4. Storage and protection",
+        paragraphs: [
+          "The editor account record stores the Google account identifier, email address, verification status, name, and profile-image URL in the site's access-controlled Cloudflare D1 database. The Google access token and ID token are used only to complete sign-in and retrieve the profile; they are not retained after the sign-in request finishes.",
+          "Connections use HTTPS. Access to the administration area is role-restricted, OAuth requests use state validation and PKCE, sessions expire or can be revoked, and OAuth client secrets are stored as deployment secrets rather than in the public source code.",
+        ],
+      },
+      {
+        id: "retention-deletion",
+        title: "5. Retention and deletion",
+        paragraphs: [
+          "We retain an editor's Google-linked profile only while the editor account remains active or while it is needed to protect the service from abuse. OAuth authorisation state is single-use and is removed after the sign-in attempt. Session and security records expire through normal system cleanup.",
+          "To request access to or deletion of your Google-linked editor data, email contributions@massacritica.pt with the subject “Google data request” and the email address associated with the account. After verifying the request, we will remove the Google account link and applicable editor profile data from active systems within 30 days. Residual copies may remain temporarily in protected backups or security records until their normal rotation, unless longer retention is legally required.",
+        ],
+      },
+      {
+        id: "public-site",
+        title: "6. Public website data",
+        paragraphs: [
+          "Visitors do not need a Google account to use the public website. Like most websites, our hosting infrastructure may process technical request information such as IP address, browser details, requested pages, timestamps, and security events to deliver and protect the service.",
+          "The site also measures aggregate website usage and whether common analytics resources are blocked. These measurements are not combined with Google Sign-In data and are not used to identify authorised editors across other services.",
+        ],
+      },
+      {
+        id: "limited-use",
+        title: "7. Google API Services User Data Policy",
+        paragraphs: [
+          "Massa Crítica Portugal's use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements.",
+          "We request the minimum information needed for editor authentication and do not request sensitive or restricted Google API scopes.",
+        ],
+      },
+      {
+        id: "changes-contact",
+        title: "8. Changes and contact",
+        paragraphs: [
+          "We may update this policy when the website, its authentication flow, or legal requirements change. Material changes will be published on this page with a revised update date.",
+          "For privacy questions, access requests, or deletion requests, contact contributions@massacritica.pt.",
+        ],
+      },
+    ],
+  },
+  pt: {
+    title: "Política de Privacidade",
+    description:
+      "Como a Massa Crítica Portugal acede, utiliza, armazena, protege e elimina dados, incluindo informação recebida através do início de sessão com Google.",
+    eyebrow: "Massa Crítica Portugal",
+    updated: "Última atualização: 17 de julho de 2026",
+    intro:
+      "Esta política explica como o site massacritica.pt trata dados pessoais no site público e na área privada de gestão de conteúdos Emdash utilizada por editores autorizados.",
+    summaryTitle: "Início de sessão com Google em resumo",
+    summary:
+      "O início de sessão com Google está disponível apenas para editores autorizados. Serve para autenticar o acesso à área privada de gestão de conteúdos e não dá acesso ao Gmail, Google Calendar, Drive, Contactos ou outros serviços Google.",
+    navigationLabel: "Nesta página",
+    contactLabel: "Contacto de privacidade",
+    sections: [
+      {
+        id: "data-accessed",
+        title: "1. Dados a que acedemos",
+        paragraphs: [
+          "Quando um editor autorizado escolhe iniciar sessão com Google, solicitamos apenas os âmbitos OpenID Connect padrão openid, email e profile.",
+        ],
+        items: [
+          "O identificador estável da Conta Google, utilizado para associar o início de sessão a uma conta de editor.",
+          "O endereço de email e a indicação de que foi verificado pela Google, utilizados para identificar o editor e aplicar as regras de acesso.",
+          "O nome e a imagem de perfil, utilizados para identificar o editor na interface privada de administração.",
+        ],
+      },
+      {
+        id: "data-use",
+        title: "2. Como utilizamos dados de utilizadores Google",
+        paragraphs: [
+          "Utilizamos esta informação exclusivamente para autenticar editores autorizados, criar ou associar a respetiva conta de editor da Massa Crítica, aplicar regras de função e domínio permitido, manter uma sessão segura e apresentar a identidade do editor na interface privada de administração.",
+          "Não utilizamos dados de utilizadores Google para publicidade, definição de perfis, análise, decisões de crédito ou qualquer finalidade não relacionada com autenticação e administração de contas.",
+        ],
+      },
+      {
+        id: "data-sharing",
+        title: "3. Partilha de dados",
+        paragraphs: [
+          "Não vendemos, alugamos nem divulgamos dados de utilizadores Google a anunciantes ou terceiros não relacionados. Os dados ficam disponíveis apenas para administradores autorizados da Massa Crítica e para a Cloudflare, o nosso subcontratante de infraestrutura, na medida necessária para alojar a aplicação e a base de dados.",
+          "Não permitimos que pessoas fora da equipa editorial autorizada consultem informação das contas de editor e não transferimos dados de utilizadores Google para outras aplicações.",
+        ],
+      },
+      {
+        id: "storage-protection",
+        title: "4. Armazenamento e proteção",
+        paragraphs: [
+          "O registo da conta de editor guarda o identificador da Conta Google, o endereço de email, o estado de verificação, o nome e o URL da imagem de perfil na base de dados Cloudflare D1 do site, protegida por controlo de acesso. O token de acesso e o token de ID da Google são utilizados apenas para concluir o início de sessão e obter o perfil; não são conservados após o pedido de início de sessão terminar.",
+          "As ligações utilizam HTTPS. O acesso à área de administração é limitado por funções, os pedidos OAuth utilizam validação de state e PKCE, as sessões expiram ou podem ser revogadas e os segredos do cliente OAuth são guardados como segredos de implementação, não no código-fonte público.",
+        ],
+      },
+      {
+        id: "retention-deletion",
+        title: "5. Conservação e eliminação",
+        paragraphs: [
+          "Conservamos o perfil Google associado a um editor apenas enquanto a conta de editor estiver ativa ou enquanto for necessário para proteger o serviço contra abusos. O state de autorização OAuth é de utilização única e é removido após a tentativa de início de sessão. Os registos de sessão e segurança expiram através da limpeza normal do sistema.",
+          "Para pedir acesso ou eliminação dos dados de editor associados à Google, envie um email para contributions@massacritica.pt com o assunto “Pedido de dados Google” e o endereço de email associado à conta. Depois de verificarmos o pedido, removeremos a associação à Conta Google e os dados aplicáveis do perfil de editor dos sistemas ativos no prazo de 30 dias. Poderão permanecer temporariamente cópias residuais em backups protegidos ou registos de segurança até à respetiva rotação normal, salvo se a lei exigir uma conservação mais longa.",
+        ],
+      },
+      {
+        id: "public-site",
+        title: "6. Dados do site público",
+        paragraphs: [
+          "Os visitantes não precisam de uma Conta Google para utilizar o site público. Tal como na maioria dos sites, a nossa infraestrutura de alojamento pode tratar informação técnica do pedido, como endereço IP, detalhes do navegador, páginas solicitadas, datas e eventos de segurança, para fornecer e proteger o serviço.",
+          "O site também mede a utilização agregada do site e se recursos comuns de análise são bloqueados. Estas medições não são combinadas com dados do início de sessão Google e não são utilizadas para identificar editores autorizados noutros serviços.",
+        ],
+      },
+      {
+        id: "limited-use",
+        title: "7. Política de Dados do Utilizador dos Serviços de API da Google",
+        paragraphs: [
+          "A utilização e transferência, pela Massa Crítica Portugal, para qualquer outra aplicação de informação recebida das APIs da Google respeitará a Política de Dados do Utilizador dos Serviços de API da Google, incluindo os requisitos de Utilização Limitada.",
+          "Solicitamos a informação mínima necessária para autenticar editores e não solicitamos âmbitos sensíveis ou restritos das APIs da Google.",
+        ],
+      },
+      {
+        id: "changes-contact",
+        title: "8. Alterações e contacto",
+        paragraphs: [
+          "Podemos atualizar esta política quando o site, o fluxo de autenticação ou os requisitos legais mudarem. As alterações materiais serão publicadas nesta página com uma nova data de atualização.",
+          "Para questões de privacidade, pedidos de acesso ou pedidos de eliminação, contacte contributions@massacritica.pt.",
+        ],
+      },
+    ],
+  },
+};
+
+const content = policy[locale];
+
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+---
+
+<MainLayout
+  title={content.title}
+  description={content.description}
+  localeSwitchHref={`/${otherLocale}/privacy`}
+>
+  <section class="mx-auto w-full max-w-[1120px] px-5 pb-24 pt-12 sm:pt-16 lg:pt-20">
+    <header class="max-w-3xl">
+      <p class="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-dark/60">
+        {content.eyebrow}
+      </p>
+      <h1 class="text-balance text-4xl font-medium leading-tight text-dark sm:text-5xl lg:text-6xl">
+        {content.title}
+      </h1>
+      <p class="mt-5 max-w-2xl text-pretty text-lg leading-8 text-dark/70">
+        {content.intro}
+      </p>
+      <p class="mt-4 text-sm text-dark/55">{content.updated}</p>
+    </header>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:items-start">
+      <aside class="rounded-3xl bg-gray p-3 shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.04)] lg:sticky lg:top-28">
+        <nav aria-label={content.navigationLabel}>
+          <p class="px-3 pb-2 pt-1 text-xs font-medium uppercase tracking-[0.14em] text-dark/55">
+            {content.navigationLabel}
+          </p>
+          <ul class="grid gap-1">
+            {content.sections.map((section) => (
+              <li>
+                <a
+                  href={`#${section.id}`}
+                  class="flex min-h-10 items-center rounded-2xl px-3 py-2 text-sm leading-5 text-dark/75 transition-colors duration-150 hover:bg-white hover:text-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark"
+                >
+                  {section.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+
+      <article class="min-w-0 max-w-3xl">
+        <section class="rounded-[2rem] bg-dark p-7 text-white shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_10px_30px_-18px_rgba(0,0,0,0.4)] sm:p-9">
+          <h2 class="text-balance text-2xl font-medium text-green">{content.summaryTitle}</h2>
+          <p class="mt-4 text-pretty text-base leading-7 text-white/80">{content.summary}</p>
+        </section>
+
+        <div class="mt-4 divide-y divide-dark/10">
+          {content.sections.map((section) => (
+            <section id={section.id} class="scroll-mt-28 py-9 first:pt-8">
+              <h2 class="text-balance text-2xl font-medium leading-tight text-dark sm:text-3xl">
+                {section.title}
+              </h2>
+              <div class="mt-5 grid gap-4 text-dark/75">
+                {section.paragraphs.map((paragraph) => (
+                  <p class="text-pretty text-base leading-7">{paragraph}</p>
+                ))}
+                {section.items && (
+                  <ul class="grid gap-3 pl-5 text-pretty text-base leading-7 marker:text-dark">
+                    {section.items.map((item) => <li class="list-disc pl-1">{item}</li>)}
+                  </ul>
+                )}
+              </div>
+            </section>
+          ))}
+        </div>
+
+        <div class="mt-4 rounded-3xl bg-green p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.04)] sm:p-7">
+          <p class="text-sm font-medium uppercase tracking-[0.14em] text-dark/65">
+            {content.contactLabel}
+          </p>
+          <a
+            href="mailto:contributions@massacritica.pt"
+            class="mt-2 inline-flex min-h-10 items-center break-all text-lg font-medium text-dark underline decoration-dark/40 underline-offset-4 transition-colors duration-150 hover:decoration-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dark"
+          >
+            contributions@massacritica.pt
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+</MainLayout>

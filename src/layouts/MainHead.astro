@@ -1,10 +1,11 @@
 ---
 import Seo from "@/components/seo/Seo.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 const { title, description, image, frontmatter, robots } = Astro.props;
+const m = await getSiteCopy(Astro.currentLocale);
 
-const formattedTitle = title ? `${title} - ${m.title()}` : m.title();
+const formattedTitle = title ? `${title} - ${m.title}` : m.title;
 ---
 
 <head>

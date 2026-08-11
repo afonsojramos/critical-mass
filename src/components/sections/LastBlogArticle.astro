@@ -4,10 +4,11 @@ import Section from "@/components/sections/Section.astro";
 import Card from "@/components/ui/Card.astro";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 import { editable } from "@/utils/editable";
 
 const lang = Astro.currentLocale;
+const m = await getSiteCopy(lang);
 
 const { entries } = await getEmDashCollection("blog", {
   status: "published",
@@ -35,7 +36,7 @@ const edit = lastBlogArticle ? editable("blog", lastBlogArticle) : null;
               href={`/${lang}/articles/${lastBlogArticle.id}`}
               class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border"
             >
-              {m.button_readMore}
+              {m.button_read_more}
             </a>
           </div>
           <ContentImage

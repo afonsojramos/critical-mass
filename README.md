@@ -22,27 +22,39 @@ Join us on the last Friday of every month as we ride together through Portuguese
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun run dev`             | Starts local dev server at `localhost:4321`      |
-| `bun run build`           | Build your production site to `./dist/`          |
-| `bun run preview`         | Preview your build locally, before deploying     |
-| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun run astro -- --help` | Get help using the Astro CLI                     |
+| Command               | Action                                                   |
+| :-------------------- | :------------------------------------------------------- |
+| `nub install`         | Installs dependencies                                    |
+| `nub run dev`         | Starts local dev server at `localhost:4321`              |
+| `nub run build`       | Builds the production site to `./dist/`                  |
+| `nub run preview`     | Previews the production build locally                    |
+| `nub run astro ...`   | Runs CLI commands like `astro add`, `astro check`        |
+| `nub run cms:migrate` | Migrates localized UI copy and Gallery authors to Emdash |
+
+Before deploying this version, run the one-time content migration with an Emdash API token:
+
+```sh
+EMDASH_TOKEN=... nub run cms:migrate
+```
+
+The migration creates the localized `site_copy` entries and changes Gallery's `author`
+field into a reference to the `authors` content type. It is safe to rerun.
+
+Performance measurements and regression checks are defined in the
+[`web performance playbook`](docs/web-performance-playbook.md).
 
 ## ✨ Features
 
 ### 🌐 **Multilingual Experience**
 
 - **Portuguese** and **English** support with seamless language switching
-- Auto-translation capabilities for rapid content localization
+- Localized interface and editorial content managed in Emdash
 - SEO-optimized
 
 ### 📝 **Dynamic Content**
 
 - Blog system for movement updates and cycling advocacy
-- Content management with `i18n` thanks to [sveltia-cms](https://github.com/sveltia/sveltia-cms/) through intuitive web interface
+- Database-first content management with Emdash and localized content variants
 - Community-driven event submissions via CMS
 
 ### 🎨 **Modern Web Experience**
@@ -61,23 +73,23 @@ This project leverages modern web technologies for optimal performance and devel
 
 ### **Internationalization**
 
-- **[Paraglide.js](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)** - Type-safe i18n with compile-time optimization
-- **[Inlang](https://inlang.com/)** - Modern localization ecosystem with machine translation
+- **[Emdash](https://emdashcms.com/)** - Row-per-locale content and interface copy
+- **Astro i18n** - Locale-aware routing and language detection
 
 ### **Content Management**
 
-- **[Sveltia CMS](https://github.com/sveltia/sveltia-cms)** - A DecapCMS (formerly Netlify CMS) compatible git-based headless CMS
-- **Astro Content Collections** - Type-safe content with automatic validation
+- **[Emdash](https://emdashcms.com/)** - D1-backed content types, references, revisions, and editing
+- **Astro Live Content Collections** - Runtime content backed by Emdash
 
 ### **Infrastructure**
 
 - **[Cloudflare](https://www.cloudflare.com/)** - Global CDN with edge rendering
-- **[Bun](https://bun.sh/)** - Fast JavaScript runtime and package manager
+- **[Nub](https://nubjs.com/)** - Node.js runtime and package manager toolkit
 - **Server-Side Rendering (SSR)** - Dynamic content with optimal performance
 
 ### **Code Quality**
 
-- **[Biome](https://biomejs.dev/)** - Fast linter and formatter for consistent code style
+- **[Vite+](https://viteplus.dev/)** - Oxlint and Oxfmt for code quality
 - **TypeScript** - Type safety and enhanced developer experience
 
 ## 🤝 Contributing

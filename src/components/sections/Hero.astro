@@ -3,9 +3,10 @@ import { Image } from "astro:assets";
 import calendarSvg from "@/assets/calendar.svg?raw";
 import HeroIlust from "@/assets/hero.png";
 import Section from "@/components/sections/Section.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 const currentLang = Astro.currentLocale;
+const m = await getSiteCopy(currentLang);
 ---
 
 <Section id="home">
@@ -20,7 +21,7 @@ const currentLang = Astro.currentLocale;
         >
           {
             m
-              .hero_title()
+              .hero_title
               .split("\n")
               .map((line, index) => (
                 <span class={`block ${index > 0 ? "text-4xl" : "uppercase"}`}>{line}</span>
@@ -28,9 +29,14 @@ const currentLang = Astro.currentLocale;
           }
         </h1>
         <p
-          class="mt-6 mb-8 text-lg font-normal leading-7 sm:mb-12 text-center md:text-left md:pr-12"
+          class="mt-6 text-lg font-normal leading-7 text-center md:text-left md:pr-12"
         >
-          {m.hero_description()}
+          {m.hero_description}
+        </p>
+        <p
+          class="mb-8 text-sm leading-6 text-zinc-600 sm:mb-12 text-center md:text-left md:pr-12"
+        >
+          {m.hero_app_purpose}
         </p>
         <div
           class="w-full justify-center md:justify-start items-center inline-flex gap-4"
@@ -39,14 +45,14 @@ const currentLang = Astro.currentLocale;
             href="#locations"
             class="px-8 py-5 bg-zinc-900 hover:bg-white rounded-2xl text-center text-white hover:text-black border text-xl font-normal leading-7"
           >
-            {m.hero_button()}
+            {m.hero_button}
           </a>
           <a
             href={`/critical-mass-${currentLang}.ics`}
             download
             class="flex items-center justify-center w-14 h-14rounded-2xl transition-colors"
             aria-label="Download calendar event"
-            title={m.hero_downloadCalendar()}
+            title={m.hero_download_calendar}
           >
             <div class="w-6 h-6 [&>svg]:size-full">
               <Fragment set:html={calendarSvg} />

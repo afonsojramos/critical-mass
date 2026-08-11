@@ -3,9 +3,10 @@ import { parse } from "node-html-parser";
 import gobSvg from "@/assets/icons/icon6.svg?raw";
 import wobSvg from "@/assets/icons/icon7.svg?raw";
 import Card from "@/components/ui/Card.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 const { index, titleTop, titleBottom, date, img, alt, link, newLocation, edit } = Astro.props;
+const m = await getSiteCopy(Astro.currentLocale);
 const cityImages = import.meta.glob(`/src/assets/cities/*.svg`, {
   eager: true,
   query: "?raw",
@@ -65,7 +66,7 @@ const { attributes: svgAttributes, innerHTML } = await getSVG(img);
       <a href={link} class="flex items-center gap-3.5">
         <Fragment set:html={index % 3 === 1 || index % 3 === 2 ? gobSvg : wobSvg} />
         <span class="hidden sm:block md:hidden lg:block"
-          >{!newLocation ? m.events_serviceInfo : m.locations_sendEmail}</span
+          >{!newLocation ? m.events_service_info : m.locations_send_email}</span
         >
       </a>
     </div>

@@ -10,7 +10,10 @@ import FPCUB from "@/assets/communities/FPCUB.jpg";
 import kidicalMass from "@/assets/communities/kidical-mass.svg?raw";
 import Mubi from "@/assets/communities/mubi-cropped.png";
 import logo from "@/assets/logo-alt.svg?raw";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
+
+const locale = Astro.currentLocale === "en" ? "en" : "pt";
+const m = await getSiteCopy(locale);
 
 const contacts = {
   name: "afonso jorge ramos",
@@ -31,7 +34,7 @@ const contacts = {
       <h2 class="text-white text-2xl font-bold uppercase">
         {
           m
-            .hero_title()
+            .hero_title
             .split("\n")
             .map((line, index) => (
               <span class={`block ${index > 0 && "text-4xl"}`}>{line}</span>
@@ -42,7 +45,7 @@ const contacts = {
     <div class="flex flex-col lg:flex-row gap-16 items-center">
       <div class="flex flex-col gap-8 items-center">
         <h3 class="text-green text-center text-2xl lg:text-start">
-          {m.communities()}
+          {m.communities}
         </h3>
         <div
           class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-lg"
@@ -154,6 +157,12 @@ const contacts = {
       </div>
     </div>
     <div class="border-t border-gray-700 pt-6 mt-6 text-center">
+      <a
+        href={`/${locale}/privacy`}
+        class="inline-flex min-h-10 items-center text-sm text-gray-300 underline decoration-gray-500 underline-offset-4 transition-colors duration-150 hover:text-green hover:decoration-green"
+      >
+        {m.footer_privacy}
+      </a>
       <p class="text-sm text-gray-400">
         Crafted with 💚 by <a href={contacts.href} target="_blank" class="text-green hover:text-white transition-colors">{contacts.name}</a>
       </p>

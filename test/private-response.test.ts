@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import {
   isPrivateResponseRequest,
   privateRouteRedirectUrl,
@@ -7,13 +8,14 @@ import {
 
 describe("private response policy", () => {
   test("keeps the /admin redirect inside the private Worker policy", () => {
-    expect(privateRouteRedirectUrl("https://massacritica.pt/admin")?.href).toBe(
+    assert.equal(
+      privateRouteRedirectUrl("https://massacritica.pt/admin")?.href,
       "https://massacritica.pt/_emdash/admin",
     );
-    expect(privateRouteRedirectUrl("https://massacritica.pt/pt")).toBeNull();
+    assert.equal(privateRouteRedirectUrl("https://massacritica.pt/pt"), null);
   });
 
-  test.each([
+  for (const pathname of [
     "/admin",
     "/_emdash/admin",
     "/_emdash/admin/login",
@@ -21,27 +23,30 @@ describe("private response policy", () => {
     "/_emdash/api/users/invite",
     "/_emdash/api/content/articles/id/preview-url",
     "/_preview/reload",
-  ])("classifies %s as private", (pathname) => {
-    expect(
-      isPrivateResponseRequest(new Request(`https://massacritica.pt${pathname}`), pathname),
-    ).toBe(true);
-  });
-
-  test.each(["/pt", "/en/articles", "/_emdash/api/media/file/hero.webp"])(
-    "leaves anonymous public content at %s public",
-    (pathname) => {
-      expect(
+  ]) {
+    test(`classifies ${pathname} as private`, () => {
+      assert.equal(
         isPrivateResponseRequest(new Request(`https://massacritica.pt${pathname}`), pathname),
-      ).toBe(false);
-    },
-  );
+        true,
+      );
+    });
+  }
+
+  for (const pathname of ["/pt", "/en/articles", "/_emdash/api/media/file/hero.webp"]) {
+    test(`leaves anonymous public content at ${pathname} public`, () => {
+      assert.equal(
+        isPrivateResponseRequest(new Request(`https://massacritica.pt${pathname}`), pathname),
+        false,
+      );
+    });
+  }
 
   test("treats identity-bearing public requests as private", () => {
     const request = new Request("https://massacritica.pt/pt", {
       headers: { Cookie: "emdash_session=test" },
     });
 
-    expect(isPrivateResponseRequest(request, "/pt")).toBe(true);
+    assert.equal(isPrivateResponseRequest(request, "/pt"), true);
   });
 
   test("overrides weaker cache headers while preserving the response", async () => {
@@ -55,10 +60,10 @@ describe("private response policy", () => {
       }),
     );
 
-    expect(response.status).toBe(202);
-    expect(response.headers.get("Cache-Control")).toBe("private, no-store");
-    expect(response.headers.get("X-Robots-Tag")).toBe("noindex, nofollow, noarchive");
-    expect(response.headers.get("Content-Type")).toContain("text/plain");
-    expect(await response.text()).toBe("streamed body");
+    assert.equal(response.status, 202);
+    assert.equal(response.headers.get("Cache-Control"), "private, no-store");
+    assert.equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow, noarchive");
+    assert.match(response.headers.get("Content-Type") ?? "", /text\/plain/);
+    assert.equal(await response.text(), "streamed body");
   });
 });

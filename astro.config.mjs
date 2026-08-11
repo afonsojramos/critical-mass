@@ -2,30 +2,19 @@
 import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
-import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { github } from "emdash/auth/providers/github";
 import { google } from "emdash/auth/providers/google";
-import { baseLocale, locales } from "./src/paraglide/runtime";
+import { baseLocale, locales } from "./src/i18n/config";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://massacritica.pt",
   vite: {
-    plugins: [
-      tailwindcss(),
-      paraglideVitePlugin({
-        project: "./project.inlang",
-        outdir: "./src/paraglide",
-        disableAsyncLocalStorage: true,
-        // globalVariable is set per-request by our middleware (see src/middleware.ts).
-        // It survives nested run() calls that the mock AsyncLocalStorage doesn't.
-        strategy: ["globalVariable", "url", "cookie"],
-      }),
-    ],
+    plugins: [tailwindcss()],
   },
   integrations: [
     react(),
@@ -58,8 +47,9 @@ export default defineConfig({
   i18n: {
     locales: [...locales],
     defaultLocale: baseLocale,
-    // Manual routing: Paraglide middleware handles locale detection/redirects.
-    // This prevents Astro's built-in i18n from intercepting /_emdash CMS routes.
+    fallback: { en: baseLocale },
+    // Keep public URLs prefixed while preventing Astro's automatic router from
+    // intercepting Emdash's unprefixed admin routes.
     routing: "manual",
   },
 });

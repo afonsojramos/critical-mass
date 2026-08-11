@@ -1,6 +1,6 @@
 ---
-import * as m from "@/paraglide/messages";
 import ContentImage from "@/components/ui/ContentImage.astro";
+import { getSiteCopy } from "@/i18n/site-copy";
 import { editable } from "@/utils/editable";
 import { entryRouteSlug } from "@/utils/entryRouteSlug";
 import Card from "./Card.astro";
@@ -12,6 +12,7 @@ type Props = {
 
 const { event, index } = Astro.props as Props;
 const locale = Astro.currentLocale ?? "pt";
+const m = await getSiteCopy(locale);
 
 const coverImage = event.data.images?.[0];
 const edit = editable("events", event);
@@ -38,7 +39,7 @@ const edit = editable("events", event);
           <div
             class={`h-full w-full flex items-center justify-center ${index % 2 === 0 ? "bg-dark" : "bg-gray-200"}`}
           >
-            <span class="text-gray-400">{m.events_noImage}</span>
+            <span class="text-gray-400">{m.events_no_image}</span>
           </div>
         )
       }

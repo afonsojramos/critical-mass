@@ -1,6 +1,7 @@
 ---
 import { getEmDashEntry } from "emdash";
 import ContentImage from "@/components/ui/ContentImage.astro";
+import { getSiteCopy } from "@/i18n/site-copy";
 import { editable } from "@/utils/editable";
 import { toImageSource } from "@/utils/toImageSource";
 import { capitalize } from "@/utils";
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const { galleryItem } = Astro.props as Props;
+const m = await getSiteCopy(Astro.currentLocale);
 
 // Category taxonomy term (localized), managed in the CMS.
 const categoryTerm = galleryItem.data.terms?.category?.[0];
@@ -46,7 +48,7 @@ const authorEdit = author ? editable("authors", author) : null;
       )}
       {author && (
         <p class="text-xs text-gray-300 mb-2">
-          By {author.data.social_media_link ? (
+          {m.gallery_by} {author.data.social_media_link ? (
             <a
               href={author.data.social_media_link}
               target="_blank"

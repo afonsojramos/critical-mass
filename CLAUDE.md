@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an Astro-based multilingual website for Critical Mass Portugal. The site features:
 
-- Multilingual support (Portuguese/English) via Inlang/Paraglide.js
+- Multilingual support (Portuguese/English) via Astro i18n and Emdash
 - Content management via Emdash CMS (database-first, Portable Text)
 - Server-side rendering with Cloudflare adapter
 - TailwindCSS for styling
@@ -16,17 +16,17 @@ This is an Astro-based multilingual website for Critical Mass Portugal. The site
 
 ```bash
 # Development
-bun install                 # Install dependencies
-bun run dev                 # Start dev server at localhost:4321
-bun run build               # Build production site (includes i18n compile + astro check)
-bun run preview             # Preview build locally
+nub install                 # Install dependencies
+nub run dev                 # Start dev server at localhost:4321
+nub run build               # Build production site (includes astro check)
+nub run preview             # Preview build locally
 
 # Code Quality
-bun run lint                # Lint JS/TS with Oxlint (Vite+)
-bun run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
+nub run lint                # Lint JS/TS with Oxlint (Vite+)
+nub run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
 
-# Internationalization
-bun run machine-translate   # Auto-translate content using Inlang
+# Content schema migration
+EMDASH_TOKEN=... nub run cms:migrate
 ```
 
 ## Architecture
@@ -35,10 +35,10 @@ bun run machine-translate   # Auto-translate content using Inlang
 
 - Base locale: Portuguese (`pt`)
 - Supported locales: `pt`, `en`
-- UI strings: `messages/pt.json`, `messages/en.json` (Paraglide.js)
+- UI strings: localized `site_copy` entries in Emdash
 - Content i18n: Emdash row-per-locale with `translation_group` linking
-- Generated code: `src/paraglide/` (auto-generated, don't edit manually)
-- Build process compiles translations before Astro build
+- Locale constants and the typed query helper live in `src/i18n/`
+- Astro derives `Astro.currentLocale` from the locale-prefixed public URL
 
 ### Content Management
 
@@ -46,7 +46,8 @@ bun run machine-translate   # Auto-translate content using Inlang
 - Database: Cloudflare D1 (production) / SQLite (local dev)
 - Media: Cloudflare R2 (production) / local filesystem (local dev)
 - Content format: Portable Text (structured JSON), rendered via `astro-portabletext`
-- Collections: authors, blog, events, gallery, locations
+- Collections: authors, blog, events, gallery, locations, site_copy
+- Gallery's `author` field is an Emdash reference to the authors content type
 - Query API: `getEmDashCollection()` and `getEmDashEntry()` from `emdash`
 - Search: FTS5 full-text search via `search()` from `emdash`
 - Legacy content files in `src/content/` (kept for reference during migration)
@@ -72,13 +73,13 @@ bun run machine-translate   # Auto-translate content using Inlang
 
 ### Tooling
 
-- Linting and formatting via Vite+ (`vp`): Oxlint (`bun run lint`) and Oxfmt (`bun run format`). `vite-plus` is pinned as a devDependency, so `bun install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
+- Linting and formatting via Vite+ (`vp`): Oxlint (`nub run lint`) and Oxfmt (`nub run format`). `vite-plus` is pinned as a devDependency, so `nub install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
 - Suppress a lint rule with an oxlint directive (`// oxlint-disable-next-line <rule>`), not Biome's `biome-ignore` (which oxlint ignores). Note oxlint's default config does not enable `no-explicit-any`.
 - Oxfmt formats JS/TS, CSS, JSON/JSONC, and Markdown. It does not yet support `.astro`, so `.astro` files are currently left unformatted.
 
 ## Important Notes
 
-- Always run build command to test i18n compilation before committing
+- Always run the build command to test Emdash-backed locale queries and Astro checks before committing
 - Content pages are SSR-only (no prerendering) since they query D1 at runtime
 - Local dev uses SQLite (`data.db`) and local filesystem (`uploads/`) — both gitignored
 - Site deploys to Cloudflare with server-side rendering

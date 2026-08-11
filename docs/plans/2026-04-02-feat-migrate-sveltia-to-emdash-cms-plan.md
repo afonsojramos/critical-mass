@@ -55,7 +55,7 @@ After:
 
 5. **Phased rollback safety**: Git content files and CMS workflows are removed only in a cleanup phase after 1-2 weeks of stable operation. D1 Time Travel provides 30-day point-in-time recovery.
 
-6. **Local development**: Emdash supports SQLite locally + local filesystem storage. `bun run dev` works without Cloudflare infrastructure. A seed script populates local DB from exported content.
+6. **Local development**: Emdash supports SQLite locally + local filesystem storage. `nub run dev` works without Cloudflare infrastructure. A seed script populates local DB from exported content.
 
 ### Implementation Phases
 
@@ -68,10 +68,10 @@ Upgrade Astro from 5.13.5 to 6.x in a separate PR. This isolates framework break
 - [ ] Upgrade `astro` to `^6.0.0` in `package.json`
 - [ ] Upgrade `@astrojs/cloudflare` to Astro 6-compatible version
 - [ ] Upgrade `@astrojs/check` and `@astrojs/sitemap` to compatible versions
-- [ ] Upgrade `@inlang/paraglide-astro` if needed for Astro 6 compatibility
+- [ ] Move localized interface copy into Emdash and rely on Astro for locale routing
 - [ ] Review Astro 6 migration guide for breaking changes (content collections API, routing, middleware)
-- [ ] Run `bun run build` and fix any compilation errors
-- [ ] Run `bun run lint` and fix any new issues
+- [ ] Run `nub run build` and fix any compilation errors
+- [ ] Run `nub run lint` and fix any new issues
 - [ ] Verify all pages render correctly in dev
 - [ ] Deploy and verify production
 
@@ -91,7 +91,7 @@ Install Emdash and configure infrastructure. The old CMS continues to work — t
 
 **Tasks:**
 
-- [ ] Install dependencies: `bun add emdash @emdash-cms/cloudflare astro-portabletext`
+- [ ] Install dependencies: `nub add emdash @emdash-cms/cloudflare astro-portabletext`
 - [ ] Remove `astro-decap-cms-oauth` from dependencies
 - [ ] Configure Emdash integration in `astro.config.mjs`:
 
@@ -112,7 +112,7 @@ export default defineConfig({
       database: isDev ? sqlite({ url: "file:./data.db" }) : d1({ binding: "DB" }),
       storage: isDev ? local({ directory: "./uploads" }) : r2({ binding: "MEDIA" }),
     }),
-    // ... existing integrations (paraglide, sitemap)
+    // ... existing integrations (sitemap)
   ],
   i18n: {
     defaultLocale: "pt",
@@ -281,7 +281,7 @@ Define Emdash collections matching the current schema, then migrate all existing
 // 7. Link translations via translation_group
 ```
 
-- [ ] Install migration deps: `bun add -D gray-matter @sanity/block-tools unified remark-parse remark-html`
+- [ ] Install migration deps: `nub add -D gray-matter @sanity/block-tools unified remark-parse remark-html`
 - [ ] Migrate `authors` first (simplest: JSON, no i18n, no Markdown)
 - [ ] Migrate `locations` (JSON, no i18n, no Markdown)
 - [ ] Migrate `gallery` (JSON, i18n, no Markdown — link translation pairs)
@@ -427,8 +427,8 @@ Comprehensive testing before declaring the migration complete.
 - [ ] Verify images: R2 media loads, Cloudflare Image Resizing transforms correctly, OG images work
 - [ ] Verify SEO: canonical URLs, JSON-LD, Open Graph meta, sitemap
 - [ ] Verify auth: login to Emdash admin via GitHub OAuth, create/edit/publish content
-- [ ] Verify local dev: `bun run dev` works with local SQLite + filesystem storage
-- [ ] Run `bun run build` and `bun run lint`
+- [ ] Verify local dev: `nub run dev` works with local SQLite + filesystem storage
+- [ ] Run `nub run build` and `nub run lint`
 - [ ] Deploy to staging/preview and test end-to-end
 
 **Success criteria:** Zero regressions. All URLs return 200. Content renders correctly. Editors can manage content.
@@ -549,8 +549,8 @@ Media upload in Emdash Admin
 
 - [ ] Page load time <= 200ms (D1 query + Worker render, before Cloudflare cache)
 - [ ] Cloudflare cache hit ratio > 90% for content pages after warm-up
-- [ ] Local development works with `bun run dev` (SQLite + local filesystem)
-- [ ] `bun run build` and `bun run lint` pass
+- [ ] Local development works with `nub run dev` (SQLite + local filesystem)
+- [ ] `nub run build` and `nub run lint` pass
 
 ### Quality Gates
 
@@ -637,10 +637,10 @@ Media upload in Emdash Admin
 **UNCHANGED:**
 
 - `src/lib/tagMapper.ts` (CMS-agnostic)
-- `src/middleware.ts` (Paraglide, CMS-agnostic)
+- `src/middleware.ts` (locale routing, CMS-agnostic)
 - `src/i18n/utils.ts`
 - `src/utils.ts`
 - `src/components/ui/Tags.astro`
 - `src/components/ui/LocationCard.astro` (static SVGs, not CMS media)
 - `src/components/ui/EventCarousel.astro` (pure UI)
-- `messages/pt.json`, `messages/en.json` (Paraglide, untouched)
+- Localized interface copy (migrated to Emdash)

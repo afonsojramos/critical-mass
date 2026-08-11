@@ -3,9 +3,10 @@ import { getEmDashCollection } from "emdash";
 import Section from "@/components/sections/Section.astro";
 import EventCard from "@/components/ui/EventCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 const lang = Astro.currentLocale || "pt";
+const m = await getSiteCopy(lang);
 
 const { entries: events } = await getEmDashCollection("events", {
   status: "published",
@@ -28,7 +29,7 @@ const { entries: events } = await getEmDashCollection("events", {
 
     <div class="mt-12 text-center">
       <a href={`/${lang}/events`} class="btn-secondary inline-block">
-        {m.events_viewAll}
+        {m.events_view_all}
       </a>
     </div>
   </div>

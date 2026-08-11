@@ -3,9 +3,10 @@ import { getEmDashCollection } from "emdash";
 import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 import { editable } from "@/utils/editable";
 
+const m = await getSiteCopy(Astro.currentLocale);
 const { entries } = await getEmDashCollection("locations", {
   status: "published",
 });
@@ -21,7 +22,7 @@ const cards = locations.map((location) => {
     dateText = location.data.custom_date;
   } else if (location.data.date_frequency && location.data.day_of_week) {
     // Map day names to translation keys
-    const dayMap: Record<string, () => string> = {
+    const dayMap: Record<string, string> = {
       Sunday: m.location_sunday,
       Monday: m.location_monday,
       Tuesday: m.location_tuesday,
@@ -51,16 +52,16 @@ const cards = locations.map((location) => {
           Last: "Última",
         };
 
-    const dayTranslation = dayMap[location.data.day_of_week]?.() || location.data.day_of_week;
+    const dayTranslation = dayMap[location.data.day_of_week] || location.data.day_of_week;
     const frequencyTranslation =
       frequencyMap[location.data.date_frequency] || location.data.date_frequency;
-    dateText = `${frequencyTranslation} ${dayTranslation} ${m.location_ofEveryMonth()}`;
+    dateText = `${frequencyTranslation} ${dayTranslation} ${m.location_of_every_month}`;
   }
 
   return {
     index: location.data.sort_index,
-    titleTop: isSpecial ? m.locations_moreComingSoon : location.data.city,
-    titleBottom: isSpecial ? m.locations_createYourMovement : location.data.exact_location,
+    titleTop: isSpecial ? m.locations_more_coming_soon : location.data.city,
+    titleBottom: isSpecial ? m.locations_create_your_movement : location.data.exact_location,
     img: location.data.image,
     link: location.data.link,
     date: dateText,

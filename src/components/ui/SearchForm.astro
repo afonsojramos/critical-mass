@@ -1,7 +1,8 @@
 ---
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 const lang = Astro.currentLocale;
+const m = await getSiteCopy(lang);
 ---
 
 <form
@@ -9,14 +10,14 @@ const lang = Astro.currentLocale;
   class="flex items-center"
   action={`/${lang}/articles/search`}
 >
-  <label for="search-input" class="sr-only">{m.search_button()}</label>
+  <label for="search-input" class="sr-only">{m.search_button}</label>
   <div class="relative w-full">
     <input
       type="text"
       id="query"
       name="query"
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-      placeholder={m.search_placeholder()}
+      placeholder={m.search_placeholder}
       required
     />
   </div>
@@ -38,6 +39,6 @@ const lang = Astro.currentLocale;
         stroke-width="2"
         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
     </svg>
-    <span class="sr-only">{m.search_button()}</span>
+    <span class="sr-only">{m.search_button}</span>
   </button>
 </form>

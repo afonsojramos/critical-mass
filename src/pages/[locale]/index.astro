@@ -5,13 +5,15 @@ import LatestEvents from "@/components/sections/LatestEvents.astro";
 import Hero from "@/components/sections/Hero.astro";
 import LastBlogArticle from "@/components/sections/LastBlogArticle.astro";
 import Locations from "@/components/sections/Locations.astro";
+import { getSiteCopy } from "@/i18n/site-copy";
 import MainLayout from "@/layouts/MainLayout.astro";
-import * as m from "@/paraglide/messages";
+
+const m = await getSiteCopy(Astro.currentLocale);
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout description={m.description()}>
+<MainLayout description={m.description}>
   <Hero />
   <Locations />
   <LatestEvents />

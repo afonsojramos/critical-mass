@@ -2,7 +2,7 @@
 import { getEmDashCollection, getEntriesByTerm, getTaxonomyTerms } from "emdash";
 import GalleryCard from "@/components/ui/GalleryCard.astro";
 import ImageModal from "@/components/ui/ImageModal.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 import { capitalize } from "@/utils";
 import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
@@ -12,6 +12,7 @@ interface Props {
 
 const { filterCategory = "all" } = Astro.props;
 const locale = Astro.currentLocale as "pt" | "en";
+const m = await getSiteCopy(locale);
 
 // Filter by the `category` taxonomy term (DB JOIN) when a category is set;
 // otherwise list every published item. The URL slug is localized, so resolve
@@ -40,9 +41,9 @@ const categoryTerms = await getTaxonomyTerms("category", { locale });
 <main class="space-y-20">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
     <div class="text-center mb-4">
-      <h1 class="text-5xl font-bold mb-4">{m.gallery_title()}</h1>
+      <h1 class="text-5xl font-bold mb-4">{m.gallery_title}</h1>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        {m.gallery_description()}
+        {m.gallery_description}
       </p>
     </div>
 
@@ -88,7 +89,7 @@ const categoryTerms = await getTaxonomyTerms("category", { locale });
 
     {sortedGalleryItems.length === 0 && (
       <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">{m.gallery_noImages()}</p>
+        <p class="text-gray-500 text-lg">{m.gallery_no_images}</p>
       </div>
     )}
   </div>

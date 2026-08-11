@@ -1,7 +1,7 @@
 ---
 import { Astronav } from "astro-navbar";
 import LanguagePicker from "@/components/LanguagePicker.astro";
-import * as m from "@/paraglide/messages";
+import { getSiteCopy } from "@/i18n/site-copy";
 
 interface Props {
   // Precomputed other-locale URL for the language switcher (content/term pages).
@@ -10,6 +10,7 @@ interface Props {
 
 const { localeSwitchHref } = Astro.props;
 const lang = Astro.currentLocale;
+const m = await getSiteCopy(lang);
 
 const menuitems = [
   // { href: "/about", label: "About us" },
@@ -43,7 +44,7 @@ const menuitems = [
               ></path>
             </svg>
             <h2 class="text-3xl font-bold">
-              {m.nav_home().toUpperCase()}
+              {m.nav_home.toUpperCase()}
             </h2>
           </a>
           <div class="block lg:hidden">
@@ -100,14 +101,14 @@ const menuitems = [
                   >
                     <span class="hidden lg:block text-center">
                       {item
-                        .label()
+                        .label
                         .split("\n")
                         .map((line: string) => (
                           <span class="block">{line}</span>
                         ))}
                     </span>
                     <span class="block lg:hidden">
-                      {item.label().split("\n").join(" ")}
+                      {item.label.split("\n").join(" ")}
                     </span>
                   </a>
                 </li>

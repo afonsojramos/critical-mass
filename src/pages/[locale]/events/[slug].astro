@@ -4,8 +4,8 @@ export const prerender = false;
 import { PortableText } from "astro-portabletext";
 import { getEmDashEntry } from "emdash";
 import EventCarousel from "@/components/ui/EventCarousel.astro";
+import { getSiteCopy } from "@/i18n/site-copy";
 import MainLayout from "@/layouts/MainLayout.astro";
-import * as m from "@/paraglide/messages";
 import { editable } from "@/utils/editable";
 import { entryLocaleSwitchHref } from "@/utils/localeSwitch";
 
@@ -16,6 +16,7 @@ if (!slug) {
 }
 
 const locale = Astro.currentLocale;
+const m = await getSiteCopy(locale);
 const { entry } = await getEmDashEntry("events", slug, { locale });
 
 if (!entry) {
@@ -58,7 +59,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
           >
           </path>
         </svg>
-        <span class="ml-1 font-bold text-lg">{m.events_viewAll()}</span>
+        <span class="ml-1 font-bold text-lg">{m.events_view_all}</span>
       </a>
 
       <header class="mb-8" {...edit}>
@@ -76,7 +77,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
             />
           ) : (
             <div class="h-full w-full bg-gray-200 flex items-center justify-center">
-              <span class="text-gray-400 text-xl">{m.events_noImage()}</span>
+              <span class="text-gray-400 text-xl">{m.events_no_image}</span>
             </div>
           )
         }
