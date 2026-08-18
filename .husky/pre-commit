@@ -15,11 +15,11 @@ if [ -n "$STAGED_FILES" ]; then
       [ -n "$FMT_FILES" ] && "$VP" fmt $FMT_FILES --write
       [ -n "$LINT_FILES" ] && "$VP" lint $LINT_FILES --fix
     else
-      echo "warn: Vite+ (vp) not found — skipping format/lint. Run: nub install"
+      echo "warn: Vite+ (vp) not found — skipping format/lint. Run: pnpm install"
     fi
   fi
 
   git add $STAGED_FILES
 fi
 
-nub x tsc --noEmit
+"$PWD/node_modules/.bin/tsc" --noEmit

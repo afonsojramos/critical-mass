@@ -4,7 +4,7 @@ import {
   isPrivateResponseRequest,
   privateRouteRedirectUrl,
   withPrivateResponseHeaders,
-} from "../src/private-response";
+} from "../src/private-response.ts";
 
 describe("private response policy", () => {
   test("keeps the /admin redirect inside the private Worker policy", () => {

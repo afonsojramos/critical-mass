@@ -1,4 +1,4 @@
-import { isLiveLocation } from "./location-status";
+import { isLiveLocation } from "./location-status.ts";
 
 export type CalendarLocale = "en" | "pt";
 

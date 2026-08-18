@@ -4,7 +4,7 @@ import {
   buildLocationCalendar,
   resolveRecurrence,
   type LocationCalendarEntry,
-} from "../src/location-calendar";
+} from "../src/location-calendar.ts";
 
 const locations: LocationCalendarEntry[] = [
   {

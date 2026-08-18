@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { galleryMediaValue, galleryTitleFromFilename } from "../src/gallery-import";
+import { galleryMediaValue, galleryTitleFromFilename } from "../src/gallery-import.ts";
 
 describe("gallery import helpers", () => {
   test("turns filenames into editable titles", () => {

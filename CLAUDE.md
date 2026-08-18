@@ -16,14 +16,14 @@ This is an Astro-based multilingual website for Critical Mass Portugal. The site
 
 ```bash
 # Development
-nub install                 # Install dependencies
-nub run dev                 # Start dev server at localhost:4321
-nub run build               # Build production site (includes astro check)
-nub run preview             # Preview build locally
+pnpm install                 # Install dependencies
+pnpm run dev                 # Start dev server at localhost:4321
+pnpm run build               # Build production site (includes astro check)
+pnpm run preview             # Preview build locally
 
 # Code Quality
-nub run lint                # Lint JS/TS with Oxlint (Vite+)
-nub run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
+pnpm run lint                # Lint JS/TS with Oxlint (Vite+)
+pnpm run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
 ```
 
 ## Architecture
@@ -45,6 +45,7 @@ nub run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSO
 - Content format: Portable Text (structured JSON), rendered via `astro-portabletext`
 - Collections: authors, blog, events, gallery, locations
 - Gallery's `author` field is an Emdash reference to the authors content type, rendered by the custom `content-reference` admin plugin
+- Bulk gallery uploads: the `emdash-plugin-bulk-upload` npm package (our own OSS plugin), configured in `src/plugins/bulk-upload-admin.tsx` with plugin id `gallery-tools` (existing schema references `gallery-tools:month-year`)
 - Query API: `getEmDashCollection()` and `getEmDashEntry()` from `emdash`
 - Search: FTS5 full-text search via `search()` from `emdash`
 - Legacy content files in `src/content/` (kept for reference during migration)
@@ -71,7 +72,7 @@ nub run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSO
 
 ### Tooling
 
-- Linting and formatting via Vite+ (`vp`): Oxlint (`nub run lint`) and Oxfmt (`nub run format`). `vite-plus` is pinned as a devDependency, so `nub install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
+- Linting and formatting via Vite+ (`vp`): Oxlint (`pnpm run lint`) and Oxfmt (`pnpm run format`). `vite-plus` is pinned as a devDependency, so `pnpm install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
 - Suppress a lint rule with an oxlint directive (`// oxlint-disable-next-line <rule>`), not Biome's `biome-ignore` (which oxlint ignores). Note oxlint's default config does not enable `no-explicit-any`.
 - Oxfmt formats JS/TS, CSS, JSON/JSONC, and Markdown. It does not yet support `.astro`, so `.astro` files are currently left unformatted.
 

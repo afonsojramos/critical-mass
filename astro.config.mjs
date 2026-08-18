@@ -8,10 +8,10 @@ import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
 import { github } from "emdash/auth/providers/github";
 import { google } from "emdash/auth/providers/google";
+import { bulkUpload } from "emdash-plugin-bulk-upload";
 import { baseLocale, locales } from "./src/paraglide/runtime";
 import { contentReference } from "./src/plugins/content-reference";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
-import { galleryTools } from "./src/plugins/gallery-tools";
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,7 +43,12 @@ export default defineConfig({
       authProviders: [google(), github()],
       plugins: [
         contentReference(),
-        galleryTools(),
+        bulkUpload({
+          id: "gallery-tools",
+          adminEntry: "@/plugins/bulk-upload-admin",
+          page: { label: "Gallery bulk upload" },
+          monthYearWidget: true,
+        }),
         emailCloudflare({
           from: "auth@admin.massacritica.pt",
           fromName: "Massa Crítica",

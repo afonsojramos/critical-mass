@@ -5,7 +5,7 @@ import {
   galleryPeriodRange,
   nextGalleryPeriod,
   normalizeGalleryPeriod,
-} from "../src/gallery-period";
+} from "../src/gallery-period.ts";
 
 describe("gallery periods", () => {
   test("normalizes current month values and legacy ISO timestamps", () => {
