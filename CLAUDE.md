@@ -24,9 +24,6 @@ nub run preview             # Preview build locally
 # Code Quality
 nub run lint                # Lint JS/TS with Oxlint (Vite+)
 nub run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JSONC, Markdown
-
-# Content schema migration
-EMDASH_TOKEN=... nub run cms:migrate
 ```
 
 ## Architecture

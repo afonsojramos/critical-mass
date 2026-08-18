@@ -5,5 +5,6 @@
   "link": "https://www.facebook.com/bicicletada.santairia",
   "index": 5,
   "dateFrequency": "1st",
-  "dayOfWeek": "Sunday"
+  "dayOfWeek": "Sunday",
+  "activityStatus": "active"
 }

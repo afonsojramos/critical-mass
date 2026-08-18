@@ -6,5 +6,6 @@
   "index": 6,
   "dateFrequency": "1st",
   "dayOfWeek": "Friday",
-  "customDate": ""
+  "customDate": "",
+  "activityStatus": "inactive"
 }

@@ -47,6 +47,16 @@ const locations: LocationCalendarEntry[] = [
       sort_index: 100,
     },
   },
+  {
+    id: "inactive-id",
+    slug: "inactive",
+    data: {
+      city: "Inactive city",
+      exact_location: "Old square 18h30",
+      activity_status: "inactive",
+      sort_index: 4,
+    },
+  },
 ];
 
 function unfold(calendar: string): string {
@@ -61,6 +71,7 @@ describe("location calendar", () => {
     assert.equal((content.match(/BEGIN:VEVENT/g) ?? []).length, 3);
     assert.equal((content.match(/\r\nUID:/g) ?? []).length, 3);
     assert.doesNotMatch(content, /Coming soon/);
+    assert.doesNotMatch(content, /Inactive city/);
     assert.match(content, /UID:location-porto-id-pt@massacritica\.pt/);
     assert.match(content, /DTSTAMP:20260811T100000Z/);
     assert.match(content, /LOCATION:Praça do Marquês/);

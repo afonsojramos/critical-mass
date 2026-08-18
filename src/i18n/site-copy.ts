@@ -43,7 +43,15 @@ export interface SiteCopy {
   gallery_title: string;
   gallery_description: string;
   gallery_no_images: string;
+  gallery_no_results: string;
   gallery_by: string;
+  gallery_all_categories: string;
+  gallery_filter_title: string;
+  gallery_filter_location: string;
+  gallery_filter_all_locations: string;
+  gallery_filter_period: string;
+  gallery_filter_apply: string;
+  gallery_filter_clear: string;
   location_sunday: string;
   location_monday: string;
   location_tuesday: string;

@@ -11,6 +11,7 @@ import { google } from "emdash/auth/providers/google";
 import { baseLocale, locales } from "./src/paraglide/runtime";
 import { contentReference } from "./src/plugins/content-reference";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
+import { galleryTools } from "./src/plugins/gallery-tools";
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,6 +43,7 @@ export default defineConfig({
       authProviders: [google(), github()],
       plugins: [
         contentReference(),
+        galleryTools(),
         emailCloudflare({
           from: "auth@admin.massacritica.pt",
           fromName: "Massa Crítica",

@@ -8,7 +8,6 @@
     "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cms:migrate": "nub scripts/migrate-to-emdash.ts",
     "lint": "vp lint .",
     "format": "vp fmt . --write",
     "test": "nub --test test/*.test.ts",

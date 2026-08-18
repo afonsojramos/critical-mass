@@ -1,3 +1,5 @@
+import { isLiveLocation } from "./location-status";
+
 export type CalendarLocale = "en" | "pt";
 
 export interface LocationCalendarEntry {
@@ -11,6 +13,7 @@ export interface LocationCalendarEntry {
     date_frequency?: unknown;
     day_of_week?: unknown;
     custom_date?: unknown;
+    activity_status?: unknown;
   };
 }
 
@@ -254,7 +257,7 @@ export function buildLocationCalendar(
   ];
 
   const locations = entries
-    .filter((entry) => entry.data.sort_index !== 100)
+    .filter(isLiveLocation)
     .sort((a, b) => Number(a.data.sort_index ?? 0) - Number(b.data.sort_index ?? 0));
 
   for (const entry of locations) {

@@ -4,6 +4,7 @@ import Section from "@/components/sections/Section.astro";
 import LocationCard from "@/components/ui/LocationCard.astro";
 import SectionTitle from "@/components/ui/SectionTitle.astro";
 import { getSiteCopy } from "@/i18n/site-copy";
+import { isActiveLocation } from "@/location-status";
 import { editable } from "@/utils/editable";
 
 const m = await getSiteCopy(Astro.currentLocale);
@@ -11,7 +12,9 @@ const { entries } = await getEmDashCollection("locations", {
   status: "published",
 });
 const locationsData = entries as any[];
-const locations = locationsData.sort((a, b) => a.data.sort_index - b.data.sort_index);
+const locations = locationsData
+  .filter((location) => location.data.sort_index === 100 || isActiveLocation(location))
+  .sort((a, b) => a.data.sort_index - b.data.sort_index);
 
 const cards = locations.map((location) => {
   const isSpecial = location.data.sort_index === 100;

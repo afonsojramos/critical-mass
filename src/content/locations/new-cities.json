@@ -3,5 +3,6 @@
   "exactLocation": "DISABLED",
   "image": "/cities/plus.svg",
   "link": "mailto:afonsojorgeramos@gmail.com",
-  "index": 100
+  "index": 100,
+  "activityStatus": "active"
 }

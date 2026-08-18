@@ -1,8 +1,10 @@
 ---
-import { getEmDashCollection, getEntriesByTerm, getTaxonomyTerms } from "emdash";
+import { getEmDashCollection, getTaxonomyTerms } from "emdash";
 import GalleryCard from "@/components/ui/GalleryCard.astro";
 import ImageModal from "@/components/ui/ImageModal.astro";
+import { galleryPeriodRange, normalizeGalleryPeriod } from "@/gallery-period";
 import { getSiteCopy } from "@/i18n/site-copy";
+import { isLiveLocation } from "@/location-status";
 import { capitalize } from "@/utils";
 import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
@@ -13,29 +15,67 @@ interface Props {
 const { filterCategory = "all" } = Astro.props;
 const locale = Astro.currentLocale as "pt" | "en";
 const m = await getSiteCopy(locale);
+const requestedPeriod = Astro.url.searchParams.get("period") ?? "";
+const selectedPeriod = normalizeGalleryPeriod(requestedPeriod) === requestedPeriod
+  ? requestedPeriod
+  : "";
+const requestedLocation = Astro.url.searchParams.get("location") ?? "";
 
-// Filter by the `category` taxonomy term (DB JOIN) when a category is set;
-// otherwise list every published item. The URL slug is localized, so resolve
-// it to the base-locale slug the term filter matches.
-const entries =
-  filterCategory === "all"
-    ? (await getEmDashCollection("gallery", { status: "published", locale })).entries
-    : await getEntriesByTerm(
-        "gallery",
-        "category",
-        await resolveBaseTermSlug("category", filterCategory, locale),
-        { locale },
-      );
+// References are stored against the canonical/default-locale location row.
+// City names are proper nouns, so that canonical row is also suitable for the
+// localized filter label.
+const [{ entries: locationEntries }, categoryTerms] = await Promise.all([
+  getEmDashCollection("locations", { status: "published", locale: "pt" }),
+  getTaxonomyTerms("category", { locale }),
+]);
+const locations = (locationEntries as any[])
+  .filter(isLiveLocation)
+  .map((location) => ({
+    ...location,
+    referenceId: String(location.data.id),
+    slug: location.id,
+  }))
+  .sort((a, b) => String(a.data.city).localeCompare(String(b.data.city), locale));
+const selectedLocation = locations.find((location) => location.slug === requestedLocation);
+
+type GalleryWhereValue = string | { gte: string; lt: string };
+const where: Record<string, GalleryWhereValue> = {};
+if (filterCategory !== "all") {
+  where.category = await resolveBaseTermSlug("category", filterCategory, locale);
+}
+const periodRange = galleryPeriodRange(selectedPeriod);
+if (periodRange) where.date = periodRange;
+if (selectedLocation) where.location = selectedLocation.referenceId;
+
+const { entries } = await getEmDashCollection("gallery", {
+  status: "published",
+  locale,
+  where: Object.keys(where).length > 0 ? where : undefined,
+  orderBy: { date: "desc", title: "asc" },
+});
 
 const sortedGalleryItems = (entries as any[]).sort((a, b) => {
   if (a.data.date && b.data.date) {
-    return new Date(b.data.date as string).getTime() - new Date(a.data.date as string).getTime();
+    return String(b.data.date).localeCompare(String(a.data.date));
   }
   return (a.data.title as string).localeCompare(b.data.title as string);
 });
 
-// Filter buttons come from the taxonomy terms (managed in the CMS).
-const categoryTerms = await getTaxonomyTerms("category", { locale });
+const galleryPath =
+  filterCategory === "all"
+    ? `/${locale}/gallery/`
+    : `/${locale}/gallery/${encodeURIComponent(filterCategory)}/`;
+
+const galleryHref = (category: string) => {
+  const params = new URLSearchParams();
+  if (selectedPeriod) params.set("period", selectedPeriod);
+  if (selectedLocation) params.set("location", selectedLocation.slug);
+  const path =
+    category === "all"
+      ? `/${locale}/gallery/`
+      : `/${locale}/gallery/${encodeURIComponent(category)}/`;
+  return params.size > 0 ? `${path}?${params}` : path;
+};
 ---
 
 <main class="space-y-20">
@@ -47,23 +87,77 @@ const categoryTerms = await getTaxonomyTerms("category", { locale });
       </p>
     </div>
 
+    <form
+      method="get"
+      action={galleryPath}
+      class="mx-auto mb-8 grid max-w-4xl gap-4 rounded-[32px] bg-dark p-5 text-white shadow-[0_6px_0_0_#b9ff66] sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-end lg:p-7"
+    >
+      <div class="sm:col-span-2 lg:col-span-3">
+        <h2 class="text-xl font-medium">{m.gallery_filter_title}</h2>
+      </div>
+      <label class="grid gap-2 text-sm font-medium" for="gallery-location">
+        {m.gallery_filter_location}
+        <select
+          id="gallery-location"
+          name="location"
+          class="min-h-12 w-full rounded-xl border-2 border-white/20 bg-white px-4 text-base text-dark outline-none transition focus:border-green focus:ring-2 focus:ring-green/40"
+        >
+          <option value="">{m.gallery_filter_all_locations}</option>
+          {locations.map((location) => (
+            <option
+              value={location.slug}
+              selected={selectedLocation?.referenceId === location.referenceId}
+            >
+              {location.data.city}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label class="grid gap-2 text-sm font-medium" for="gallery-period">
+        {m.gallery_filter_period}
+        <input
+          id="gallery-period"
+          name="period"
+          type="month"
+          value={selectedPeriod}
+          class="min-h-12 w-full rounded-xl border-2 border-white/20 bg-white px-4 text-base text-dark outline-none transition focus:border-green focus:ring-2 focus:ring-green/40"
+        />
+      </label>
+      <div class="flex flex-wrap items-center gap-3 sm:col-span-2 lg:col-span-1 lg:flex-nowrap">
+        <button
+          type="submit"
+          class="min-h-12 flex-1 rounded-xl bg-green px-5 font-medium text-dark transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green motion-reduce:transform-none"
+        >
+          {m.gallery_filter_apply}
+        </button>
+        {(selectedPeriod || selectedLocation) && (
+          <a
+            href={galleryPath}
+            class="rounded-lg px-2 py-3 text-sm underline decoration-green decoration-2 underline-offset-4 hover:text-green"
+          >
+            {m.gallery_filter_clear}
+          </a>
+        )}
+      </div>
+    </form>
+
     {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
-          href={`/${locale}/gallery/`}
+          href={galleryHref("all")}
           class={`px-4 py-2 rounded-full border-2 transition-colors ${
             filterCategory === "all"
               ? "bg-black text-white border-black"
               : "border-gray-300 hover:border-gray-400"
           }`}
         >
-          All
+          {m.gallery_all_categories}
         </a>
         {categoryTerms.map((term) => {
           const isActive = filterCategory === term.slug;
           return (
             <a
-              href={`/${locale}/gallery/${term.slug}/`}
+              href={galleryHref(term.slug)}
               class={`px-4 py-2 rounded-full border-2 transition-colors capitalize ${
                 isActive
                   ? "bg-black text-white border-black"
@@ -89,7 +183,9 @@ const categoryTerms = await getTaxonomyTerms("category", { locale });
 
     {sortedGalleryItems.length === 0 && (
       <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">{m.gallery_no_images}</p>
+        <p class="text-gray-500 text-lg">
+          {selectedPeriod || selectedLocation ? m.gallery_no_results : m.gallery_no_images}
+        </p>
       </div>
     )}
   </div>
@@ -100,10 +196,10 @@ const categoryTerms = await getTaxonomyTerms("category", { locale });
   // Make global function for tag clicks - navigate to filtered page
   window.filterByTag = (tag: string) => {
     const currentLocale = document.documentElement.lang || 'pt';
-    if (tag === 'all') {
-      window.location.href = `/${currentLocale}/gallery/`;
-    } else {
-      window.location.href = `/${currentLocale}/gallery/${encodeURIComponent(tag)}/`;
-    }
+    const nextUrl = new URL(window.location.href);
+    nextUrl.pathname = tag === 'all'
+      ? `/${currentLocale}/gallery/`
+      : `/${currentLocale}/gallery/${encodeURIComponent(tag)}/`;
+    window.location.href = `${nextUrl.pathname}${nextUrl.search}`;
   };
 </script>

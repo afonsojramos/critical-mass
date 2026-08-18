@@ -1,4 +1,4 @@
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+STAGED_FILES=$(git -c core.quotepath=false diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 
 # vp ships as the vite-plus devDependency; prefer the local binary (it is not
 # on PATH in non-interactive git hooks), falling back to a global install.
@@ -15,11 +15,11 @@ if [ -n "$STAGED_FILES" ]; then
       [ -n "$FMT_FILES" ] && "$VP" fmt $FMT_FILES --write
       [ -n "$LINT_FILES" ] && "$VP" lint $LINT_FILES --fix
     else
-      echo "warn: Vite+ (vp) not found — skipping format/lint. Run: bun install"
+      echo "warn: Vite+ (vp) not found — skipping format/lint. Run: nub install"
     fi
   fi
 
   git add $STAGED_FILES
 fi
 
-bun tsc --noEmit
+nub x tsc --noEmit

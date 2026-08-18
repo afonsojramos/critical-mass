@@ -22,24 +22,17 @@ Join us on the last Friday of every month as we ride together through Portuguese
 
 All commands are run from the root of the project, from a terminal:
 
-| Command               | Action                                               |
-| :-------------------- | :--------------------------------------------------- |
-| `nub install`         | Installs dependencies                                |
-| `nub run dev`         | Starts local dev server at `localhost:4321`          |
-| `nub run build`       | Builds the production site to `./dist/`              |
-| `nub run preview`     | Previews the production build locally                |
-| `nub run astro ...`   | Runs CLI commands like `astro add`, `astro check`    |
-| `nub run cms:migrate` | Connects Gallery authors to the Authors content type |
+| Command             | Action                                            |
+| :------------------ | :------------------------------------------------ |
+| `nub install`       | Installs dependencies                             |
+| `nub run dev`       | Starts local dev server at `localhost:4321`       |
+| `nub run build`     | Builds the production site to `./dist/`           |
+| `nub run preview`   | Previews the production build locally             |
+| `nub run astro ...` | Runs CLI commands like `astro add`, `astro check` |
 
-To create or repair the Gallery author relationship, run the idempotent schema migration with an Emdash API token:
-
-```sh
-EMDASH_TOKEN=... nub run cms:migrate
-```
-
-The migration changes Gallery's `author` field into a reference to the `authors`
-content type, assigns its entry-picker widget, and normalizes existing values to
-author entry IDs. It is safe to rerun.
+Editors can use **Gallery bulk upload** in the Emdash admin to upload several
+posters as linked Portuguese and English drafts, then adjust each title and
+month individually before publishing.
 
 Performance measurements and regression checks are defined in the
 [`web performance playbook`](docs/web-performance-playbook.md).
