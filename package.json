@@ -18,6 +18,7 @@
     "@astrojs/cloudflare": "^14.2.0",
     "@astrojs/react": "^6.0.2",
     "@astrojs/sitemap": "^3.7.3",
+    "@cloudflare/kumo": "2.6.0",
     "@emdash-cms/admin": "^0.32.0",
     "@emdash-cms/auth-atproto": "^0.2.32",
     "@emdash-cms/cloudflare": "^0.32.0",

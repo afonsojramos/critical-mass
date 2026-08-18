@@ -9,6 +9,15 @@ import {
   type MediaItem,
   type TaxonomyTerm,
 } from "@emdash-cms/admin";
+import { Badge, type BadgeVariant } from "@cloudflare/kumo/components/badge";
+import { Banner } from "@cloudflare/kumo/components/banner";
+import { Button, LinkButton } from "@cloudflare/kumo/components/button";
+import { Checkbox } from "@cloudflare/kumo/components/checkbox";
+import { Empty } from "@cloudflare/kumo/components/empty";
+import { Input } from "@cloudflare/kumo/components/input";
+import { LayerCard } from "@cloudflare/kumo/components/layer-card";
+import { Select } from "@cloudflare/kumo/components/select";
+import { Text } from "@cloudflare/kumo/components/text";
 import type { PluginAdminExports } from "emdash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { galleryMediaValue, galleryTitleFromFilename } from "@/gallery-import";
@@ -25,20 +34,15 @@ interface FieldProps {
 function MonthYearField({ value, onChange, label, id, required }: FieldProps) {
   const normalized = normalizeGalleryPeriod(value) ?? "";
   return (
-    <div className="grid gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-kumo-default">
-        {label}
-        {!required && <span className="font-normal text-kumo-subtle"> (optional)</span>}
-      </label>
-      <input
-        id={id}
-        type="month"
-        value={normalized}
-        required={required}
-        onChange={(event) => onChange(event.target.value || null)}
-        className="min-h-11 w-full rounded-xl border border-kumo-line bg-kumo-control px-3 text-base text-kumo-default outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
-      />
-    </div>
+    <Input
+      id={id}
+      type="month"
+      value={normalized}
+      required={required}
+      label={label}
+      size="lg"
+      onChange={(event) => onChange(event.target.value || null)}
+    />
   );
 }
 
@@ -70,13 +74,12 @@ const copy = {
     noAuthor: "No author",
     translations: "Create linked Portuguese and English drafts",
     files: "Poster images",
-    drop: "Drop images here, or choose files",
+    drop: "Drop poster images here",
+    chooseFiles: "Choose images",
     hint: "JPEG, PNG, WebP, AVIF, GIF, or SVG. You can adjust every title and month below.",
-    empty: "No files selected yet.",
-    image: "Image",
+    images: "images",
     itemTitle: "Title",
     period: "Month and year",
-    state: "Status",
     queued: "Ready",
     uploading: "Uploading",
     creating: "Creating drafts",
@@ -105,13 +108,12 @@ const copy = {
     noAuthor: "Sem autoria",
     translations: "Criar rascunhos ligados em português e inglês",
     files: "Imagens dos cartazes",
-    drop: "Arrasta as imagens para aqui ou escolhe ficheiros",
+    drop: "Arrasta as imagens dos cartazes para aqui",
+    chooseFiles: "Escolher imagens",
     hint: "JPEG, PNG, WebP, AVIF, GIF ou SVG. Podes ajustar cada título e mês abaixo.",
-    empty: "Ainda não selecionaste ficheiros.",
-    image: "Imagem",
+    images: "imagens",
     itemTitle: "Título",
     period: "Mês e ano",
-    state: "Estado",
     queued: "Pronto",
     uploading: "A carregar",
     creating: "A criar rascunhos",
@@ -169,6 +171,37 @@ function rowKey(file: File): string {
 
 function statusLabel(status: UploadStatus, labels: (typeof copy)[keyof typeof copy]): string {
   return labels[status];
+}
+
+function statusVariant(status: UploadStatus): BadgeVariant {
+  if (status === "done") return "success";
+  if (status === "error") return "error";
+  if (status === "uploading" || status === "creating") return "info";
+  return "neutral";
+}
+
+const NO_AUTHOR_VALUE = "__none__";
+
+function PosterPreview({ file }: { file: File }) {
+  const [src, setSrc] = useState("");
+
+  useEffect(() => {
+    const objectUrl = URL.createObjectURL(file);
+    setSrc(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
+
+  return (
+    <div className="aspect-[2/3] w-20 shrink-0 overflow-hidden rounded-lg bg-kumo-tint shadow-sm">
+      {src && (
+        <img
+          src={src}
+          alt=""
+          className="size-full object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+        />
+      )}
+    </div>
+  );
 }
 
 function GalleryBulkUploadPage() {
@@ -329,94 +362,96 @@ function GalleryBulkUploadPage() {
   const hasErrors = rows.some((row) => row.status === "error");
 
   return (
-    <main className="mx-auto max-w-6xl space-y-8 p-5 sm:p-8 lg:p-10">
+    <main className="mx-auto max-w-7xl space-y-8 p-5 sm:p-8 lg:p-10">
       <header className="max-w-3xl space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-kumo-brand">
           {labels.eyebrow}
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-kumo-default sm:text-4xl">
+        <Text variant="heading1" as="h1" DANGEROUS_className="text-balance tracking-tight">
           {labels.title}
-        </h1>
-        <p className="text-base leading-7 text-kumo-subtle">{labels.intro}</p>
+        </Text>
+        <Text variant="secondary" DANGEROUS_className="max-w-2xl text-pretty leading-7">
+          {labels.intro}
+        </Text>
       </header>
 
       {loadError && (
-        <div
-          role="alert"
-          className="rounded-xl border border-kumo-danger/40 bg-kumo-danger/10 p-4 text-sm text-kumo-danger"
-        >
-          {labels.loadError} {loadError}
-        </div>
+        <Banner role="alert" variant="error" title={labels.loadError} description={loadError} />
       )}
 
-      <section className="grid gap-5 rounded-2xl border border-kumo-line bg-kumo-base p-5 shadow-sm lg:grid-cols-3 lg:p-6">
-        <div className="lg:col-span-3">
-          <h2 className="text-lg font-semibold text-kumo-default">{labels.defaults}</h2>
-        </div>
-        <label className="grid gap-2 text-sm font-medium text-kumo-default">
-          {labels.location}
-          <select
-            value={locationId}
+      <LayerCard className="space-y-5 p-5 sm:p-6">
+        <Text variant="heading3" as="h2" DANGEROUS_className="text-balance">
+          {labels.defaults}
+        </Text>
+        <div className="grid gap-5 lg:grid-cols-3">
+          <Select
+            label={labels.location}
+            placeholder={labels.chooseLocation}
+            value={locationId || null}
+            loading={loading}
             disabled={loading || isImporting}
-            onChange={(event) => setLocationId(event.target.value)}
-            className="min-h-11 rounded-xl border border-kumo-line bg-kumo-control px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
+            onValueChange={(value) => setLocationId(typeof value === "string" ? value : "")}
+            size="lg"
           >
-            <option value="">{labels.chooseLocation}</option>
             {locations.map((location) => (
-              <option key={location.id} value={location.id}>
+              <Select.Option key={location.id} value={location.id}>
                 {contentLabel(location)}
                 {location.data.activity_status === "inactive" ? ` (${labels.inactive})` : ""}
-              </option>
+              </Select.Option>
             ))}
-          </select>
-        </label>
-        <label className="grid gap-2 text-sm font-medium text-kumo-default">
-          {labels.category}
-          <select
-            value={categoryId}
+          </Select>
+          <Select
+            label={labels.category}
+            placeholder={labels.chooseCategory}
+            value={categoryId || null}
+            loading={loading}
             disabled={loading || isImporting}
-            onChange={(event) => setCategoryId(event.target.value)}
-            className="min-h-11 rounded-xl border border-kumo-line bg-kumo-control px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
+            onValueChange={(value) => setCategoryId(typeof value === "string" ? value : "")}
+            size="lg"
           >
-            <option value="">{labels.chooseCategory}</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <Select.Option key={category.id} value={category.id}>
                 {category.label}
-              </option>
+              </Select.Option>
             ))}
-          </select>
-        </label>
-        <label className="grid gap-2 text-sm font-medium text-kumo-default">
-          {labels.author}
-          <select
-            value={authorId}
+          </Select>
+          <Select
+            label={labels.author}
+            value={authorId || NO_AUTHOR_VALUE}
+            loading={loading}
             disabled={loading || isImporting}
-            onChange={(event) => setAuthorId(event.target.value)}
-            className="min-h-11 rounded-xl border border-kumo-line bg-kumo-control px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
+            onValueChange={(value) =>
+              setAuthorId(typeof value === "string" && value !== NO_AUTHOR_VALUE ? value : "")
+            }
+            size="lg"
           >
-            <option value="">{labels.noAuthor}</option>
+            <Select.Option value={NO_AUTHOR_VALUE}>{labels.noAuthor}</Select.Option>
             {authors.map((author) => (
-              <option key={author.id} value={author.id}>
+              <Select.Option key={author.id} value={author.id}>
                 {contentLabel(author)}
-              </option>
+              </Select.Option>
             ))}
-          </select>
-        </label>
-        <label className="flex items-center gap-3 text-sm text-kumo-default lg:col-span-3">
-          <input
-            type="checkbox"
-            checked={createTranslations}
-            disabled={isImporting}
-            onChange={(event) => setCreateTranslations(event.target.checked)}
-            className="size-4 rounded border-kumo-line accent-current"
-          />
-          {labels.translations}
-        </label>
-      </section>
+          </Select>
+          <div className="lg:col-span-3">
+            <Checkbox
+              label={labels.translations}
+              controlFirst
+              checked={createTranslations}
+              disabled={isImporting}
+              onCheckedChange={(checked) => setCreateTranslations(checked)}
+            />
+          </div>
+        </div>
+      </LayerCard>
 
       <section className="space-y-4">
-        <div>
-          <h2 className="text-lg font-semibold text-kumo-default">{labels.files}</h2>
+        <div className="flex items-center justify-between gap-4">
+          <Text variant="heading3" as="h2" DANGEROUS_className="text-balance">
+            {labels.files}
+          </Text>
+          <Badge variant="secondary" className="tabular-nums">
+            {rows.length} {labels.images}
+          </Badge>
         </div>
         <div
           onDragEnter={(event) => {
@@ -430,10 +465,13 @@ function GalleryBulkUploadPage() {
           onDrop={(event) => {
             event.preventDefault();
             setIsDragging(false);
+            if (isImporting) return;
             addFiles([...event.dataTransfer.files]);
           }}
-          className={`rounded-2xl border-2 border-dashed p-7 text-center transition sm:p-10 ${
-            isDragging ? "border-kumo-brand bg-kumo-brand/10" : "border-kumo-line bg-kumo-base"
+          className={`rounded-2xl p-1 transition-[box-shadow,background-color] duration-150 ${
+            isDragging
+              ? "bg-kumo-brand/10 ring-2 ring-kumo-brand"
+              : "bg-kumo-tint ring ring-kumo-line"
           }`}
         >
           <input
@@ -446,123 +484,122 @@ function GalleryBulkUploadPage() {
             className="sr-only"
             onChange={(event) => addFiles([...(event.target.files ?? [])])}
           />
-          <label
-            htmlFor="gallery-files"
-            className="cursor-pointer text-base font-semibold text-kumo-default underline decoration-kumo-brand decoration-2 underline-offset-4"
-          >
-            {labels.drop}
-          </label>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-kumo-subtle">{labels.hint}</p>
+          <Empty
+            size="sm"
+            title={labels.drop}
+            description={labels.hint}
+            contents={
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={isImporting}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {labels.chooseFiles}
+              </Button>
+            }
+            className="rounded-xl bg-kumo-base"
+          />
         </div>
 
-        {rows.length === 0 ? (
-          <div className="rounded-2xl border border-kumo-line bg-kumo-base p-8 text-center text-sm text-kumo-subtle">
-            {labels.empty}
-          </div>
-        ) : (
+        {rows.length > 0 ? (
           <div className="space-y-3">
             {rows.map((row, index) => (
-              <article
-                key={row.id}
-                className="grid gap-4 rounded-2xl border border-kumo-line bg-kumo-base p-4 shadow-sm md:grid-cols-[minmax(0,1fr)_11rem_10rem] md:items-start"
-              >
-                <div className="min-w-0 space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-kumo-brand text-sm font-semibold text-kumo-inverse">
-                      {index + 1}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="truncate text-xs text-kumo-subtle">{row.file.name}</p>
-                      <label className="sr-only" htmlFor={`gallery-title-${index}`}>
-                        {labels.itemTitle}
-                      </label>
-                      <input
+              <article key={row.id}>
+                <LayerCard className="space-y-4 p-4">
+                  <div className="grid gap-4 md:grid-cols-[5rem_minmax(0,1fr)_12rem_auto] md:items-start">
+                    <PosterPreview file={row.file} />
+                    <div className="min-w-0 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary" className="tabular-nums">
+                          {index + 1}
+                        </Badge>
+                        <Text variant="secondary" size="xs" truncate>
+                          {row.file.name}
+                        </Text>
+                      </div>
+                      <Input
                         id={`gallery-title-${index}`}
+                        label={labels.itemTitle}
                         value={row.title}
                         disabled={isImporting || row.status === "done"}
                         onChange={(event) => patchRow(row.id, { title: event.target.value })}
-                        className="mt-1 min-h-10 w-full rounded-lg border border-kumo-line bg-kumo-control px-3 text-base font-medium text-kumo-default outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
                       />
+                      {row.status === "done" && (
+                        <div className="flex flex-wrap gap-2">
+                          {row.primaryEntryId && (
+                            <LinkButton
+                              size="sm"
+                              variant="ghost"
+                              href={`/_emdash/admin/content/gallery/${row.primaryEntryId}?locale=pt`}
+                            >
+                              {labels.editPt}
+                            </LinkButton>
+                          )}
+                          {row.translationEntryId && (
+                            <LinkButton
+                              size="sm"
+                              variant="ghost"
+                              href={`/_emdash/admin/content/gallery/${row.translationEntryId}?locale=en`}
+                            >
+                              {labels.editEn}
+                            </LinkButton>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <Input
+                      id={`gallery-period-${index}`}
+                      label={labels.period}
+                      type="month"
+                      value={row.period}
+                      disabled={isImporting || row.status === "done"}
+                      onChange={(event) => patchRow(row.id, { period: event.target.value })}
+                    />
+                    <div className="flex min-h-10 items-center justify-between gap-2 md:flex-col md:items-end">
+                      <Badge variant={statusVariant(row.status)} appearance="dot">
+                        {statusLabel(row.status, labels)}
+                      </Badge>
+                      {!row.primaryEntryId && row.status !== "done" && (
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="secondary-destructive"
+                          disabled={isImporting}
+                          onClick={() =>
+                            setRows((current) => current.filter((item) => item.id !== row.id))
+                          }
+                        >
+                          {labels.remove}
+                        </Button>
+                      )}
                     </div>
                   </div>
-                  {row.error && (
-                    <p role="alert" className="text-sm text-kumo-danger">
-                      {row.error}
-                    </p>
-                  )}
-                  {row.status === "done" && (
-                    <div className="flex flex-wrap gap-3 text-sm">
-                      {row.primaryEntryId && (
-                        <a
-                          className="text-kumo-link underline"
-                          href={`/_emdash/admin/content/gallery/${row.primaryEntryId}?locale=pt`}
-                        >
-                          {labels.editPt}
-                        </a>
-                      )}
-                      {row.translationEntryId && (
-                        <a
-                          className="text-kumo-link underline"
-                          href={`/_emdash/admin/content/gallery/${row.translationEntryId}?locale=en`}
-                        >
-                          {labels.editEn}
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
-                <label
-                  className="grid gap-2 text-xs font-medium text-kumo-subtle"
-                  htmlFor={`gallery-period-${index}`}
-                >
-                  {labels.period}
-                  <input
-                    id={`gallery-period-${index}`}
-                    type="month"
-                    value={row.period}
-                    disabled={isImporting || row.status === "done"}
-                    onChange={(event) => patchRow(row.id, { period: event.target.value })}
-                    className="min-h-10 rounded-lg border border-kumo-line bg-kumo-control px-3 text-sm text-kumo-default outline-none focus-visible:ring-2 focus-visible:ring-kumo-focus"
-                  />
-                </label>
-                <div className="space-y-2 md:text-end">
-                  <p className="text-sm font-medium text-kumo-default">
-                    {statusLabel(row.status, labels)}
-                  </p>
-                  {!row.primaryEntryId && row.status !== "done" && (
-                    <button
-                      type="button"
-                      disabled={isImporting}
-                      onClick={() =>
-                        setRows((current) => current.filter((item) => item.id !== row.id))
-                      }
-                      className="text-xs text-kumo-subtle underline hover:text-kumo-danger disabled:opacity-50"
-                    >
-                      {labels.remove}
-                    </button>
-                  )}
-                </div>
+                  {row.error && <Banner role="alert" variant="error" description={row.error} />}
+                </LayerCard>
               </article>
             ))}
           </div>
-        )}
+        ) : null}
       </section>
 
-      <footer className="sticky bottom-4 flex flex-col gap-3 rounded-2xl border border-kumo-line bg-kumo-base/95 p-4 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-kumo-subtle">
+      <LayerCard className="sticky bottom-4 z-10 flex flex-col gap-3 bg-kumo-base/95 p-4 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <Text variant="secondary" size="sm" DANGEROUS_className="text-pretty tabular-nums">
           {!canImport && !isImporting && rows.some((row) => row.status !== "done")
             ? labels.incomplete
             : `${rows.filter((row) => row.status === "done").length}/${rows.length}`}
-        </p>
-        <button
+        </Text>
+        <Button
           type="button"
+          variant="primary"
+          size="lg"
+          loading={isImporting}
           disabled={!canImport}
           onClick={() => void importRows()}
-          className="min-h-11 rounded-xl bg-kumo-brand px-5 font-semibold text-kumo-inverse transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isImporting ? labels.importing : hasErrors ? labels.retry : labels.import}
-        </button>
-      </footer>
+        </Button>
+      </LayerCard>
     </main>
   );
 }
