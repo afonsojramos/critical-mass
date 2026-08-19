@@ -54,8 +54,6 @@ export interface SiteCopy {
   gallery_filter_month: string;
   gallery_filter_all_years: string;
   gallery_filter_all_months: string;
-  gallery_results_one: string;
-  gallery_results_many: string;
   gallery_filter_apply: string;
   gallery_filter_clear: string;
   location_sunday: string;

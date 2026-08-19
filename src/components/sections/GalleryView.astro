@@ -261,13 +261,6 @@ const filterHref = (overrides: FilterState = {}) => {
       )}
     </div>
 
-    {hasActiveFilters && (
-      <p class="mb-8 text-center text-gray-500 tabular-nums">
-        {sortedGalleryItems.length}{" "}
-        {sortedGalleryItems.length === 1 ? m.gallery_results_one : m.gallery_results_many}
-      </p>
-    )}
-
     {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
