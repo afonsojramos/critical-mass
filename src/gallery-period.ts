@@ -23,7 +23,13 @@ export function nextGalleryPeriod(period: string): string | undefined {
   return `${year}-${String(month + 1).padStart(2, "0")}`;
 }
 
+const GALLERY_YEAR_PATTERN = /^\d{4}$/;
+
 export function galleryPeriodRange(value: unknown): { gte: string; lt: string } | undefined {
+  if (typeof value === "string" && GALLERY_YEAR_PATTERN.test(value)) {
+    const year = Number(value);
+    return { gte: `${year}-01`, lt: `${year + 1}-01` };
+  }
   const period = normalizeGalleryPeriod(value);
   if (!period || period !== value) return undefined;
   const next = nextGalleryPeriod(period);

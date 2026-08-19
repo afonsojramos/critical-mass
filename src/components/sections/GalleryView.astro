@@ -15,19 +15,34 @@ interface Props {
 const { filterCategory = "all" } = Astro.props;
 const locale = Astro.currentLocale as "pt" | "en";
 const m = await getSiteCopy(locale);
-const requestedPeriod = Astro.url.searchParams.get("period") ?? "";
-const selectedPeriod = normalizeGalleryPeriod(requestedPeriod) === requestedPeriod
-  ? requestedPeriod
-  : "";
-const requestedLocation = Astro.url.searchParams.get("location") ?? "";
+
+// Canonical filter params are `year` and `month`; `period` (YYYY or YYYY-MM)
+// is still accepted so old links keep working.
+const params = Astro.url.searchParams;
+const requestedPeriod = params.get("period") ?? "";
+const legacyMonth = normalizeGalleryPeriod(requestedPeriod);
+const YEAR_PATTERN = /^\d{4}$/;
+const MONTH_PATTERN = /^(0[1-9]|1[0-2])$/;
+let selectedYear = params.get("year") ?? "";
+let selectedMonth = params.get("month") ?? "";
+if (!selectedYear && legacyMonth === requestedPeriod && legacyMonth) {
+  [selectedYear, selectedMonth] = requestedPeriod.split("-");
+} else if (!selectedYear && YEAR_PATTERN.test(requestedPeriod)) {
+  selectedYear = requestedPeriod;
+}
+if (!YEAR_PATTERN.test(selectedYear)) selectedYear = "";
+if (!selectedYear || !MONTH_PATTERN.test(selectedMonth)) selectedMonth = "";
+const requestedLocation = params.get("location") ?? "";
 
 // References are stored against the canonical/default-locale location row.
 // City names are proper nouns, so that canonical row is also suitable for the
 // localized filter label.
-const [{ entries: locationEntries }, categoryTerms] = await Promise.all([
-  getEmDashCollection("locations", { status: "published", locale: "pt" }),
-  getTaxonomyTerms("category", { locale }),
-]);
+const [{ entries: locationEntries }, categoryTerms, { entries: allGalleryEntries }] =
+  await Promise.all([
+    getEmDashCollection("locations", { status: "published", locale: "pt" }),
+    getTaxonomyTerms("category", { locale }),
+    getEmDashCollection("gallery", { status: "published", locale: "pt" }),
+  ]);
 const locations = (locationEntries as any[])
   .filter(isLiveLocation)
   .map((location) => ({
@@ -37,6 +52,31 @@ const locations = (locationEntries as any[])
   }))
   .sort((a, b) => String(a.data.city).localeCompare(String(b.data.city), locale));
 const selectedLocation = locations.find((location) => location.slug === requestedLocation);
+
+const yearSet = new Set(
+  (allGalleryEntries as any[])
+    .map((entry) => String(entry.data.date ?? "").slice(0, 4))
+    .filter((year) => YEAR_PATTERN.test(year)),
+);
+if (selectedYear) yearSet.add(selectedYear);
+const years = [...yearSet].sort((a, b) => b.localeCompare(a));
+
+const monthName = (month: string) =>
+  capitalize(
+    new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "pt-PT", {
+      month: "long",
+      timeZone: "UTC",
+    }).format(new Date(Date.UTC(2000, Number(month) - 1, 1))),
+  );
+const months = Array.from({ length: 12 }, (_, index) =>
+  String(index + 1).padStart(2, "0"),
+);
+
+const selectedPeriod = selectedYear
+  ? selectedMonth
+    ? `${selectedYear}-${selectedMonth}`
+    : selectedYear
+  : "";
 
 type GalleryWhereValue = string | { gte: string; lt: string };
 const where: Record<string, GalleryWhereValue> = {};
@@ -61,20 +101,36 @@ const sortedGalleryItems = (entries as any[]).sort((a, b) => {
   return (a.data.title as string).localeCompare(b.data.title as string);
 });
 
+const hasActiveFilters = Boolean(selectedYear || selectedLocation);
+
 const galleryPath =
   filterCategory === "all"
     ? `/${locale}/gallery/`
     : `/${locale}/gallery/${encodeURIComponent(filterCategory)}/`;
 
-const galleryHref = (category: string) => {
-  const params = new URLSearchParams();
-  if (selectedPeriod) params.set("period", selectedPeriod);
-  if (selectedLocation) params.set("location", selectedLocation.slug);
+interface FilterState {
+  category?: string;
+  location?: string;
+  year?: string;
+  month?: string;
+}
+
+// Build a gallery URL from the current filters plus overrides. An override
+// set to "" clears that filter; a cleared year always clears the month too.
+const filterHref = (overrides: FilterState = {}) => {
+  const category = overrides.category ?? filterCategory;
+  const location = overrides.location ?? selectedLocation?.slug ?? "";
+  const year = overrides.year ?? selectedYear;
+  const month = year ? (overrides.month ?? selectedMonth) : "";
+  const search = new URLSearchParams();
+  if (location) search.set("location", location);
+  if (year) search.set("year", year);
+  if (year && month) search.set("month", month);
   const path =
     category === "all"
       ? `/${locale}/gallery/`
       : `/${locale}/gallery/${encodeURIComponent(category)}/`;
-  return params.size > 0 ? `${path}?${params}` : path;
+  return search.size > 0 ? `${path}?${search}` : path;
 };
 ---
 
@@ -87,64 +143,135 @@ const galleryHref = (category: string) => {
       </p>
     </div>
 
-    <form
-      method="get"
-      action={galleryPath}
-      class="mx-auto mb-8 grid max-w-4xl gap-4 rounded-[32px] bg-dark p-5 text-white shadow-[0_6px_0_0_#b9ff66] sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-end lg:p-7"
+    <div
+      class="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-3"
+      id="gallery-filters"
     >
-      <div class="sm:col-span-2 lg:col-span-3">
-        <h2 class="text-xl font-medium">{m.gallery_filter_title}</h2>
-      </div>
-      <label class="grid gap-2 text-sm font-medium" for="gallery-location">
-        {m.gallery_filter_location}
-        <select
-          id="gallery-location"
-          name="location"
-          class="min-h-12 w-full rounded-xl border-2 border-white/20 bg-white px-4 text-base text-dark outline-none transition focus:border-green focus:ring-2 focus:ring-green/40"
+      <details class="gallery-dropdown relative" data-dropdown>
+        <summary
+          class={`flex min-h-12 cursor-pointer select-none list-none items-center gap-2 rounded-full border-2 px-5 font-medium transition ${
+            selectedLocation
+              ? "border-dark bg-dark text-white shadow-[0_4px_0_0_#b9ff66]"
+              : "border-gray-300 bg-white hover:border-gray-400"
+          }`}
         >
-          <option value="">{m.gallery_filter_all_locations}</option>
+          <span class="text-sm opacity-70">{m.gallery_filter_location}</span>
+          <span>{selectedLocation ? selectedLocation.data.city : m.gallery_filter_all_locations}</span>
+          <svg class="size-4 shrink-0 transition-transform" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-56 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
+          <a
+            href={filterHref({ location: "" })}
+            class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedLocation ? "bg-dark text-white" : ""}`}
+          >
+            {m.gallery_filter_all_locations}
+          </a>
           {locations.map((location) => (
-            <option
-              value={location.slug}
-              selected={selectedLocation?.referenceId === location.referenceId}
+            <a
+              href={filterHref({ location: location.slug })}
+              class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${
+                selectedLocation?.slug === location.slug ? "bg-dark text-white" : ""
+              }`}
             >
               {location.data.city}
-            </option>
+            </a>
           ))}
-        </select>
-      </label>
-      <label class="grid gap-2 text-sm font-medium" for="gallery-period">
-        {m.gallery_filter_period}
-        <input
-          id="gallery-period"
-          name="period"
-          type="month"
-          value={selectedPeriod}
-          class="min-h-12 w-full rounded-xl border-2 border-white/20 bg-white px-4 text-base text-dark outline-none transition focus:border-green focus:ring-2 focus:ring-green/40"
-        />
-      </label>
-      <div class="flex flex-wrap items-center gap-3 sm:col-span-2 lg:col-span-1 lg:flex-nowrap">
-        <button
-          type="submit"
-          class="min-h-12 flex-1 rounded-xl bg-green px-5 font-medium text-dark transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green motion-reduce:transform-none"
+        </div>
+      </details>
+
+      <details class="gallery-dropdown relative" data-dropdown>
+        <summary
+          class={`flex min-h-12 cursor-pointer select-none list-none items-center gap-2 rounded-full border-2 px-5 font-medium transition ${
+            selectedYear
+              ? "border-dark bg-dark text-white shadow-[0_4px_0_0_#b9ff66]"
+              : "border-gray-300 bg-white hover:border-gray-400"
+          }`}
         >
-          {m.gallery_filter_apply}
-        </button>
-        {(selectedPeriod || selectedLocation) && (
+          <span class="text-sm opacity-70">{m.gallery_filter_year}</span>
+          <span>{selectedYear || m.gallery_filter_all_years}</span>
+          <svg class="size-4 shrink-0 transition-transform" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-44 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
           <a
-            href={galleryPath}
-            class="rounded-lg px-2 py-3 text-sm underline decoration-green decoration-2 underline-offset-4 hover:text-green"
+            href={filterHref({ year: "" })}
+            class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedYear ? "bg-dark text-white" : ""}`}
           >
-            {m.gallery_filter_clear}
+            {m.gallery_filter_all_years}
           </a>
-        )}
-      </div>
-    </form>
+          {years.map((year) => (
+            <a
+              href={filterHref({ year })}
+              class={`block rounded-xl px-4 py-2.5 tabular-nums transition hover:bg-green/30 ${
+                selectedYear === year ? "bg-dark text-white" : ""
+              }`}
+            >
+              {year}
+            </a>
+          ))}
+        </div>
+      </details>
+
+      {selectedYear && (
+        <details class="gallery-dropdown relative" data-dropdown>
+          <summary
+            class={`flex min-h-12 cursor-pointer select-none list-none items-center gap-2 rounded-full border-2 px-5 font-medium transition ${
+              selectedMonth
+                ? "border-dark bg-dark text-white shadow-[0_4px_0_0_#b9ff66]"
+                : "border-gray-300 bg-white hover:border-gray-400"
+            }`}
+          >
+            <span class="text-sm opacity-70">{m.gallery_filter_month}</span>
+            <span>{selectedMonth ? monthName(selectedMonth) : m.gallery_filter_all_months}</span>
+            <svg class="size-4 shrink-0 transition-transform" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </summary>
+          <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-48 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
+            <a
+              href={filterHref({ month: "" })}
+              class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedMonth ? "bg-dark text-white" : ""}`}
+            >
+              {m.gallery_filter_all_months}
+            </a>
+            {months.map((month) => (
+              <a
+                href={filterHref({ month })}
+                class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${
+                  selectedMonth === month ? "bg-dark text-white" : ""
+                }`}
+              >
+                {monthName(month)}
+              </a>
+            ))}
+          </div>
+        </details>
+      )}
+
+      {hasActiveFilters && (
+        <a
+          href={galleryPath}
+          class="rounded-lg px-2 py-3 text-sm underline decoration-green decoration-2 underline-offset-4 hover:text-green"
+        >
+          {m.gallery_filter_clear}
+        </a>
+      )}
+    </div>
+
+    {hasActiveFilters && (
+      <p class="mb-8 text-center text-gray-500 tabular-nums">
+        {sortedGalleryItems.length}{" "}
+        {sortedGalleryItems.length === 1 ? m.gallery_results_one : m.gallery_results_many}
+      </p>
+    )}
 
     {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
-          href={galleryHref("all")}
+          href={filterHref({ category: "all" })}
           class={`px-4 py-2 rounded-full border-2 transition-colors ${
             filterCategory === "all"
               ? "bg-black text-white border-black"
@@ -157,7 +284,7 @@ const galleryHref = (category: string) => {
           const isActive = filterCategory === term.slug;
           return (
             <a
-              href={galleryHref(term.slug)}
+              href={filterHref({ category: term.slug })}
               class={`px-4 py-2 rounded-full border-2 transition-colors capitalize ${
                 isActive
                   ? "bg-black text-white border-black"
@@ -184,13 +311,44 @@ const galleryHref = (category: string) => {
     {sortedGalleryItems.length === 0 && (
       <div class="text-center py-12">
         <p class="text-gray-500 text-lg">
-          {selectedPeriod || selectedLocation ? m.gallery_no_results : m.gallery_no_images}
+          {hasActiveFilters ? m.gallery_no_results : m.gallery_no_images}
         </p>
       </div>
     )}
   </div>
 </main>
 <ImageModal id="gallery-modal" />
+
+<style>
+  .gallery-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+  .gallery-dropdown[open] summary svg {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // One dropdown open at a time; close on outside click and Escape.
+  const dropdowns = document.querySelectorAll<HTMLDetailsElement>("#gallery-filters [data-dropdown]");
+  for (const dropdown of dropdowns) {
+    dropdown.addEventListener("toggle", () => {
+      if (!dropdown.open) return;
+      for (const other of dropdowns) {
+        if (other !== dropdown) other.open = false;
+      }
+    });
+  }
+  document.addEventListener("click", (event) => {
+    for (const dropdown of dropdowns) {
+      if (dropdown.open && !dropdown.contains(event.target as Node)) dropdown.open = false;
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    for (const dropdown of dropdowns) dropdown.open = false;
+  });
+</script>
 
 <script>
   // Make global function for tag clicks - navigate to filtered page
