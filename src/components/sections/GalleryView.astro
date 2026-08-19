@@ -4,7 +4,6 @@ import GalleryCard from "@/components/ui/GalleryCard.astro";
 import ImageModal from "@/components/ui/ImageModal.astro";
 import { galleryPeriodRange, normalizeGalleryPeriod } from "@/gallery-period";
 import { getSiteCopy } from "@/i18n/site-copy";
-import { isLiveLocation } from "@/location-status";
 import { capitalize } from "@/utils";
 import { resolveBaseTermSlug } from "@/utils/taxonomy";
 
@@ -34,17 +33,27 @@ if (!YEAR_PATTERN.test(selectedYear)) selectedYear = "";
 if (!selectedYear || !MONTH_PATTERN.test(selectedMonth)) selectedMonth = "";
 const requestedLocation = params.get("location") ?? "";
 
-// References are stored against the canonical/default-locale location row.
-// City names are proper nouns, so that canonical row is also suitable for the
-// localized filter label.
+// Gallery content is single-locale: posters are proper names, so only the
+// base-locale rows exist and both language versions of the page show them.
+// City names are proper nouns, so the canonical location row is also
+// suitable for the localized filter label.
 const [{ entries: locationEntries }, categoryTerms, { entries: allGalleryEntries }] =
   await Promise.all([
     getEmDashCollection("locations", { status: "published", locale: "pt" }),
     getTaxonomyTerms("category", { locale }),
     getEmDashCollection("gallery", { status: "published", locale: "pt" }),
   ]);
+
+// Only offer locations that actually have gallery entries (including
+// inactive historical ones such as Setúbal) so no filter is a dead end.
+const usedLocationIds = new Set(
+  (allGalleryEntries as any[])
+    .map((entry) => entry.data.location)
+    .filter(Boolean)
+    .map(String),
+);
 const locations = (locationEntries as any[])
-  .filter(isLiveLocation)
+  .filter((location) => usedLocationIds.has(String(location.data.id)))
   .map((location) => ({
     ...location,
     referenceId: String(location.data.id),
@@ -89,7 +98,7 @@ if (selectedLocation) where.location = selectedLocation.referenceId;
 
 const { entries } = await getEmDashCollection("gallery", {
   status: "published",
-  locale,
+  locale: "pt",
   where: Object.keys(where).length > 0 ? where : undefined,
   orderBy: { date: "desc", title: "asc" },
 });
@@ -161,7 +170,8 @@ const filterHref = (overrides: FilterState = {}) => {
             <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </summary>
-        <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-56 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
+        <div class="absolute left-1/2 z-20 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
+          <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
           <a
             href={filterHref({ location: "" })}
             class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedLocation ? "bg-dark text-white" : ""}`}
@@ -178,6 +188,7 @@ const filterHref = (overrides: FilterState = {}) => {
               {location.data.city}
             </a>
           ))}
+          </div>
         </div>
       </details>
 
@@ -195,7 +206,8 @@ const filterHref = (overrides: FilterState = {}) => {
             <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </summary>
-        <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-44 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
+        <div class="absolute left-1/2 z-20 mt-2 w-44 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
+          <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
           <a
             href={filterHref({ year: "" })}
             class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedYear ? "bg-dark text-white" : ""}`}
@@ -212,6 +224,7 @@ const filterHref = (overrides: FilterState = {}) => {
               {year}
             </a>
           ))}
+          </div>
         </div>
       </details>
 
@@ -230,7 +243,8 @@ const filterHref = (overrides: FilterState = {}) => {
               <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </summary>
-          <div class="absolute left-1/2 z-20 mt-2 max-h-80 w-48 -translate-x-1/2 overflow-y-auto rounded-2xl border-2 border-dark bg-white p-2 shadow-[0_6px_0_0_#b9ff66]">
+          <div class="absolute left-1/2 z-20 mt-2 w-48 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
+            <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
             <a
               href={filterHref({ month: "" })}
               class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedMonth ? "bg-dark text-white" : ""}`}
@@ -247,6 +261,7 @@ const filterHref = (overrides: FilterState = {}) => {
                 {monthName(month)}
               </a>
             ))}
+            </div>
           </div>
         </details>
       )}

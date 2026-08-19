@@ -7,6 +7,8 @@ import "emdash-plugin-bulk-upload/styles.css";
 
 export const { pages, fields } = createBulkUploadAdmin({
   collection: "gallery",
+  // Gallery content is single-locale; no linked translation drafts.
+  translationLocales: [],
   sharedFields: [
     {
       kind: "collection",
@@ -56,7 +58,6 @@ export const { pages, fields } = createBulkUploadAdmin({
     en: {
       eyebrow: "Gallery tools",
       intro: "Create a reviewed Gallery draft for every image. Nothing is published automatically.",
-      translations: "Create linked Portuguese and English drafts",
       files: "Poster images",
       drop: "Drop poster images here",
       chooseFiles: "Choose images",
@@ -70,7 +71,6 @@ export const { pages, fields } = createBulkUploadAdmin({
     pt: {
       eyebrow: "Ferramentas da galeria",
       intro: "Cria um rascunho da Galeria por imagem. Nada é publicado automaticamente.",
-      translations: "Criar rascunhos ligados em português e inglês",
       files: "Imagens dos cartazes",
       drop: "Arrasta as imagens dos cartazes para aqui",
       chooseFiles: "Escolher imagens",
