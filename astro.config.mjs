@@ -57,6 +57,10 @@ export default defineConfig({
     }),
   ],
   output: "server",
+  // Opt-in prefetching: links marked `data-astro-prefetch` are fetched on
+  // hover, so gallery filter navigations render from an already-loaded
+  // response. Not `prefetchAll` — most links here are one-off page visits.
+  prefetch: true,
   adapter: cloudflare({
     imageService: "compile",
   }),

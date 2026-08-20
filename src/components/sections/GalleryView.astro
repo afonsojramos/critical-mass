@@ -37,11 +37,23 @@ const requestedLocation = params.get("location") ?? "";
 // base-locale rows exist and both language versions of the page show them.
 // City names are proper nouns, so the canonical location row is also
 // suitable for the localized filter label.
+// One D1 round trip fetches the (category-scoped) entries; location and
+// period filtering happen in memory, so filter clicks cost a single wave of
+// queries instead of three sequential ones.
+const categorySlug =
+  filterCategory !== "all"
+    ? await resolveBaseTermSlug("category", filterCategory, locale)
+    : undefined;
 const [{ entries: locationEntries }, categoryTerms, { entries: allGalleryEntries }] =
   await Promise.all([
     getEmDashCollection("locations", { status: "published", locale: "pt" }),
     getTaxonomyTerms("category", { locale }),
-    getEmDashCollection("gallery", { status: "published", locale: "pt" }),
+    getEmDashCollection("gallery", {
+      status: "published",
+      locale: "pt",
+      where: categorySlug ? { category: categorySlug } : undefined,
+      orderBy: { date: "desc", title: "asc" },
+    }),
   ]);
 
 // Only offer locations that actually have gallery entries (including
@@ -87,20 +99,16 @@ const selectedPeriod = selectedYear
     : selectedYear
   : "";
 
-type GalleryWhereValue = string | { gte: string; lt: string };
-const where: Record<string, GalleryWhereValue> = {};
-if (filterCategory !== "all") {
-  where.category = await resolveBaseTermSlug("category", filterCategory, locale);
-}
 const periodRange = galleryPeriodRange(selectedPeriod);
-if (periodRange) where.date = periodRange;
-if (selectedLocation) where.location = selectedLocation.referenceId;
-
-const { entries } = await getEmDashCollection("gallery", {
-  status: "published",
-  locale: "pt",
-  where: Object.keys(where).length > 0 ? where : undefined,
-  orderBy: { date: "desc", title: "asc" },
+const entries = (allGalleryEntries as any[]).filter((entry) => {
+  if (selectedLocation && String(entry.data.location) !== selectedLocation.referenceId) {
+    return false;
+  }
+  if (periodRange) {
+    const date = String(entry.data.date ?? "");
+    if (!date || date < periodRange.gte || date >= periodRange.lt) return false;
+  }
+  return true;
 });
 
 const sortedGalleryItems = (entries as any[]).sort((a, b) => {
@@ -173,6 +181,7 @@ const filterHref = (overrides: FilterState = {}) => {
         <div class="absolute left-1/2 z-20 mt-2 w-56 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
           <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
           <a
+            data-astro-prefetch
             href={filterHref({ location: "" })}
             class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedLocation ? "bg-dark text-white" : ""}`}
           >
@@ -180,6 +189,7 @@ const filterHref = (overrides: FilterState = {}) => {
           </a>
           {locations.map((location) => (
             <a
+              data-astro-prefetch
               href={filterHref({ location: location.slug })}
               class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${
                 selectedLocation?.slug === location.slug ? "bg-dark text-white" : ""
@@ -209,6 +219,7 @@ const filterHref = (overrides: FilterState = {}) => {
         <div class="absolute left-1/2 z-20 mt-2 w-44 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
           <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
           <a
+            data-astro-prefetch
             href={filterHref({ year: "" })}
             class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedYear ? "bg-dark text-white" : ""}`}
           >
@@ -216,6 +227,7 @@ const filterHref = (overrides: FilterState = {}) => {
           </a>
           {years.map((year) => (
             <a
+              data-astro-prefetch
               href={filterHref({ year })}
               class={`block rounded-xl px-4 py-2.5 tabular-nums transition hover:bg-green/30 ${
                 selectedYear === year ? "bg-dark text-white" : ""
@@ -246,6 +258,7 @@ const filterHref = (overrides: FilterState = {}) => {
           <div class="absolute left-1/2 z-20 mt-2 w-48 -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-dark bg-white shadow-[0_6px_0_0_#b9ff66]">
             <div class="max-h-80 overflow-y-auto p-2 [scrollbar-width:thin]">
             <a
+              data-astro-prefetch
               href={filterHref({ month: "" })}
               class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${!selectedMonth ? "bg-dark text-white" : ""}`}
             >
@@ -253,6 +266,7 @@ const filterHref = (overrides: FilterState = {}) => {
             </a>
             {months.map((month) => (
               <a
+                data-astro-prefetch
                 href={filterHref({ month })}
                 class={`block rounded-xl px-4 py-2.5 transition hover:bg-green/30 ${
                   selectedMonth === month ? "bg-dark text-white" : ""
@@ -279,6 +293,7 @@ const filterHref = (overrides: FilterState = {}) => {
     {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
+          data-astro-prefetch
           href={filterHref({ category: "all" })}
           class={`px-4 py-2 rounded-full border-2 transition-colors ${
             filterCategory === "all"
@@ -292,6 +307,7 @@ const filterHref = (overrides: FilterState = {}) => {
           const isActive = filterCategory === term.slug;
           return (
             <a
+              data-astro-prefetch
               href={filterHref({ category: term.slug })}
               class={`px-4 py-2 rounded-full border-2 transition-colors capitalize ${
                 isActive
