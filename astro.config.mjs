@@ -3,6 +3,7 @@ import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
+import solid from "@solidjs/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import emdash from "emdash/astro";
@@ -13,12 +14,18 @@ import { baseLocale, locales } from "./src/paraglide/runtime";
 import { contentReference } from "./src/plugins/content-reference";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
+const SOLID_ISLANDS = "**/*.solid.tsx";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://massacritica.pt",
   vite: {
     plugins: [
       tailwindcss(),
+      // Compiles `*.solid.tsx` to plain DOM code. These are mounted by hand
+      // from client scripts with `render()`, so Astro needs no Solid renderer
+      // and no island hydration.
+      solid({ include: [SOLID_ISLANDS] }),
       paraglideVitePlugin({
         project: "./project.inlang",
         outdir: "./src/paraglide",
@@ -30,7 +37,9 @@ export default defineConfig({
     ],
   },
   integrations: [
-    react(),
+    // React exists only to compile the Emdash admin plugins; it must not
+    // touch the Solid islands, which the Solid compiler owns.
+    react({ exclude: [SOLID_ISLANDS] }),
     // Emdash CMS — uses D1 for database and R2 for media.
     // In local dev, the Cloudflare Vite plugin emulates D1 with local SQLite
     // and R2 with local filesystem automatically.

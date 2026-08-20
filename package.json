@@ -22,6 +22,7 @@
     "@emdash-cms/admin": "^0.32.0",
     "@emdash-cms/auth-atproto": "^0.2.32",
     "@emdash-cms/cloudflare": "^0.32.0",
+    "@solidjs/web": "2.0.0-rc.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.101.4",
     "@tanstack/react-router": "^1.170.25",
@@ -37,6 +38,7 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "sharp": "^0.35.3",
+    "solid-js": "2.0.0-rc.1",
     "swiper": "^14.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
@@ -46,6 +48,7 @@
     "@cloudflare/workers-types": "^5.20260811.1",
     "@inlang/cli": "^3.3.0",
     "@inlang/paraglide-js": "^2.23.2",
+    "@solidjs/vite-plugin": "3.0.0-next.31",
     "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",

@@ -76,9 +76,9 @@ const authorEdit = author ? editable("authors", author) : null;
 </div>
 
 <script>
-  // Document-level delegation so cards keep working after ClientRouter swaps
-  // the grid on filter navigations. Tags win over the overlay, and clicks on
-  // the content strip never open the lightbox.
+  // Document-level delegation so cards keep working however the grid is
+  // re-rendered. Tags win over the overlay, and clicks on the content strip
+  // never open the lightbox.
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement;
 

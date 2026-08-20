@@ -100,7 +100,10 @@ const selectedPeriod = selectedYear
   : "";
 
 const periodRange = galleryPeriodRange(selectedPeriod);
-const entries = (allGalleryEntries as any[]).filter((entry) => {
+// Every entry of the category is rendered; non-matching ones get the plain
+// `hidden` attribute. Filtering stays correct without JavaScript, and the
+// island can re-reveal posters without another request.
+const matchesFilters = (entry: any) => {
   if (selectedLocation && String(entry.data.location) !== selectedLocation.referenceId) {
     return false;
   }
@@ -109,9 +112,10 @@ const entries = (allGalleryEntries as any[]).filter((entry) => {
     if (!date || date < periodRange.gte || date >= periodRange.lt) return false;
   }
   return true;
-});
+};
+const visibleCount = (allGalleryEntries as any[]).filter(matchesFilters).length;
 
-const sortedGalleryItems = (entries as any[]).sort((a, b) => {
+const sortedGalleryItems = (allGalleryEntries as any[]).sort((a, b) => {
   if (a.data.date && b.data.date) {
     return String(b.data.date).localeCompare(String(a.data.date));
   }
@@ -120,10 +124,38 @@ const sortedGalleryItems = (entries as any[]).sort((a, b) => {
 
 const hasActiveFilters = Boolean(selectedYear || selectedLocation);
 
+// No trailing slash: the Worker canonicalizes those away, so keeping it
+// would cost every filter link a 308.
 const galleryPath =
   filterCategory === "all"
-    ? `/${locale}/gallery/`
-    : `/${locale}/gallery/${encodeURIComponent(filterCategory)}/`;
+    ? `/${locale}/gallery`
+    : `/${locale}/gallery/${encodeURIComponent(filterCategory)}`;
+
+// Handed to the Solid island; must stay JSON-serializable.
+const filterProps = {
+  labels: {
+    location: m.gallery_filter_location,
+    allLocations: m.gallery_filter_all_locations,
+    year: m.gallery_filter_year,
+    allYears: m.gallery_filter_all_years,
+    month: m.gallery_filter_month,
+    allMonths: m.gallery_filter_all_months,
+    clear: m.gallery_filter_clear,
+  },
+  locations: locations.map((location) => ({
+    slug: location.slug,
+    city: String(location.data.city),
+    id: location.referenceId,
+  })),
+  years,
+  months: months.map((month) => ({ value: month, label: monthName(month) })),
+  selected: {
+    location: selectedLocation?.slug ?? "",
+    year: selectedYear,
+    month: selectedMonth,
+  },
+  basePath: galleryPath,
+};
 
 interface FilterState {
   category?: string;
@@ -145,8 +177,8 @@ const filterHref = (overrides: FilterState = {}) => {
   if (year && month) search.set("month", month);
   const path =
     category === "all"
-      ? `/${locale}/gallery/`
-      : `/${locale}/gallery/${encodeURIComponent(category)}/`;
+      ? `/${locale}/gallery`
+      : `/${locale}/gallery/${encodeURIComponent(category)}`;
   return search.size > 0 ? `${path}?${search}` : path;
 };
 ---
@@ -160,6 +192,7 @@ const filterHref = (overrides: FilterState = {}) => {
       </p>
     </div>
 
+    <div id="gallery-filters-root">
     <div
       class="mx-auto mb-8 flex max-w-4xl flex-wrap items-center justify-center gap-3"
       id="gallery-filters"
@@ -290,6 +323,8 @@ const filterHref = (overrides: FilterState = {}) => {
       )}
     </div>
 
+    </div>
+
     {categoryTerms.length > 0 && (
       <div class="flex flex-wrap justify-center gap-3 mb-8">
         <a
@@ -327,7 +362,11 @@ const filterHref = (overrides: FilterState = {}) => {
         sortedGalleryItems.map((galleryItem) => (
           <div
             class="break-inside-avoid mb-6"
-            transition:name={`poster-${galleryItem.id}`}
+            data-poster
+            data-poster-location={galleryItem.data.location ?? ""}
+            data-poster-date={galleryItem.data.date ?? ""}
+            hidden={!matchesFilters(galleryItem)}
+            style={`view-transition-name: poster-${galleryItem.id}`}
           >
             <GalleryCard galleryItem={galleryItem} />
           </div>
@@ -335,13 +374,11 @@ const filterHref = (overrides: FilterState = {}) => {
       }
     </div>
 
-    {sortedGalleryItems.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">
-          {hasActiveFilters ? m.gallery_no_results : m.gallery_no_images}
-        </p>
-      </div>
-    )}
+    <div class="text-center py-12" id="gallery-empty" hidden={visibleCount > 0}>
+      <p class="text-gray-500 text-lg">
+        {hasActiveFilters ? m.gallery_no_results : m.gallery_no_images}
+      </p>
+    </div>
   </div>
 </main>
 <ImageModal id="gallery-modal" />
@@ -355,33 +392,23 @@ const filterHref = (overrides: FilterState = {}) => {
   }
 </style>
 
+<script type="application/json" id="gallery-filters-props" is:inline set:html={
+  JSON.stringify(filterProps).replaceAll("<", "\\u003c")
+}></script>
+
 <script>
-  // One dropdown open at a time; close on outside click and Escape. All
-  // handlers are document-level delegation so they keep working after the
-  // ClientRouter swaps the page on filter navigations.
-  const dropdowns = () =>
-    document.querySelectorAll<HTMLDetailsElement>("#gallery-filters [data-dropdown]");
-  // `toggle` does not bubble, so listen in the capture phase.
-  document.addEventListener(
-    "toggle",
-    (event) => {
-      const opened = event.target as HTMLDetailsElement;
-      if (!opened?.matches?.("#gallery-filters [data-dropdown]") || !opened.open) return;
-      for (const other of dropdowns()) {
-        if (other !== opened) other.open = false;
-      }
-    },
-    true,
-  );
-  document.addEventListener("click", (event) => {
-    for (const dropdown of dropdowns()) {
-      if (dropdown.open && !dropdown.contains(event.target as Node)) dropdown.open = false;
-    }
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    for (const dropdown of dropdowns()) dropdown.open = false;
-  });
+  // Solid renders the filter bar client-side, replacing the server-rendered
+  // links above. Plain `render()` — no island hydration, no Astro renderer.
+  import { createComponent, render } from "@solidjs/web";
+  import GalleryFilters from "../gallery/GalleryFilters.solid";
+
+  const root = document.getElementById("gallery-filters-root");
+  const propsScript = document.getElementById("gallery-filters-props");
+  if (root && propsScript?.textContent) {
+    const props = JSON.parse(propsScript.textContent);
+    root.replaceChildren();
+    render(() => createComponent(GalleryFilters, props), root);
+  }
 </script>
 
 <script>

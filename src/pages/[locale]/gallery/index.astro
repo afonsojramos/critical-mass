@@ -10,6 +10,6 @@ const m = await getSiteCopy(Astro.currentLocale);
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---
 
-<MainLayout title={m.gallery_title} description={m.gallery_description} clientRouter>
+<MainLayout title={m.gallery_title} description={m.gallery_description}>
   <GalleryView filterCategory="all" />
 </MainLayout>
