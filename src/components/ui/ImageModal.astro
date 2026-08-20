@@ -20,63 +20,66 @@ const { id } = Astro.props;
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.querySelector('.image-modal') as HTMLElement;
-    const modalImg = modal?.querySelector('#modal-image') as HTMLImageElement;
-    const modalTitle = modal?.querySelector('#modal-title') as HTMLElement;
-    const modalAuthor = modal?.querySelector('#modal-author') as HTMLAnchorElement;
-    const closeBtn = modal?.querySelector('button') as HTMLButtonElement;
+  // Everything queries the DOM at call time and binds at the document level,
+  // so the lightbox keeps working after ClientRouter swaps the page.
+  const getModal = () => document.querySelector<HTMLElement>('.image-modal');
 
-    function openImageModal(imageSrc: string, imageAlt: string, authorName?: string, authorLink?: string) {
-      if (modal && modalImg && modalTitle && modalAuthor) {
-        modalImg.src = imageSrc;
-        modalImg.alt = imageAlt;
-        modalTitle.textContent = imageAlt;
+  function closeModal() {
+    const modal = getModal();
+    if (modal) {
+      modal.classList.add('opacity-0', 'invisible');
+      document.body.style.overflow = '';
+    }
+  }
 
-        // Handle author display (using DOM API to prevent XSS)
-        modalAuthor.textContent = '';
-        if (authorName) {
-          const byText = document.createTextNode('By ');
-          modalAuthor.appendChild(byText);
-          if (authorLink && (authorLink.startsWith('https://') || authorLink.startsWith('http://'))) {
-            const a = document.createElement('a');
-            a.href = authorLink;
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            a.className = 'hover:text-white underline decoration-dotted underline-offset-2 pointer-events-auto';
-            a.textContent = authorName;
-            modalAuthor.appendChild(a);
-          } else {
-            modalAuthor.appendChild(document.createTextNode(authorName));
-          }
-        }
+  window.openImageModal = (
+    imageSrc: string,
+    imageAlt: string,
+    authorName?: string,
+    authorLink?: string,
+  ) => {
+    const modal = getModal();
+    const modalImg = modal?.querySelector<HTMLImageElement>('#modal-image');
+    const modalTitle = modal?.querySelector<HTMLElement>('#modal-title');
+    const modalAuthor = modal?.querySelector<HTMLElement>('#modal-author');
+    if (!modal || !modalImg || !modalTitle || !modalAuthor) return;
 
-        modal.classList.remove('opacity-0', 'invisible');
-        document.body.style.overflow = 'hidden';
+    modalImg.src = imageSrc;
+    modalImg.alt = imageAlt;
+    modalTitle.textContent = imageAlt;
+
+    // Handle author display (using DOM API to prevent XSS)
+    modalAuthor.textContent = '';
+    if (authorName) {
+      const byText = document.createTextNode('By ');
+      modalAuthor.appendChild(byText);
+      if (authorLink && (authorLink.startsWith('https://') || authorLink.startsWith('http://'))) {
+        const a = document.createElement('a');
+        a.href = authorLink;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'hover:text-white underline decoration-dotted underline-offset-2 pointer-events-auto';
+        a.textContent = authorName;
+        modalAuthor.appendChild(a);
+      } else {
+        modalAuthor.appendChild(document.createTextNode(authorName));
       }
     }
 
-    function closeModal() {
-      if (modal) {
-        modal.classList.add('opacity-0', 'invisible');
-        document.body.style.overflow = '';
-      }
-    }
+    modal.classList.remove('opacity-0', 'invisible');
+    document.body.style.overflow = 'hidden';
+  };
 
-    closeBtn?.addEventListener('click', closeModal);
+  document.addEventListener('click', (event) => {
+    const modal = getModal();
+    if (!modal || modal.classList.contains('invisible')) return;
+    const target = event.target as HTMLElement;
+    if (target === modal || target.closest('.image-modal button')) closeModal();
+  });
 
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal && !modal.classList.contains('invisible')) {
-        closeModal();
-      }
-    });
-
-    window.openImageModal = openImageModal;
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const modal = getModal();
+    if (modal && !modal.classList.contains('invisible')) closeModal();
   });
 </script>

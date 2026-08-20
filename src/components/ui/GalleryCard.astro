@@ -76,38 +76,31 @@ const authorEdit = author ? editable("authors", author) : null;
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const galleryOverlays = document.querySelectorAll('.gallery-overlay');
-    galleryOverlays.forEach(overlay => {
-      overlay.addEventListener('click', () => {
-        const imageSrc = overlay.getAttribute('data-image-src');
-        const imageTitle = overlay.getAttribute('data-image-title');
-        const authorName = overlay.getAttribute('data-author-name');
-        const authorLink = overlay.getAttribute('data-author-link');
-        // Author is optional (openImageModal handles a missing author); only the
-        // image is required to open the lightbox.
-        if (imageSrc) {
-          window.openImageModal(imageSrc, imageTitle ?? '', authorName ?? undefined, authorLink ?? undefined);
-        }
-      });
-    });
+  // Document-level delegation so cards keep working after ClientRouter swaps
+  // the grid on filter navigations. Tags win over the overlay, and clicks on
+  // the content strip never open the lightbox.
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
 
-    const galleryContents = document.querySelectorAll('.gallery-content');
-    galleryContents.forEach(content => {
-      content.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    });
+    const tag = target.closest('.gallery-tag');
+    if (tag) {
+      const category = tag.getAttribute('data-category');
+      if (category && window.filterByTag) window.filterByTag(category);
+      return;
+    }
 
-    const galleryTags = document.querySelectorAll('.gallery-tag');
-    galleryTags.forEach(tag => {
-      tag.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const category = tag.getAttribute('data-category');
-        if (category && window.filterByTag) {
-          window.filterByTag(category);
-        }
-      });
-    });
+    if (target.closest('.gallery-content')) return;
+
+    const overlay = target.closest('.gallery-overlay');
+    if (!overlay) return;
+    const imageSrc = overlay.getAttribute('data-image-src');
+    const imageTitle = overlay.getAttribute('data-image-title');
+    const authorName = overlay.getAttribute('data-author-name');
+    const authorLink = overlay.getAttribute('data-author-link');
+    // Author is optional (openImageModal handles a missing author); only the
+    // image is required to open the lightbox.
+    if (imageSrc) {
+      window.openImageModal(imageSrc, imageTitle ?? '', authorName ?? undefined, authorLink ?? undefined);
+    }
   });
 </script>

@@ -309,7 +309,10 @@ const filterHref = (overrides: FilterState = {}) => {
     <div class="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6" id="gallery-grid">
       {
         sortedGalleryItems.map((galleryItem) => (
-          <div class="break-inside-avoid mb-6">
+          <div
+            class="break-inside-avoid mb-6"
+            transition:name={`poster-${galleryItem.id}`}
+          >
             <GalleryCard galleryItem={galleryItem} />
           </div>
         ))
@@ -337,24 +340,31 @@ const filterHref = (overrides: FilterState = {}) => {
 </style>
 
 <script>
-  // One dropdown open at a time; close on outside click and Escape.
-  const dropdowns = document.querySelectorAll<HTMLDetailsElement>("#gallery-filters [data-dropdown]");
-  for (const dropdown of dropdowns) {
-    dropdown.addEventListener("toggle", () => {
-      if (!dropdown.open) return;
-      for (const other of dropdowns) {
-        if (other !== dropdown) other.open = false;
+  // One dropdown open at a time; close on outside click and Escape. All
+  // handlers are document-level delegation so they keep working after the
+  // ClientRouter swaps the page on filter navigations.
+  const dropdowns = () =>
+    document.querySelectorAll<HTMLDetailsElement>("#gallery-filters [data-dropdown]");
+  // `toggle` does not bubble, so listen in the capture phase.
+  document.addEventListener(
+    "toggle",
+    (event) => {
+      const opened = event.target as HTMLDetailsElement;
+      if (!opened?.matches?.("#gallery-filters [data-dropdown]") || !opened.open) return;
+      for (const other of dropdowns()) {
+        if (other !== opened) other.open = false;
       }
-    });
-  }
+    },
+    true,
+  );
   document.addEventListener("click", (event) => {
-    for (const dropdown of dropdowns) {
+    for (const dropdown of dropdowns()) {
       if (dropdown.open && !dropdown.contains(event.target as Node)) dropdown.open = false;
     }
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    for (const dropdown of dropdowns) dropdown.open = false;
+    for (const dropdown of dropdowns()) dropdown.open = false;
   });
 </script>
 

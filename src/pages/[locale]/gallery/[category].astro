@@ -26,6 +26,7 @@ Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-r
   title={categoryTitle}
   description={m.gallery_description}
   localeSwitchHref={localeSwitchHref}
+  clientRouter
 >
   <GalleryView filterCategory={category} />
 </MainLayout>

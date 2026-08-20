@@ -1,8 +1,11 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import Seo from "@/components/seo/Seo.astro";
 import { getSiteCopy } from "@/i18n/site-copy";
 
-const { title, description, image, frontmatter, robots } = Astro.props;
+// `clientRouter` opts a page into view-transition (client-side) navigation;
+// only navigations between two opted-in pages are swapped client-side.
+const { title, description, image, frontmatter, robots, clientRouter } = Astro.props;
 const m = await getSiteCopy(Astro.currentLocale);
 
 const formattedTitle = title ? `${title} - ${m.title}` : m.title;
@@ -30,4 +33,5 @@ const formattedTitle = title ? `${title} - ${m.title}` : m.title;
 
   <!-- Preconnect fonts, images... -->
   <script defer is:inline src="https://rybbit.afonsojramos.me/api/script.js" data-site-id="0806a857a038"></script>
+  {clientRouter && <ClientRouter />}
 </head>
