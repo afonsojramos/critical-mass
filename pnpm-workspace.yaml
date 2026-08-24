@@ -12,7 +12,9 @@ allowBuilds:
   sharp: true
   workerd: true
 
-# Versions allowed to bypass the 1-day release-age gate.
+# Versions allowed to bypass the 1-day release-age gate. The bulk-upload
+# plugin is ours, so every version of it is exempt.
 minimumReleaseAgeExclude:
+  - "emdash-plugin-bulk-upload"
   - "@cloudflare/workers-types@5.20260713.1"
   - "css-tree@3.2.1"
