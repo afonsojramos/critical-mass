@@ -61,17 +61,5 @@
     "vite-plus": "^0.2.9",
     "wrangler": "^4.125.0"
   },
-  "packageManager": "pnpm@10.33.0",
-  "pnpm": {
-    "overrides": {
-      "css-tree": "3.2.1"
-    },
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "better-sqlite3",
-      "esbuild",
-      "sharp",
-      "workerd"
-    ]
-  }
+  "packageManager": "pnpm@11.22.0"
 }
