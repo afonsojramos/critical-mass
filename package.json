@@ -50,6 +50,7 @@
     "@inlang/paraglide-js": "^2.24.1",
     "@solidjs/vite-plugin": "3.0.0-next.32",
     "@tailwindcss/typography": "^0.5.20",
+    "@tanstack/intent": "^0.4.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "gray-matter": "^4.0.3",
@@ -61,5 +62,10 @@
     "vite-plus": "^0.2.9",
     "wrangler": "^4.125.0"
   },
-  "packageManager": "pnpm@11.22.0"
+  "packageManager": "pnpm@11.22.0",
+  "intent": {
+    "skills": [
+      "@tanstack/*"
+    ]
+  }
 }
