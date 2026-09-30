@@ -12,7 +12,7 @@ if [ -n "$STAGED_FILES" ]; then
 
   if [ -n "$FMT_FILES" ] || [ -n "$LINT_FILES" ]; then
     if [ -x "$VP" ]; then
-      [ -n "$FMT_FILES" ] && "$VP" fmt $FMT_FILES --write
+      [ -n "$FMT_FILES" ] && "$VP" fmt $FMT_FILES --write --no-error-on-unmatched-pattern
       [ -n "$LINT_FILES" ] && "$VP" lint $LINT_FILES --fix
     else
       echo "warn: Vite+ (vp) not found — skipping format/lint. Run: pnpm install"
