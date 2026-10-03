@@ -19,15 +19,14 @@ if (!slug) {
 
 const locale = Astro.currentLocale;
 const m = await getSiteCopy(locale);
-const { entry } = await getEmDashEntry("blog", slug, { locale });
+const { entry } = await getEmDashEntry("blog", slug, { locale, references: { author: true } });
 
 if (!entry) {
   return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
 const article = entry as any;
-const { entry: authorEntry } = await getEmDashEntry("authors", article.data.author);
-const author = authorEntry as any;
+const author = article.references?.author?.entries[0] ?? null;
 
 const edit = editable("blog", article);
 const authorEdit = author ? editable("authors", author) : null;

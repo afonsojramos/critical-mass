@@ -6,6 +6,7 @@ import { galleryPeriodRange, normalizeGalleryPeriod } from "@/gallery-period";
 import { getSiteCopy } from "@/i18n/site-copy";
 import { capitalize } from "@/utils";
 import { resolveBaseTermSlug } from "@/utils/taxonomy";
+import { withEntryReferences } from "@/utils/contentReferences";
 
 interface Props {
   filterCategory?: string;
@@ -37,14 +38,13 @@ const requestedLocation = params.get("location") ?? "";
 // base-locale rows exist and both language versions of the page show them.
 // City names are proper nouns, so the canonical location row is also
 // suitable for the localized filter label.
-// One D1 round trip fetches the (category-scoped) entries; location and
-// period filtering happen in memory, so filter clicks cost a single wave of
-// queries instead of three sequential ones.
+// Location and period filtering use the category's entries and hydrated
+// references in memory, so server and client filters share the same links.
 const categorySlug =
   filterCategory !== "all"
     ? await resolveBaseTermSlug("category", filterCategory, locale)
     : undefined;
-const [{ entries: locationEntries }, categoryTerms, { entries: allGalleryEntries }] =
+const [{ entries: locationEntries }, categoryTerms, { entries: galleryEntries }] =
   await Promise.all([
     getEmDashCollection("locations", { status: "published", locale: "pt" }),
     getTaxonomyTerms("category", { locale }),
@@ -56,11 +56,16 @@ const [{ entries: locationEntries }, categoryTerms, { entries: allGalleryEntries
     }),
   ]);
 
+const allGalleryEntries = await withEntryReferences(
+  "gallery", galleryEntries, { location: true, author: true }, "pt",
+);
+
 // Only offer locations that actually have gallery entries (including
 // inactive historical ones such as Setúbal) so no filter is a dead end.
+const galleryLocationId = (entry: any) => entry.references?.location?.entries[0]?.data.id;
 const usedLocationIds = new Set(
   (allGalleryEntries as any[])
-    .map((entry) => entry.data.location)
+    .map(galleryLocationId)
     .filter(Boolean)
     .map(String),
 );
@@ -104,7 +109,7 @@ const periodRange = galleryPeriodRange(selectedPeriod);
 // `hidden` attribute. Filtering stays correct without JavaScript, and the
 // island can re-reveal posters without another request.
 const matchesFilters = (entry: any) => {
-  if (selectedLocation && String(entry.data.location) !== selectedLocation.referenceId) {
+  if (selectedLocation && String(galleryLocationId(entry)) !== selectedLocation.referenceId) {
     return false;
   }
   if (periodRange) {
@@ -363,7 +368,7 @@ const filterHref = (overrides: FilterState = {}) => {
           <div
             class="break-inside-avoid mb-6"
             data-poster
-            data-poster-location={galleryItem.data.location ?? ""}
+            data-poster-location={galleryLocationId(galleryItem) ?? ""}
             data-poster-date={galleryItem.data.date ?? ""}
             hidden={!matchesFilters(galleryItem)}
             style={`view-transition-name: poster-${galleryItem.id}`}

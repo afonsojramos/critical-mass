@@ -20,7 +20,7 @@ const { items } = await search(query, {
 });
 
 const entries = await Promise.all(
-  items.map((item) => getEmDashEntry("blog", item.id, { locale: lang })),
+  items.map((item) => getEmDashEntry("blog", item.id, { locale: lang, references: { author: true } })),
 );
 const searchResults = entries.map(({ entry }) => entry).filter((entry) => entry !== null);
 

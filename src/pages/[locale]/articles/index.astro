@@ -7,15 +7,17 @@ import ArticleCard from "@/components/ui/ArticleCard.astro";
 import SearchForm from "@/components/ui/SearchForm.astro";
 import { getSiteCopy } from "@/i18n/site-copy";
 import MainLayout from "@/layouts/MainLayout.astro";
+import { withEntryReferences } from "@/utils/contentReferences";
 
 const locale = Astro.currentLocale;
 const m = await getSiteCopy(locale);
 
-const { entries: allBlogArticles } = await getEmDashCollection("blog", {
+const { entries: blogEntries } = await getEmDashCollection("blog", {
   status: "published",
   locale,
   orderBy: { pub_date: "desc" },
 });
+const allBlogArticles = await withEntryReferences("blog", blogEntries, { author: true }, locale);
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
 ---

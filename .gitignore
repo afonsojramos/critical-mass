@@ -27,9 +27,12 @@ uploads/
 seed.json
 .wrangler/
 emdash-env.d.ts
+.emdash/migrations.json
 
 # Playwright/test artifacts
 .playwright-mcp/
+test-results/
+playwright-report/
 test-*.png
 homepage-*.png
 .gstack/

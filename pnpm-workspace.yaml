@@ -1,5 +1,13 @@
 # pnpm 11 reads settings from here; `.npmrc` is auth/registry only, and the
 # `pnpm` block in package.json no longer carries them.
+patchedDependencies:
+  emdash-plugin-bulk-upload@0.2.0: patches/emdash-plugin-bulk-upload@0.2.0.patch
+
+peerDependencyRules:
+  allowedVersions:
+    "emdash-plugin-bulk-upload@0.2.0>emdash": "1"
+    "emdash-plugin-bulk-upload@0.2.0>@emdash-cms/admin": "1"
+
 overrides:
   # Astro's unifont needs this exact API; see the dependency notes.
   css-tree: 3.2.1
