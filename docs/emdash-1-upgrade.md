@@ -8,14 +8,14 @@ Reference fields bound to relations are no longer scalar values in `entry.data`.
 
 The Cloudflare email provider declares `hooks.email-transport:register`, the current name for its existing capability. Delivery behavior is unchanged. Email sending and AT Protocol login were not exercised in the isolated test.
 
-## Unreleased uploader fix
+## Released uploader fixes
 
-The npm dependency remains `emdash-plugin-bulk-upload@^0.2.0`. A pnpm source patch at `patches/emdash-plugin-bulk-upload@0.2.0.patch` supplies two fixes:
+The site uses the published `emdash-plugin-bulk-upload@^0.2.1`, which includes both EmDash 1.x compatibility fixes:
 
 - Carry the host's configured React admin entry into the runtime plugin definition.
 - Move relation-bound fields from `data` to the content API's `references` payload, for both primary and translated drafts. Unbound legacy fields stay in `data`.
 
-`pnpm-workspace.yaml` permits EmDash 1.x peers only for this patched package. The same source changes and regression tests live in the plugin repository. Remove the patch and its targeted peer rules when an npm release includes these fixes. No temporary tarball or sibling-checkout dependency is required.
+The package declares EmDash 1.x-compatible peers, so the temporary pnpm source patch and package-specific peer allowances are no longer needed. No temporary tarball or sibling-checkout dependency is required.
 
 ## Safe local server
 
