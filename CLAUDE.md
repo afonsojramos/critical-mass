@@ -28,7 +28,7 @@ This is an Astro-based multilingual website for Critical Mass Portugal. The site
 ```bash
 # Development
 pnpm install                 # Install dependencies
-pnpm run dev                 # Start dev server at localhost:4321
+pnpm run dev:local           # Start dev with isolated local D1/R2 bindings
 pnpm run build               # Build production site (includes astro check)
 pnpm run preview             # Preview build locally
 
@@ -55,7 +55,7 @@ pnpm run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JS
 - Media: Cloudflare R2 (production) / local filesystem (local dev)
 - Content format: Portable Text (structured JSON), rendered via `astro-portabletext`
 - Collections: authors, blog, events, gallery, locations
-- Gallery's `author` field is an Emdash reference to the authors content type, rendered by the custom `content-reference` admin plugin
+- Gallery's `author` field is an EmDash relation-backed reference to authors, rendered by the built-in native reference editor
 - Bulk gallery uploads: the `emdash-plugin-bulk-upload` npm package (our own OSS plugin), configured in `src/plugins/bulk-upload-admin.tsx` with plugin id `gallery-tools` (existing schema references `gallery-tools:month-year`)
 - Query API: `getEmDashCollection()` and `getEmDashEntry()` from `emdash`
 - Search: FTS5 full-text search via `search()` from `emdash`
@@ -91,5 +91,5 @@ pnpm run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JS
 
 - Always run the build command to compile Paraglide messages, test Emdash-backed content queries, and run Astro checks before committing
 - Content pages are SSR-only (no prerendering) since they query D1 at runtime
-- Local dev uses SQLite (`data.db`) and local filesystem (`uploads/`) — both gitignored
+- Use `pnpm dev:local` for write tests: it disables remote bindings and persists D1/R2 under ignored `.wrangler/local-test`. The normal `dev` configuration uses remote production bindings. For EmDash upgrade testing and deployment precautions, read `docs/emdash-1-upgrade.md`.
 - Site deploys to Cloudflare with server-side rendering

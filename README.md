@@ -24,15 +24,20 @@ All commands are run from the root of the project, from a terminal:
 
 | Command             | Action                                            |
 | :------------------ | :------------------------------------------------ |
-| `nub install`       | Installs dependencies                             |
-| `nub run dev`       | Starts local dev server at `localhost:4321`       |
-| `nub run build`     | Builds the production site to `./dist/`           |
-| `nub run preview`   | Previews the production build locally             |
-| `nub run astro ...` | Runs CLI commands like `astro add`, `astro check` |
+| `pnpm install`      | Installs dependencies                             |
+| `pnpm dev:local`    | Starts dev with isolated local D1/R2 bindings     |
+| `pnpm build`        | Builds the production site to `./dist/`           |
+| `pnpm preview`      | Previews the production build locally             |
+| `pnpm test:browser` | Runs the isolated gallery bulk-upload smoke test  |
+| `pnpm astro ...`    | Runs CLI commands like `astro add`, `astro check` |
+
+The normal `pnpm dev` command uses remote production bindings. Use `dev:local`
+for write tests. See [EmDash 1.x local validation](docs/emdash-1-upgrade.md) for
+local database prerequisites, test coverage, and deployment precautions.
 
 Editors can use **Gallery bulk upload** in the Emdash admin to upload several
-posters as linked Portuguese and English drafts, then adjust each title and
-month individually before publishing.
+posters as Portuguese drafts, then adjust each title and month individually
+before publishing.
 
 Performance measurements and regression checks are defined in the
 [`web performance playbook`](docs/web-performance-playbook.md).

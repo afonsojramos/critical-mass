@@ -11,7 +11,6 @@ import { github } from "emdash/auth/providers/github";
 import { google } from "emdash/auth/providers/google";
 import { bulkUpload } from "emdash-plugin-bulk-upload";
 import { baseLocale, locales } from "./src/paraglide/runtime";
-import { contentReference } from "./src/plugins/content-reference";
 import { emailCloudflare } from "./src/plugins/email-cloudflare";
 
 const SOLID_ISLANDS = "**/*.solid.tsx";
@@ -51,7 +50,6 @@ export default defineConfig({
       // EMDASH_OAUTH_{GOOGLE,GITHUB}_CLIENT_ID/SECRET secrets.
       authProviders: [google(), github()],
       plugins: [
-        contentReference(),
         bulkUpload({
           id: "gallery-tools",
           adminEntry: "@/plugins/bulk-upload-admin",

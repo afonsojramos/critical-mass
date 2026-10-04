@@ -1,5 +1,4 @@
 ---
-import { getEmDashEntry } from "emdash";
 import ContentImage from "@/components/ui/ContentImage.astro";
 import { getSiteCopy } from "@/i18n/site-copy";
 import { editable } from "@/utils/editable";
@@ -16,11 +15,7 @@ const m = await getSiteCopy(Astro.currentLocale);
 // Category taxonomy term (localized), managed in the CMS.
 const categoryTerm = galleryItem.data.terms?.category?.[0];
 
-// Get author data if available
-const { entry: authorEntry } = galleryItem.data.author
-  ? await getEmDashEntry("authors", galleryItem.data.author)
-  : { entry: null };
-const author = authorEntry as any;
+const author = galleryItem.references?.author?.entries[0] ?? null;
 
 // Modal needs a plain URL string; ImageMetadata exposes it via `.src`.
 const resolvedImage = toImageSource(galleryItem.data.image);

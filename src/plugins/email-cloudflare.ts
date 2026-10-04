@@ -44,7 +44,7 @@ export function emailCloudflare(config: EmailCloudflareConfig): PluginDescriptor
     format: "native",
     entrypoint: "@/plugins/email-cloudflare",
     options: { ...config },
-    capabilities: ["email:provide"],
+    capabilities: ["hooks.email-transport:register"],
   };
 }
 
@@ -55,7 +55,7 @@ export function createPlugin(config: EmailCloudflareConfig): ResolvedPlugin {
   return definePlugin({
     id: "email-cloudflare",
     version: "1.0.0",
-    capabilities: ["email:provide"],
+    capabilities: ["hooks.email-transport:register"],
     hooks: {
       "email:deliver": {
         exclusive: true,
