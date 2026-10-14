@@ -83,7 +83,7 @@ pnpm run format              # Format with Oxfmt (Vite+) — JS/TS, CSS, JSON/JS
 
 ### Tooling
 
-- Linting and formatting via Vite+ (`vp`): Oxlint (`pnpm run lint`) and Oxfmt (`pnpm run format`). `vite-plus` is pinned as a devDependency, so `pnpm install` provides the `vp` binary (no global install needed). The pre-commit hook resolves the local binary and skips checks with a warning if it is missing.
+- Linting and formatting via Vite+ (`vp`): Oxlint (`pnpm run lint`) and Oxfmt (`pnpm run format`). `vite-plus` is pinned as a devDependency, so `pnpm install` provides the `vp` binary (no global install needed). The hk pre-commit hook checks the staged snapshot and requires the local tools. For hook installation or recovery, read [Git hooks](docs/git-hooks.md).
 - Suppress a lint rule with an oxlint directive (`// oxlint-disable-next-line <rule>`), not Biome's `biome-ignore` (which oxlint ignores). Note oxlint's default config does not enable `no-explicit-any`.
 - Oxfmt formats JS/TS, CSS, JSON/JSONC, and Markdown. It does not yet support `.astro`, so `.astro` files are currently left unformatted.
 

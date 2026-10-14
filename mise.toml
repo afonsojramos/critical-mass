@@ -1,6 +1,8 @@
 # Dev toolchain, managed by mise (https://mise.jdx.dev).
 # Nub (https://nubjs.com) is the installer and script runner.
-# `mise install` provisions Node and Nub.
+# `mise install` provisions Node, Nub, pnpm, and hk.
 [tools]
+hk = "2.6.0"
 node = "24"
 "npm:@nubjs/nub" = "latest"
+"npm:pnpm" = "11.22.0"
